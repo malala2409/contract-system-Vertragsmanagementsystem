@@ -1,0 +1,539 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="mb-4">
+    <a href="{{ url_for('manage_templates') }}" class="text-brand-500 hover:text-brand-700 text-sm">&larr; {{ t('btn_back') }}</a>
+</div>
+
+<h1 class="text-2xl font-bold text-brand-700 mb-2">{{ t('create_template_title') | default('Neue Vorlage erstellen') }}</h1>
+
+<!-- Template Metadata -->
+<div class="bg-white rounded-xl shadow-sm border p-4 mb-4">
+    <div class="grid md:grid-cols-3 gap-3">
+        <div>
+            <label class="block text-xs font-medium text-gray-500 mb-1">Titel (DE) *</label>
+            <input type="text" id="tmpl-title-de" class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-brand-300 outline-none">
+        </div>
+        <div>
+            <label class="block text-xs font-medium text-gray-500 mb-1">Title (EN)</label>
+            <input type="text" id="tmpl-title-en" class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-brand-300 outline-none">
+        </div>
+        <div>
+            <label class="block text-xs font-medium text-gray-500 mb-1">{{ t('label_category') }} *</label>
+            <select id="tmpl-category" class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-brand-300 outline-none"
+                    onchange="filterModules()">
+                <option value="">—</option>
+                {% for cat in categories %}
+                <option value="{{ cat.slug }}">{{ cat.name_de }} ({{ cat.name_en }})</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+</div>
+
+<!-- Three-column editor -->
+<div class="grid lg:grid-cols-[250px_1fr_220px] gap-4" style="min-height:60vh">
+    <!-- LEFT: Module panel -->
+    <div class="bg-white rounded-xl shadow-sm border p-4">
+        <h3 class="font-bold text-brand-700 text-sm mb-2">📦 Module</h3>
+        <p class="text-xs text-gray-400 mb-3" id="module-hint">Bitte Kategorie wählen</p>
+        <div id="module-list" class="space-y-2 max-h-[55vh] overflow-y-auto">
+            <!-- Modules loaded by JS -->
+        </div>
+    </div>
+
+    <!-- CENTER: Editor area -->
+    <div class="bg-white rounded-xl shadow-sm border p-4 flex flex-col">
+        <h3 class="font-bold text-brand-700 text-sm mb-2">📝 Vertragseditor</h3>
+        <p class="text-xs text-gray-400 mb-2">Module hierher ziehen oder Text direkt eingeben</p>
+        <div id="editor-drop-zone"
+             class="flex-1 border-2 border-dashed border-gray-300 rounded-lg p-4 overflow-y-auto min-h-[400px] bg-gray-50"
+             ondragover="allowDrop(event)" ondrop="handleDrop(event)">
+            <div id="editor-sections" class="space-y-3">
+                <!-- Dropped sections appear here -->
+            </div>
+            <div id="editor-placeholder" class="text-center py-16 text-gray-400">
+                <p class="text-4xl mb-2">📋</p>
+                <p class="text-sm">Module aus der linken Spalte hierher ziehen</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- RIGHT: TOC -->
+    <div class="bg-white rounded-xl shadow-sm border p-4">
+        <h3 class="font-bold text-brand-700 text-sm mb-2">📑 Inhaltsverzeichnis</h3>
+        <div id="toc-list" class="text-xs text-gray-500 space-y-1 max-h-[55vh] overflow-y-auto">
+            <p class="italic">Noch keine Abschnitte</p>
+        </div>
+    </div>
+</div>
+
+<!-- Preview Modal -->
+<div id="preview-modal" class="hidden fixed inset-0 bg-black/40 flex items-center justify-center z-50 overflow-y-auto py-8">
+    <div class="bg-white rounded-xl shadow-2xl p-6 w-full max-w-3xl mx-4 my-auto" style="max-height:90vh;overflow-y:auto">
+        <div class="flex items-center justify-between mb-4">
+            <h2 class="text-lg font-bold text-brand-700">👁 Vorschau</h2>
+            <button onclick="document.getElementById('preview-modal').classList.add('hidden')"
+                    class="text-gray-400 hover:text-gray-600 text-xl">&times;</button>
+        </div>
+        <div id="preview-content" class="space-y-4 text-sm leading-relaxed"></div>
+    </div>
+</div>
+
+<!-- Bottom actions -->
+<div class="flex justify-center gap-4 mt-6 pb-8">
+    <button onclick="showPreview()"
+            class="bg-white border-2 border-brand-500 text-brand-700 px-6 py-3 rounded-xl font-medium hover:bg-brand-50 transition">
+        👁 Vorschau
+    </button>
+    <button onclick="saveTemplate()"
+            class="bg-brand-700 text-white px-8 py-3 rounded-xl text-lg font-semibold hover:bg-brand-900 transition shadow-lg"
+            id="save-btn" disabled>
+        💾 Speichern
+    </button>
+</div>
+
+<form id="save-form" method="POST" action="{{ url_for('create_template_wizard') }}" class="hidden">
+    <input type="hidden" name="title_de" id="save-title-de">
+    <input type="hidden" name="title_en" id="save-title-en">
+    <input type="hidden" name="category_id" id="save-category-id">
+    <input type="hidden" name="sections" id="save-sections">
+</form>
+
+<script>
+// Standard modules by contract category
+var MODULES = {
+    kaufvertrag: [
+        {title_de:'Parteien',title_en:'Parties',
+         content_de:'Zwischen {{seller_name}}, {{seller_address}} (Verkäufer) und {{buyer_name}}, {{buyer_address}} (Käufer) wird folgender Kaufvertrag geschlossen:',
+         content_en:'Between {{seller_name}}, {{seller_address}} (Seller) and {{buyer_name}}, {{buyer_address}} (Buyer) the following purchase agreement is concluded:'},
+        {title_de:'Kaufgegenstand',title_en:'Subject Matter',
+         content_de:'Verkauft wird: {{goods_description}}. Menge: {{quantity}} Stück. Qualität: {{quality}}.',
+         content_en:'Sold: {{goods_description}}. Quantity: {{quantity}} units. Quality: {{quality}}.'},
+        {title_de:'Kaufpreis & Zahlung',title_en:'Price & Payment',
+         content_de:'Kaufpreis: {{price}} EUR ({{vat}}% MwSt). Zahlungsziel: {{payment_days}} Tage. Zahlungsart: {{payment_method}}.',
+         content_en:'Price: {{price}} EUR ({{vat}}% VAT). Payment: {{payment_days}} days. Method: {{payment_method}}.'},
+        {title_de:'Lieferung & Versand',title_en:'Delivery & Shipping',
+         content_de:'Lieferung bis {{delivery_date}} an {{delivery_place}}. Versand: {{shipping_terms}}. Kosten: {{shipping_cost_bearer}}.',
+         content_en:'Delivery by {{delivery_date}} to {{delivery_place}}. Shipping: {{shipping_terms}}. Cost bearer: {{shipping_cost_bearer}}.'},
+        {title_de:'Gefahrübergang & Eigentumsvorbehalt',title_en:'Risk & Retention of Title',
+         content_de:'Gefahrübergang mit Übergabe. Eigentumsvorbehalt bis vollständiger Zahlung (§ 449 BGB).',
+         content_en:'Risk passes upon handover. Retention of title until full payment (§ 449 BGB).'},
+        {title_de:'Abnahme & Untersuchung',title_en:'Acceptance & Inspection',
+         content_de:'Untersuchungsfrist: {{inspection_days}} Tage. Mängelrüge unverzüglich (§ 377 HGB).',
+         content_en:'Inspection period: {{inspection_days}} days. Defect notification without delay (§ 377 HGB).'},
+        {title_de:'Gewährleistung',title_en:'Warranty',
+         content_de:'Gewährleistungsfrist: {{warranty_months}} Monate (§§ 434 ff. BGB). Nacherfüllung vor Rücktritt.',
+         content_en:'Warranty period: {{warranty_months}} months (§§ 434 ff. BGB). Subsequent performance before rescission.'},
+        {title_de:'Haftung & Vertragsstrafe',title_en:'Liability & Penalty',
+         content_de:'Vertragsstrafe bei Lieferverzug: {{penalty_percent}}% pro Woche, max. {{penalty_max}}%. Haftungsobergrenze: {{liability_cap}} EUR.',
+         content_en:'Penalty for delay: {{penalty_percent}}% per week, max {{penalty_max}}%. Liability cap: {{liability_cap}} EUR.'},
+        {title_de:'Höhere Gewalt',title_en:'Force Majeure',
+         content_de:'Keine Haftung bei höherer Gewalt (Naturkatastrophen, Krieg, Streik, Pandemie). Benachrichtigungspflicht innerhalb {{force_majeure_notice}} Tagen.',
+         content_en:'No liability for force majeure (natural disasters, war, strike, pandemic). Notification within {{force_majeure_notice}} days.'},
+        {title_de:'Schlussbestimmungen',title_en:'Final Provisions',
+         content_de:'Gerichtsstand: {{court}}. Anwendbares Recht: deutsches Recht. Schriftformerfordernis. Salvatorische Klausel. Ort: {{place}}, Datum: {{date}}.',
+         content_en:'Jurisdiction: {{court}}. Governing law: German law. Written form requirement. Severability clause. Place: {{place}}, Date: {{date}}.'},
+    ],
+    mietvertrag: [
+        {title_de:'Parteien',title_en:'Parties',
+         content_de:'Zwischen {{landlord_name}}, {{landlord_address}} (Vermieter) und {{tenant_name}}, {{tenant_address}} (Mieter) wird folgender Mietvertrag geschlossen:',
+         content_en:'Between {{landlord_name}}, {{landlord_address}} (Landlord) and {{tenant_name}}, {{tenant_address}} (Tenant) the following lease is concluded:'},
+        {title_de:'Mietgegenstand',title_en:'Leased Property',
+         content_de:'{{property_description}}, {{property_address}}, {{rooms}} Räume, {{area}} m², {{floor}}. Stock. Nutzung: {{usage_type}}.',
+         content_en:'{{property_description}}, {{property_address}}, {{rooms}} rooms, {{area}} m², {{floor}} floor. Use: {{usage_type}}.'},
+        {title_de:'Miete & Nebenkosten',title_en:'Rent & Operating Costs',
+         content_de:'Nettokaltmiete: {{cold_rent}} EUR/Monat. Nebenkostenvorauszahlung: {{utilities}} EUR. Gesamt: {{total_rent}} EUR. Fällig bis zum {{payment_day}}. Werktag. Kaution: {{deposit}} EUR (§ 551 BGB).',
+         content_en:'Net cold rent: {{cold_rent}} EUR/month. Utilities advance: {{utilities}} EUR. Total: {{total_rent}} EUR. Due by {{payment_day}} working day. Deposit: {{deposit}} EUR (§ 551 BGB).'},
+        {title_de:'Mietdauer & Kündigung',title_en:'Term & Termination',
+         content_de:'Beginn: {{start_date}}. {{term_type}}. Kündigungsfrist: {{notice_period}} Monate (§ 573c BGB).',
+         content_en:'Start: {{start_date}}. {{term_type}}. Notice period: {{notice_period}} months (§ 573c BGB).'},
+        {title_de:'Betriebskosten',title_en:'Operating Costs',
+         content_de:'Gemäß BetrKV: Heizung, Warmwasser, Kaltwasser, Abwasser, Müllabfuhr, Hausreinigung, Gartenpflege, Aufzug, Hauswart, Gemeinschaftsstrom.',
+         content_en:'Per BetrKV: heating, hot water, cold water, waste water, garbage, cleaning, garden, elevator, caretaker, common electricity.'},
+        {title_de:'Instandhaltung & Schönheitsreparaturen',title_en:'Maintenance & Repairs',
+         content_de:'Mieter: {{tenant_repairs}}. Schönheitsreparaturen alle {{renovation_interval}} Jahre. Vermieter: {{landlord_maintenance}}.',
+         content_en:'Tenant: {{tenant_repairs}}. Cosmetic repairs every {{renovation_interval}} years. Landlord: {{landlord_maintenance}}.'},
+        {title_de:'Versicherungen',title_en:'Insurance',
+         content_de:'Gebäudeversicherung durch Vermieter. Haftpflichtversicherung durch Mieter ({{liability_coverage}} EUR Deckung). Hausratversicherung durch Mieter.',
+         content_en:'Building insurance by landlord. Liability insurance by tenant ({{liability_coverage}} EUR coverage). Contents insurance by tenant.'},
+        {title_de:'Tiere, Untervermietung, Änderungen',title_en:'Pets, Subletting, Changes',
+         content_de:'Haustiere: {{pets_allowed}}. Untervermietung: {{subletting_allowed}}. Bauliche Änderungen: {{changes_allowed}}.',
+         content_en:'Pets: {{pets_allowed}}. Subletting: {{subletting_allowed}}. Structural changes: {{changes_allowed}}.'},
+        {title_de:'Haftung',title_en:'Liability',
+         content_de:'Vermieterhaftung für anfängliche Mängel (§ 536a BGB). Mieterhaftung für schuldhafte Beschädigung. Leichte Fahrlässigkeit beschränkt auf {{rental_liability_cap}} EUR.',
+         content_en:'Landlord liability for initial defects (§ 536a BGB). Tenant liability for culpable damage. Slight negligence limited to {{rental_liability_cap}} EUR.'},
+        {title_de:'Schlussbestimmungen',title_en:'Final Provisions',
+         content_de:'Gerichtsstand: {{court}}. Deutsches Recht. Schriftform. Ort: {{place}}, Datum: {{date}}.',
+         content_en:'Jurisdiction: {{court}}. German law. Written form. Place: {{place}}, Date: {{date}}.'},
+    ],
+    arbeitsvertrag: [
+        {title_de:'Parteien',title_en:'Parties',
+         content_de:'Zwischen {{employer_name}}, {{employer_address}} (Arbeitgeber) und {{employee_name}}, {{employee_address}} (Arbeitnehmer) wird folgender Arbeitsvertrag geschlossen:',
+         content_en:'Between {{employer_name}}, {{employer_address}} (Employer) and {{employee_name}}, {{employee_address}} (Employee) the following employment contract is concluded:'},
+        {title_de:'Tätigkeit & Position',title_en:'Position & Duties',
+         content_de:'Position: {{position}}. Aufgaben: {{job_description}}. Berichtslinie: {{reporting_to}}.',
+         content_en:'Position: {{position}}. Duties: {{job_description}}. Reports to: {{reporting_to}}.'},
+        {title_de:'Arbeitsort',title_en:'Place of Work',
+         content_de:'Arbeitsort: {{work_location}}. Home-Office: {{home_office_policy}}. Reisetätigkeit: {{travel_required}}.',
+         content_en:'Place of work: {{work_location}}. Home office: {{home_office_policy}}. Travel: {{travel_required}}.'},
+        {title_de:'Arbeitszeit',title_en:'Working Hours',
+         content_de:'{{working_hours}} Stunden/Woche. Gleitzeit: {{flexitime}}. Überstundenregelung: {{overtime_rule}}. Pausen nach § 3 ArbZG.',
+         content_en:'{{working_hours}} hours/week. Flexitime: {{flexitime}}. Overtime: {{overtime_rule}}. Breaks per § 3 ArbZG.'},
+        {title_de:'Vergütung',title_en:'Remuneration',
+         content_de:'Bruttogehalt: {{salary}} EUR/Monat. {{bonus}}. Zahlung bis zum {{payday}}. Gehaltsüberprüfung: {{salary_review}}.',
+         content_en:'Gross salary: {{salary}} EUR/month. {{bonus}}. Payment by {{payday}}. Review: {{salary_review}}.'},
+        {title_de:'Sozialleistungen & Versicherung',title_en:'Benefits & Insurance',
+         content_de:'KV: {{health_insurance}}. RV: gesetzlich. AV: gesetzlich. PV: gesetzlich. bAV: {{pension_scheme}}. VWL: {{vwl}}.',
+         content_en:'Health: {{health_insurance}}. Pension: statutory. Unemployment: statutory. Long-term care: statutory. Company pension: {{pension_scheme}}. Capital benefits: {{vwl}}.'},
+        {title_de:'Urlaub',title_en:'Vacation',
+         content_de:'{{vacation_days}} Tage/Jahr (§ 3 BUrlG). Sonderurlaub: {{special_leave}}. Unbezahlter Urlaub: {{unpaid_leave}}.',
+         content_en:'{{vacation_days}} days/year (§ 3 BUrlG). Special leave: {{special_leave}}. Unpaid leave: {{unpaid_leave}}.'},
+        {title_de:'Krankheit',title_en:'Sickness',
+         content_de:'Meldepflicht am {{sick_notify_time}}. AU ab {{sick_note_day}}. Tag. Entgeltfortzahlung § 3 EFZG.',
+         content_en:'Notification by {{sick_notify_time}}. Medical certificate from day {{sick_note_day}}. Continued pay § 3 EFZG.'},
+        {title_de:'Kündigung',title_en:'Termination',
+         content_de:'Beginn: {{start_date}}. Probezeit: {{probation_months}} Monate. Kündigungsfrist: {{notice_period_emp}} Wochen (§ 622 BGB).',
+         content_en:'Start: {{start_date}}. Probation: {{probation_months}} months. Notice: {{notice_period_emp}} weeks (§ 622 BGB).'},
+        {title_de:'Verschwiegenheit & Wettbewerb',title_en:'Confidentiality & Competition',
+         content_de:'Verschwiegenheit über Betriebsgeheimnisse. Nebentätigkeit: {{secondary_employment}}. Nachvertragliches Wettbewerbsverbot: {{non_compete}}.',
+         content_en:'Confidentiality of trade secrets. Secondary employment: {{secondary_employment}}. Post-contractual non-compete: {{non_compete}}.'},
+        {title_de:'Datenschutz',title_en:'Data Protection',
+         content_de:'Verarbeitung von Mitarbeiterdaten gemäß DSGVO und BDSG. Unterrichtung nach Art. 13 DSGVO erfolgt gesondert.',
+         content_en:'Processing of employee data per GDPR and BDSG. Information per Art. 13 GDPR provided separately.'},
+        {title_de:'Schlussbestimmungen',title_en:'Final Provisions',
+         content_de:'Gerichtsstand: {{court}}. Deutsches Recht. Schriftform. Ort: {{place}}, Datum: {{date}}.',
+         content_en:'Jurisdiction: {{court}}. German law. Written form. Place: {{place}}, Date: {{date}}.'},
+    ],
+    dienstvertrag: [
+        {title_de:'Parteien',title_en:'Parties',
+         content_de:'Zwischen {{client_name}}, {{client_address}} (Auftraggeber) und {{contractor_name}}, {{contractor_address}} (Auftragnehmer) wird folgender Dienstvertrag geschlossen:',
+         content_en:'Between {{client_name}}, {{client_address}} (Client) and {{contractor_name}}, {{contractor_address}} (Contractor) the following service contract is concluded:'},
+        {title_de:'Leistungsumfang',title_en:'Scope of Services',
+         content_de:'{{service_description}}. Meilensteine: {{milestones}}. Leistungsort: {{service_location}}.',
+         content_en:'{{service_description}}. Milestones: {{milestones}}. Place: {{service_location}}.'},
+        {title_de:'Vergütung',title_en:'Remuneration',
+         content_de:'{{service_fee}} EUR. Zahlungsplan: {{payment_schedule}}. Fällig {{payment_days_service}} Tage nach Rechnung.',
+         content_en:'{{service_fee}} EUR. Schedule: {{payment_schedule}}. Due {{payment_days_service}} days after invoice.'},
+        {title_de:'Mitwirkung des Auftraggebers',title_en:'Client Cooperation',
+         content_de:'Der Auftraggeber stellt bereit: {{client_provisions}}. Verzögerung durch fehlende Mitwirkung geht zu Lasten des Auftraggebers.',
+         content_en:'The Client shall provide: {{client_provisions}}. Delays due to lack of cooperation are at the Client\'s expense.'},
+        {title_de:'Datenschutz & Vertraulichkeit',title_en:'Data Protection & Confidentiality',
+         content_de:'DSGVO-konforme Verarbeitung. Vertraulichkeit für {{confidentiality_years}} Jahre. Auftragsverarbeitungsvertrag: {{dp_agreement}}.',
+         content_en:'GDPR-compliant processing. Confidentiality for {{confidentiality_years}} years. Data processing agreement: {{dp_agreement}}.'},
+        {title_de:'Haftung',title_en:'Liability',
+         content_de:'Unbeschränkt bei Vorsatz/grober Fahrlässigkeit. Leichte Fahrlässigkeit: {{service_liability_cap}} EUR. Ausgenommen: Leben, Körper, Gesundheit.',
+         content_en:'Unlimited for intent/gross negligence. Slight negligence: {{service_liability_cap}} EUR. Excluded: life, body, health.'},
+        {title_de:'Versicherung',title_en:'Insurance',
+         content_de:'Berufshaftpflicht: {{professional_liability_coverage}} EUR Deckung. Nachweis auf Verlangen.',
+         content_en:'Professional liability: {{professional_liability_coverage}} EUR coverage. Proof upon request.'},
+        {title_de:'Laufzeit & Kündigung',title_en:'Term & Termination',
+         content_de:'{{contract_start}} bis {{contract_end}}. Kündigungsfrist: {{notice_period_service}} Wochen. Außerordentlich: § 626 BGB.',
+         content_en:'{{contract_start}} to {{contract_end}}. Notice: {{notice_period_service}} weeks. Extraordinary: § 626 BGB.'},
+        {title_de:'Abnahme',title_en:'Acceptance',
+         content_de:'Abnahmefrist: {{acceptance_period}} Tage. Mängelrüge innerhalb {{defect_period}} Tagen. Nacherfüllung vor Minderung.',
+         content_en:'Acceptance period: {{acceptance_period}} days. Defect notice: {{defect_period}} days. Cure before reduction.'},
+        {title_de:'Schlussbestimmungen',title_en:'Final Provisions',
+         content_de:'Gerichtsstand: {{court}}. Deutsches Recht. Schriftform. Ort: {{place}}, Datum: {{date}}.',
+         content_en:'Jurisdiction: {{court}}. German law. Written form. Place: {{place}}, Date: {{date}}.'},
+    ],
+    darlehensvertrag: [
+        {title_de:'Parteien',title_en:'Parties',
+         content_de:'Zwischen {{lender_name}}, {{lender_address}} (Darlehensgeber) und {{borrower_name}}, {{borrower_address}} (Darlehensnehmer) wird folgender Darlehensvertrag geschlossen:',
+         content_en:'Between {{lender_name}}, {{lender_address}} (Lender) and {{borrower_name}}, {{borrower_address}} (Borrower) the following loan agreement is concluded:'},
+        {title_de:'Darlehenssumme & Auszahlung',title_en:'Loan Amount & Disbursement',
+         content_de:'{{loan_amount}} EUR. Auszahlung am {{disbursement_date}}. Bedingungen: {{conditions_precedent}}.',
+         content_en:'{{loan_amount}} EUR. Disbursement on {{disbursement_date}}. Conditions: {{conditions_precedent}}.'},
+        {title_de:'Zinsen',title_en:'Interest',
+         content_de:'Nominalzins: {{interest_rate}}% p.a. Effektivzins: {{effective_rate}}% p.a. Zinsmethode: {{interest_method}}.',
+         content_en:'Nominal rate: {{interest_rate}}% p.a. Effective: {{effective_rate}}% p.a. Method: {{interest_method}}.'},
+        {title_de:'Rückzahlung',title_en:'Repayment',
+         content_de:'{{installments}} Raten à {{installment_amount}} EUR. Erste Rate: {{first_payment_date}}. Vorzeitige Rückzahlung: {{early_repayment}} (§ 489 BGB).',
+         content_en:'{{installments}} installments of {{installment_amount}} EUR. First: {{first_payment_date}}. Early repayment: {{early_repayment}} (§ 489 BGB).'},
+        {title_de:'Sicherheiten',title_en:'Collateral',
+         content_de:'{{collateral_description}}. Bewertung: {{collateral_value}} EUR. Versicherung der Sicherheiten: {{collateral_insurance}}.',
+         content_en:'{{collateral_description}}. Valuation: {{collateral_value}} EUR. Insurance of collateral: {{collateral_insurance}}.'},
+        {title_de:'Verzug & Kündigung',title_en:'Default & Termination',
+         content_de:'Verzugszins: {{default_interest}}% über Basiszinssatz (§ 288 BGB). Kündigung bei {{default_months}} Monaten Verzug (§ 498 BGB).',
+         content_en:'Default interest: {{default_interest}}% above base rate (§ 288 BGB). Termination after {{default_months}} months (§ 498 BGB).'},
+        {title_de:'Zweckbindung',title_en:'Purpose',
+         content_de:'Verwendungszweck: {{loan_purpose}}. Nicht: {{prohibited_use}}.',
+         content_en:'Purpose: {{loan_purpose}}. Not for: {{prohibited_use}}.'},
+        {title_de:'Vorfälligkeitsentschädigung',title_en:'Early Repayment Penalty',
+         content_de:'Berechnung nach § 502 BGB: {{prepayment_calc}}. Keine Vorfälligkeitsentschädigung bei Sondertilgungsrecht bis {{special_repayment}} EUR/Jahr.',
+         content_en:'Calculated per § 502 BGB: {{prepayment_calc}}. No penalty for special repayments up to {{special_repayment}} EUR/year.'},
+        {title_de:'Schlussbestimmungen',title_en:'Final Provisions',
+         content_de:'Gerichtsstand: {{court}}. Deutsches Recht. Ort: {{place}}, Datum: {{date}}.',
+         content_en:'Jurisdiction: {{court}}. German law. Place: {{place}}, Date: {{date}}.'},
+    ],
+    nda: [
+        {title_de:'Parteien',title_en:'Parties',
+         content_de:'Zwischen {{disclosing_name}}, {{disclosing_address}} (Offenlegende Partei) und {{receiving_name}}, {{receiving_address}} (Empfangende Partei) wird folgende Vertraulichkeitsvereinbarung geschlossen:',
+         content_en:'Between {{disclosing_name}}, {{disclosing_address}} (Disclosing Party) and {{receiving_name}}, {{receiving_address}} (Receiving Party) the following NDA is concluded:'},
+        {title_de:'Zweck',title_en:'Purpose',
+         content_de:'Offenlegung erfolgt zum Zweck: {{nda_purpose}}. Projekt: {{project_name}}.',
+         content_en:'Disclosure for purpose: {{nda_purpose}}. Project: {{project_name}}.'},
+        {title_de:'Vertrauliche Informationen',title_en:'Confidential Information',
+         content_de:'Umfasst: {{confidential_scope}}. Schriftlich als "VERTRAULICH" zu kennzeichnen. Mündlich: Bestätigung innerhalb {{oral_confirmation_days}} Tagen.',
+         content_en:'Includes: {{confidential_scope}}. To be marked "CONFIDENTIAL" in writing. Oral: confirmation within {{oral_confirmation_days}} days.'},
+        {title_de:'Pflichten',title_en:'Obligations',
+         content_de:'Geheimhaltung, keine Weitergabe an Dritte, Nutzung nur für {{nda_purpose}}. Zugang nur für Need-to-know-Personal. Kein Reverse Engineering.',
+         content_en:'Secrecy, no disclosure to third parties, use only for {{nda_purpose}}. Need-to-know access only. No reverse engineering.'},
+        {title_de:'Ausnahmen',title_en:'Exceptions',
+         content_de:'Gilt nicht für: öffentlich Bekanntes, unabhängig Entwickeltes, von Dritten rechtmäßig Erhaltenes, gesetzlich offenlegungspflichtige Informationen.',
+         content_en:'Excludes: publicly known, independently developed, lawfully received from third parties, legally required disclosure.'},
+        {title_de:'Dauer',title_en:'Duration',
+         content_de:'Geheimhaltungspflicht für {{nda_term}} Jahre nach Vertragsende. Rückgabe/Vernichtung auf Verlangen.',
+         content_en:'Confidentiality for {{nda_term}} years after contract end. Return/destruction upon request.'},
+        {title_de:'Vertragsstrafe',title_en:'Penalty',
+         content_de:'{{nda_penalty}} EUR pro Verstoß. Maximal {{nda_penalty_max}} EUR. Schadensersatzansprüche bleiben unberührt.',
+         content_en:'{{nda_penalty}} EUR per violation. Maximum {{nda_penalty_max}} EUR. Damages reserved.'},
+        {title_de:'Schlussbestimmungen',title_en:'Final Provisions',
+         content_de:'Gerichtsstand: {{court}}. Deutsches Recht. Ort: {{place}}, Datum: {{date}}.',
+         content_en:'Jurisdiction: {{court}}. German law. Place: {{place}}, Date: {{date}}.'},
+    ],
+    auftrag: [
+        {title_de:'Parteien',title_en:'Parties',
+         content_de:'Zwischen {{principal_name}}, {{principal_address}} (Auftraggeber) und {{agent_name}}, {{agent_address}} (Beauftragter) wird folgender Auftrag geschlossen:',
+         content_en:'Between {{principal_name}}, {{principal_address}} (Principal) and {{agent_name}}, {{agent_address}} (Agent) the following mandate is concluded:'},
+        {title_de:'Auftrag',title_en:'Mandate',
+         content_de:'{{mandate_description}}. Der Beauftragte nimmt den Auftrag an (§ 662 BGB).',
+         content_en:'{{mandate_description}}. The Agent accepts the mandate (§ 662 BGB).'},
+        {title_de:'Weisungsrecht',title_en:'Right of Instruction',
+         content_de:'Der Auftraggeber ist weisungsberechtigt (§ 665 BGB). Eigenständige Entscheidungen des Beauftragten nur bei {{agent_discretion}}.',
+         content_en:'The Principal has the right to instruct (§ 665 BGB). Agent discretion only for {{agent_discretion}}.'},
+        {title_de:'Pflichten des Beauftragten',title_en:'Agent Duties',
+         content_de:'Auskunfts- und Rechenschaftspflicht (§ 666 BGB). Sorgfaltspflicht. Keine Interessenkonflikte.',
+         content_en:'Duty to inform and account (§ 666 BGB). Duty of care. No conflicts of interest.'},
+        {title_de:'Vergütung & Aufwendungsersatz',title_en:'Remuneration & Expenses',
+         content_de:'{{mandate_fee}} EUR. Aufwendungsersatz nach § 670 BGB. Vorschuss: {{advance_payment}} EUR.',
+         content_en:'{{mandate_fee}} EUR. Expense reimbursement per § 670 BGB. Advance: {{advance_payment}} EUR.'},
+        {title_de:'Herausgabepflicht',title_en:'Obligation to Return',
+         content_de:'Der Beauftragte hat alles aus der Geschäftsbesorgung Erlangte herauszugeben (§ 667 BGB). Verzinsung: {{retained_interest}}%.',
+         content_en:'The Agent shall return everything obtained (§ 667 BGB). Interest on retained funds: {{retained_interest}}%.'},
+        {title_de:'Beendigung',title_en:'Termination',
+         content_de:'Jederzeit widerruflich/kündbar (§ 671 BGB). Kündigungsfrist: {{termination_notice}} Tage zur anderweitigen Vorsorge.',
+         content_en:'Revokable/terminable at any time (§ 671 BGB). Notice: {{termination_notice}} days for alternative arrangements.'},
+        {title_de:'Haftung',title_en:'Liability',
+         content_de:'Beauftragter haftet für Vorsatz und Fahrlässigkeit. Auftraggeber stellt frei von Ansprüchen Dritter (§ 670 BGB analog).',
+         content_en:'Agent liable for intent and negligence. Principal indemnifies against third-party claims (analogous § 670 BGB).'},
+        {title_de:'Schlussbestimmungen',title_en:'Final Provisions',
+         content_de:'Gerichtsstand: {{court}}. Deutsches Recht. Ort: {{place}}, Datum: {{date}}.',
+         content_en:'Jurisdiction: {{court}}. German law. Place: {{place}}, Date: {{date}}.'},
+    ],
+};
+
+// Current editor sections
+var editorSections = [];
+var sectionIdCounter = 0;
+
+function filterModules() {
+    var cat = document.getElementById('tmpl-category').value;
+    var list = document.getElementById('module-list');
+    var hint = document.getElementById('module-hint');
+    list.innerHTML = '';
+
+    if (!cat || !MODULES[cat]) {
+        hint.textContent = 'Bitte Kategorie wählen';
+        return;
+    }
+
+    hint.textContent = MODULES[cat].length + ' Module verfügbar. Auf den Editor ziehen.';
+    MODULES[cat].forEach(function(mod, i) {
+        var card = document.createElement('div');
+        card.className = 'border rounded-lg p-2 bg-gray-50 cursor-grab hover:shadow hover:border-brand-300 transition text-xs';
+        card.draggable = true;
+        card.id = 'module-' + i;
+        card.innerHTML = '<span class="font-medium text-brand-700">' + escHtml2(mod.title_de) + '</span>' +
+            '<p class="text-gray-400 mt-0.5 truncate">' + escHtml2(mod.content_de.substring(0, 50)) + '...</p>';
+        card.addEventListener('dragstart', function(e) {
+            e.dataTransfer.setData('text/plain', JSON.stringify({cat: cat, idx: i}));
+            card.classList.add('opacity-50');
+        });
+        card.addEventListener('dragend', function(e) { card.classList.remove('opacity-50'); });
+        list.appendChild(card);
+    });
+}
+
+function allowDrop(e) { e.preventDefault(); }
+
+function handleDrop(e) {
+    e.preventDefault();
+    document.getElementById('editor-placeholder').classList.add('hidden');
+    try {
+        var data = JSON.parse(e.dataTransfer.getData('text/plain'));
+        var mod = MODULES[data.cat][data.idx];
+        addEditorSection(mod);
+    } catch(ex) {}
+}
+
+function addEditorSection(mod) {
+    var sid = sectionIdCounter++;
+    editorSections.push({id: sid, title_de: mod.title_de, title_en: mod.title_en,
+                         content_de: mod.content_de, content_en: mod.content_en});
+
+    var html = '<div class="border rounded-lg p-3 bg-white" id="editor-sec-' + sid + '">' +
+        '<div class="flex items-center justify-between mb-2">' +
+            '<span class="text-xs font-medium text-brand-700">' + (editorSections.length) + '. ' +
+                escHtml2(mod.title_de) + '</span>' +
+            '<div class="flex gap-1">' +
+                '<button type="button" onclick="moveSection(' + sid + ',-1)" class="text-xs text-gray-400 hover:text-brand-600">▲</button>' +
+                '<button type="button" onclick="moveSection(' + sid + ',1)" class="text-xs text-gray-400 hover:text-brand-600">▼</button>' +
+                '<button type="button" onclick="removeSection(' + sid + ')" class="text-xs text-red-400 hover:text-red-600">✕</button>' +
+            '</div>' +
+        '</div>' +
+        '<textarea onchange="updateSectionContent(' + sid + ',this)" rows="3" ' +
+            'class="w-full border rounded px-2 py-1 text-xs font-mono focus:ring-1 focus:ring-brand-300 outline-none">' +
+            escHtml2(mod.content_de) + '</textarea>' +
+        '</div>';
+    document.getElementById('editor-sections').insertAdjacentHTML('beforeend', html);
+    updateTOC();
+    updateSaveButton();
+}
+
+function removeSection(sid) {
+    var el = document.getElementById('editor-sec-' + sid);
+    if (el) el.remove();
+    editorSections = editorSections.filter(function(s) { return s.id !== sid; });
+    renumberSections();
+    updateTOC();
+    updateSaveButton();
+    if (editorSections.length === 0) {
+        document.getElementById('editor-placeholder').classList.remove('hidden');
+    }
+}
+
+function moveSection(sid, dir) {
+    var idx = editorSections.findIndex(function(s) { return s.id === sid; });
+    if (idx < 0) return;
+    var newIdx = idx + dir;
+    if (newIdx < 0 || newIdx >= editorSections.length) return;
+    var tmp = editorSections[idx];
+    editorSections[idx] = editorSections[newIdx];
+    editorSections[newIdx] = tmp;
+    rebuildEditorHTML();
+    updateTOC();
+}
+
+function updateSectionContent(sid, textarea) {
+    var sec = editorSections.find(function(s) { return s.id === sid; });
+    if (sec) { sec.content_de = textarea.value; sec.content_en = textarea.value; }
+}
+
+function rebuildEditorHTML() {
+    var container = document.getElementById('editor-sections');
+    container.innerHTML = '';
+    editorSections.forEach(function(sec, i) {
+        var html = '<div class="border rounded-lg p-3 bg-white" id="editor-sec-' + sec.id + '">' +
+            '<div class="flex items-center justify-between mb-2">' +
+                '<span class="text-xs font-medium text-brand-700">' + (i + 1) + '. ' + escHtml2(sec.title_de) + '</span>' +
+                '<div class="flex gap-1">' +
+                    '<button type="button" onclick="moveSection(' + sec.id + ',-1)" class="text-xs text-gray-400 hover:text-brand-600">▲</button>' +
+                    '<button type="button" onclick="moveSection(' + sec.id + ',1)" class="text-xs text-gray-400 hover:text-brand-600">▼</button>' +
+                    '<button type="button" onclick="removeSection(' + sec.id + ')" class="text-xs text-red-400 hover:text-red-600">✕</button>' +
+                '</div>' +
+            '</div>' +
+            '<textarea onchange="updateSectionContent(' + sec.id + ',this)" rows="3" ' +
+                'class="w-full border rounded px-2 py-1 text-xs font-mono focus:ring-1 focus:ring-brand-300 outline-none">' +
+                escHtml2(sec.content_de) + '</textarea>' +
+            '</div>';
+        container.insertAdjacentHTML('beforeend', html);
+    });
+}
+
+function renumberSections() {
+    var container = document.getElementById('editor-sections');
+    var titles = container.querySelectorAll('.text-brand-700');
+    titles.forEach(function(el, i) {
+        var parts = el.textContent.split('. ');
+        if (parts.length > 1) {
+            el.textContent = (i + 1) + '. ' + parts.slice(1).join('. ');
+        }
+    });
+}
+
+function updateTOC() {
+    var toc = document.getElementById('toc-list');
+    if (editorSections.length === 0) {
+        toc.innerHTML = '<p class="italic">Noch keine Abschnitte</p>';
+        return;
+    }
+    var html = '<ol class="list-decimal list-inside space-y-1">';
+    editorSections.forEach(function(sec) {
+        html += '<li class="text-brand-700">' + escHtml2(sec.title_de) + '</li>';
+    });
+    html += '</ol>';
+    toc.innerHTML = html;
+}
+
+function updateSaveButton() {
+    var btn = document.getElementById('save-btn');
+    btn.disabled = (editorSections.length === 0 || !document.getElementById('tmpl-title-de').value.trim());
+}
+
+function showPreview() {
+    var modal = document.getElementById('preview-modal');
+    var content = document.getElementById('preview-content');
+    var cat = document.getElementById('tmpl-category');
+    var catName = cat.options[cat.selectedIndex].text;
+
+    var html = '<h1 class="text-xl font-bold text-brand-700">' + escHtml2(document.getElementById('tmpl-title-de').value || '(Titel)') + '</h1>';
+    html += '<p class="text-sm text-gray-400">' + escHtml2(catName) + '</p><hr class="my-2">';
+
+    editorSections.forEach(function(sec, i) {
+        html += '<div class="border rounded-lg p-3">';
+        html += '<h3 class="font-semibold text-brand-700 text-sm">§ ' + (i + 1) + ' ' + escHtml2(sec.title_de) + '</h3>';
+        html += '<p class="text-gray-700 mt-1 whitespace-pre-wrap">' + escHtml2(sec.content_de) + '</p>';
+        html += '</div>';
+    });
+
+    content.innerHTML = html;
+    modal.classList.remove('hidden');
+}
+
+function saveTemplate() {
+    if (editorSections.length === 0) return;
+    var titleDe = document.getElementById('tmpl-title-de').value.trim();
+    if (!titleDe) return;
+
+    var sections = [];
+    editorSections.forEach(function(sec) {
+        var contentDe = sec.content_de;
+        var contentEn = sec.content_en || contentDe;
+        var fields = [];
+        var seen = {};
+        var matches = (contentDe + contentEn).match(/\{\{(\w+)\}\}/g) || [];
+        matches.forEach(function(m) {
+            var key = m.replace(/[{}]/g, '');
+            if (!seen[key]) {
+                seen[key] = true;
+                fields.push({key: key, label_de: key, label_en: key, type: 'text', required: false});
+            }
+        });
+        sections.push({
+            title_de: sec.title_de,
+            title_en: sec.title_en,
+            content_de: contentDe,
+            content_en: contentEn,
+            fields: fields
+        });
+    });
+
+    document.getElementById('save-title-de').value = titleDe;
+    document.getElementById('save-title-en').value = document.getElementById('tmpl-title-en').value.trim();
+    document.getElementById('save-category-id').value = document.getElementById('tmpl-category').value === 'kaufvertrag' ? 1 :
+        document.getElementById('tmpl-category').value === 'mietvertrag' ? 2 :
+        document.getElementById('tmpl-category').value === 'dienstvertrag' ? 3 :
+        document.getElementById('tmpl-category').value === 'darlehensvertrag' ? 4 :
+        document.getElementById('tmpl-category').value === 'nda' ? 5 :
+        document.getElementById('tmpl-category').value === 'arbeitsvertrag' ? 6 :
+        document.getElementById('tmpl-category').value === 'auftrag' ? 7 : '';
+    document.getElementById('save-sections').value = JSON.stringify(sections);
+    document.getElementById('save-form').submit();
+}
+
+function escHtml2(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+// Enable save button when title changes
+document.getElementById('tmpl-title-de').addEventListener('input', updateSaveButton);
+</script>
+{% endblock %}

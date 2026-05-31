@@ -185,6 +185,37 @@ def update_template(id):
     return redirect(url_for('manage_templates'))
 
 
+@app.route('/templates/create', methods=['GET', 'POST'])
+def create_template_wizard():
+    """Wizard for creating new contract templates with drag-and-drop sections."""
+    categories = Category.query.order_by(Category.id).all()
+
+    if request.method == 'POST':
+        title_de = request.form.get('title_de', '').strip()
+        title_en = request.form.get('title_en', '').strip()
+        category_id = request.form.get('category_id', type=int)
+        sections_json = request.form.get('sections', '')
+
+        if title_de and category_id and sections_json:
+            try:
+                sections = json.loads(sections_json)
+                if isinstance(sections, list) and len(sections) > 0:
+                    template = Template(
+                        category_id=category_id,
+                        title_de=title_de,
+                        title_en=title_en or title_de,
+                        sections=sections,
+                    )
+                    db.session.add(template)
+                    db.session.commit()
+                    flash(t('upload_success'))
+                    return redirect(url_for('manage_templates'))
+            except json.JSONDecodeError:
+                flash('Ungültiges JSON-Format.')
+
+    return render_template('template_editor.html', categories=categories)
+
+
 # ═══════════════════════════════════════════════
 # REVIEW (Legal/Management)
 # ═══════════════════════════════════════════════
@@ -419,24 +450,45 @@ def parse_section_fields():
     i = 0
     while True:
         title_de = request.form.get(f'section_{i}_title_de', '').strip()
-        title_en = request.form.get(f'section_{i}_title_en', '').strip()
         content_de = request.form.get(f'section_{i}_content_de', '')
-        content_en = request.form.get(f'section_{i}_content_en', '')
         if not title_de and not content_de:
             break
-        # Extract {{placeholder}} fields from content
+
+        title_en = request.form.get(f'section_{i}_title_en', '').strip()
+        content_en = request.form.get(f'section_{i}_content_en', '')
+
+        # Parse field metadata from form
         fields = []
-        seen = set()
-        for match in re.findall(r'\{\{(\w+)\}\}', content_de + content_en):
-            if match not in seen:
-                seen.add(match)
-                fields.append({
-                    'key': match,
-                    'label_de': match,
-                    'label_en': match,
-                    'type': 'text',
-                    'required': False,
-                })
+        field_count = request.form.get(f'section_{i}_field_count', type=int) or 0
+        for fi in range(field_count):
+            key = request.form.get(f'section_{i}_field_{fi}_key', '').strip()
+            if not key:
+                continue
+            ftype = request.form.get(f'section_{i}_field_{fi}_type', 'text')
+            label_de = request.form.get(f'section_{i}_field_{fi}_label_de', '').strip() or key
+            label_en = request.form.get(f'section_{i}_field_{fi}_label_en', '').strip() or key
+            options_str = request.form.get(f'section_{i}_field_{fi}_options', '').strip()
+            options = [o.strip() for o in options_str.split(',') if o.strip()] if options_str else []
+            fields.append({
+                'key': key,
+                'type': ftype,
+                'label_de': label_de,
+                'label_en': label_en,
+                'options': options,
+                'required': False,
+            })
+
+        # If no explicit fields, auto-extract from content
+        if not fields:
+            seen = set()
+            for match in re.findall(r'\{\{(\w+)\}\}', content_de + content_en):
+                if match not in seen:
+                    seen.add(match)
+                    fields.append({
+                        'key': match, 'label_de': match, 'label_en': match,
+                        'type': 'text', 'required': False,
+                    })
+
         sections.append({
             'title_de': title_de,
             'title_en': title_en or title_de,

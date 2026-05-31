@@ -2,10 +2,16 @@
 {% block content %}
 <div class="flex items-center justify-between mb-6">
     <h1 class="text-2xl font-bold text-brand-700">{{ t('nav_templates') }}</h1>
-    <button onclick="showUploadModal()"
-            class="bg-brand-500 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-brand-700 transition">
-        + {{ t('btn_upload') }}
-    </button>
+    <div class="flex gap-2">
+        <a href="{{ url_for('create_template_wizard') }}"
+           class="bg-green-500 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-green-600 transition">
+            ✨ {{ t('btn_create_template') | default('Neue Vorlage erstellen') }}
+        </a>
+        <button onclick="showUploadModal()"
+                class="bg-brand-500 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-brand-700 transition">
+            + {{ t('btn_upload') }}
+        </button>
+    </div>
 </div>
 
 <div class="flex flex-wrap gap-2 mb-6">
@@ -242,6 +248,39 @@ function addSection(data) {
     var editor = getEditor();
     var idx = sectionCounter++;
     var sec = data || {title_de: '', title_en: '', content_de: '', content_en: '', fields: []};
+    var fields = sec.fields || [];
+    // Auto-extract fields from content if none defined
+    if (fields.length === 0 && sec.content_de) {
+        fields = extractFieldsFromContent(sec.content_de);
+    }
+
+    var fieldsHtml = '';
+    fields.forEach(function(f, fi) {
+        var isSelect = f.type === 'select';
+        var optionsStr = (f.options || []).join(', ');
+        fieldsHtml +=
+            '<div class="flex flex-wrap items-center gap-1 mb-1 text-xs" id="sec-' + idx + '-field-' + fi + '">' +
+                '<input name="section_' + idx + '_field_' + fi + '_key" value="' + escAttr(f.key || '') + '" placeholder="key" ' +
+                    'class="w-20 border rounded px-1 py-0.5 text-xs focus:ring-1 focus:ring-brand-300 outline-none">' +
+                '<select name="section_' + idx + '_field_' + fi + '_type" onchange="toggleFieldOptions(' + idx + ',' + fi + ',this.value)" ' +
+                    'class="border rounded px-1 py-0.5 text-xs focus:ring-1 focus:ring-brand-300 outline-none">' +
+                    '<option value="text"' + (f.type==='text'?' selected':'') + '>Text</option>' +
+                    '<option value="textarea"' + (f.type==='textarea'?' selected':'') + '>Textarea</option>' +
+                    '<option value="date"' + (f.type==='date'?' selected':'') + '>Datum</option>' +
+                    '<option value="select"' + (f.type==='select'?' selected':'') + '>Auswahl</option>' +
+                '</select>' +
+                '<input name="section_' + idx + '_field_' + fi + '_label_de" value="' + escAttr(f.label_de || '') + '" placeholder="Label DE" ' +
+                    'class="w-24 border rounded px-1 py-0.5 text-xs focus:ring-1 focus:ring-brand-300 outline-none">' +
+                '<input name="section_' + idx + '_field_' + fi + '_label_en" value="' + escAttr(f.label_en || '') + '" placeholder="Label EN" ' +
+                    'class="w-24 border rounded px-1 py-0.5 text-xs focus:ring-1 focus:ring-brand-300 outline-none">' +
+                '<span id="sec-' + idx + '-field-' + fi + '-options" style="display:' + (isSelect?'inline':'none') + '">' +
+                    '<input name="section_' + idx + '_field_' + fi + '_options" value="' + escAttr(optionsStr) + '" placeholder="Opt1, Opt2" ' +
+                        'class="w-32 border rounded px-1 py-0.5 text-xs focus:ring-1 focus:ring-brand-300 outline-none">' +
+                '</span>' +
+                '<button type="button" onclick="this.parentElement.remove()" class="text-red-400 hover:text-red-600 text-xs">✕</button>' +
+            '</div>';
+    });
+    fieldsHtml += '<input type="hidden" name="section_' + idx + '_field_count" value="' + fields.length + '" id="sec-' + idx + '-field-count">';
 
     var html = '<div class="border rounded-lg p-3 bg-gray-50" id="section-' + idx + '">' +
         '<div class="flex items-center justify-between mb-2">' +
@@ -261,8 +300,52 @@ function addSection(data) {
         '<textarea name="section_' + idx + '_content_en" rows="3" placeholder="Contract text (EN) with {{placeholders}}..." ' +
             'class="w-full border rounded px-2 py-1 text-xs font-mono focus:ring-1 focus:ring-brand-300 outline-none">' +
             escHtml(sec.content_en || '') + '</textarea>' +
+        '<details class="mt-2"><summary class="text-xs text-brand-600 cursor-pointer hover:text-brand-800">Felder (' + fields.length + ')</summary>' +
+            '<div class="mt-2 p-2 bg-white rounded border" id="sec-' + idx + '-fields">' + fieldsHtml + '</div>' +
+            '<button type="button" onclick="addFieldToSection(' + idx + ')" class="text-xs text-brand-500 hover:text-brand-700 mt-1">+ Feld hinzufügen</button>' +
+        '</details>' +
         '</div>';
     editor.insertAdjacentHTML('beforeend', html);
+}
+
+function addFieldToSection(sectionIdx) {
+    var container = document.getElementById('sec-' + sectionIdx + '-fields');
+    var countEl = document.getElementById('sec-' + sectionIdx + '-field-count');
+    var fi = parseInt(countEl.value);
+    // Insert before the + button
+    var html =
+        '<div class="flex flex-wrap items-center gap-1 mb-1 text-xs" id="sec-' + sectionIdx + '-field-' + fi + '">' +
+            '<input name="section_' + sectionIdx + '_field_' + fi + '_key" value="" placeholder="key" ' +
+                'class="w-20 border rounded px-1 py-0.5 text-xs focus:ring-1 focus:ring-brand-300 outline-none">' +
+            '<select name="section_' + sectionIdx + '_field_' + fi + '_type" onchange="toggleFieldOptions(' + sectionIdx + ',' + fi + ',this.value)" ' +
+                'class="border rounded px-1 py-0.5 text-xs focus:ring-1 focus:ring-brand-300 outline-none">' +
+                '<option value="text">Text</option><option value="textarea">Textarea</option>' +
+                '<option value="date">Datum</option><option value="select">Auswahl</option></select>' +
+            '<input name="section_' + sectionIdx + '_field_' + fi + '_label_de" value="" placeholder="Label DE" ' +
+                'class="w-24 border rounded px-1 py-0.5 text-xs focus:ring-1 focus:ring-brand-300 outline-none">' +
+            '<input name="section_' + sectionIdx + '_field_' + fi + '_label_en" value="" placeholder="Label EN" ' +
+                'class="w-24 border rounded px-1 py-0.5 text-xs focus:ring-1 focus:ring-brand-300 outline-none">' +
+            '<span id="sec-' + sectionIdx + '-field-' + fi + '-options" style="display:none">' +
+                '<input name="section_' + sectionIdx + '_field_' + fi + '_options" value="" placeholder="Opt1, Opt2" ' +
+                    'class="w-32 border rounded px-1 py-0.5 text-xs focus:ring-1 focus:ring-brand-300 outline-none">' +
+            '</span>' +
+            '<button type="button" onclick="this.parentElement.remove()" class="text-red-400 hover:text-red-600 text-xs">✕</button>' +
+        '</div>';
+    // Insert before the hidden count input
+    var countInput = document.getElementById('sec-' + sectionIdx + '-field-count');
+    countInput.parentNode.insertBefore(createElementFromHTML(html), countInput);
+    countEl.value = fi + 1;
+}
+
+function createElementFromHTML(html) {
+    var div = document.createElement('div');
+    div.innerHTML = html.trim();
+    return div.firstChild;
+}
+
+function toggleFieldOptions(secIdx, fieldIdx, type) {
+    var opts = document.getElementById('sec-' + secIdx + '-field-' + fieldIdx + '-options');
+    if (opts) opts.style.display = (type === 'select') ? 'inline' : 'none';
 }
 
 function buildSectionsJSON() {
@@ -270,23 +353,43 @@ function buildSectionsJSON() {
     for (var i = 0; i < sectionCounter; i++) {
         var titleDe = document.getElementsByName('section_' + i + '_title_de')[0];
         if (!titleDe) continue;
+        var fields = [];
+        var countEl = document.getElementById('sec-' + i + '-field-count');
+        var fc = countEl ? parseInt(countEl.value) : 0;
+        for (var fi = 0; fi < fc; fi++) {
+            var keyEl = document.getElementsByName('section_' + i + '_field_' + fi + '_key')[0];
+            if (!keyEl) continue;
+            var typeEl = document.getElementsByName('section_' + i + '_field_' + fi + '_type')[0];
+            var optsEl = document.getElementsByName('section_' + i + '_field_' + fi + '_options')[0];
+            var options = [];
+            if (optsEl && optsEl.value.trim()) {
+                options = optsEl.value.split(',').map(function(s) { return s.trim(); }).filter(Boolean);
+            }
+            fields.push({
+                key: keyEl.value,
+                type: typeEl ? typeEl.value : 'text',
+                label_de: (document.getElementsByName('section_' + i + '_field_' + fi + '_label_de')[0] || {}).value || keyEl.value,
+                label_en: (document.getElementsByName('section_' + i + '_field_' + fi + '_label_en')[0] || {}).value || keyEl.value,
+                options: options,
+                required: false
+            });
+        }
         var sec = {
             title_de: titleDe.value,
-            title_en: document.getElementsByName('section_' + i + '_title_en')[0].value,
-            content_de: document.getElementsByName('section_' + i + '_content_de')[0].value,
-            content_en: document.getElementsByName('section_' + i + '_content_en')[0].value,
-            fields: extractFields(document.getElementsByName('section_' + i + '_content_de')[0].value)
+            title_en: (document.getElementsByName('section_' + i + '_title_en')[0] || {}).value || titleDe.value,
+            content_de: (document.getElementsByName('section_' + i + '_content_de')[0] || {}).value || '',
+            content_en: (document.getElementsByName('section_' + i + '_content_en')[0] || {}).value || '',
+            fields: fields
         };
         sections.push(sec);
     }
     document.getElementById('edit-sections-hidden').value = JSON.stringify(sections);
 }
 
-function extractFields(content) {
-    // Extract {{placeholder}} names from content text
+function extractFieldsFromContent(content) {
     var fields = [];
     var seen = {};
-    var matches = content.match(/\{\{(\w+)\}\}/g);
+    var matches = (content || '').match(/\{\{(\w+)\}\}/g);
     if (matches) {
         matches.forEach(function(m) {
             var key = m.replace(/[{}]/g, '');
