@@ -28,48 +28,35 @@
         </div>
     </div>
 
+    <!-- Contract Content -->
     <div class="space-y-4 mt-6">
-        {% for section in submission.template.sections %}
-        {% set sec_data = submission.filled_data.sections[loop.index0] if submission.filled_data and submission.filled_data.get('sections') and loop.index0 < submission.filled_data.sections|length else None %}
-        {% set is_modified = sec_data and sec_data.get('modified') == True %}
-
-        <div class="border rounded-lg p-4 {% if is_modified %}border-red-300 bg-red-50{% endif %}">
+        {% for rs in rendered_sections %}
+        <div class="border rounded-lg p-4 {% if rs.is_modified %}border-red-300 bg-red-50{% endif %}">
             <div class="flex items-center gap-2 mb-2">
                 <span class="text-brand-300 text-sm">{{ loop.index }}.</span>
                 <h3 class="font-semibold text-brand-700 text-sm">
-                    {% if current_lang() == 'en' %}{{ section.title_en }}{% else %}{{ section.title_de }}{% endif %}
+                    {% if current_lang() == 'en' %}{{ rs.title_en }}{% else %}{{ rs.title_de }}{% endif %}
                 </h3>
-                {% if is_modified %}
+                {% if rs.is_modified %}
                 <span class="bg-red-500 text-white text-xs px-2 py-0.5 rounded-full font-bold">{{ t('modified_warning') }}</span>
                 {% endif %}
             </div>
 
-            {% if is_modified %}
+            {% if rs.is_modified %}
             <div class="border-2 border-red-400 bg-white rounded-lg p-3">
-                <p class="text-sm text-gray-800 whitespace-pre-wrap">{{ sec_data.get('content', '') }}</p>
+                <p class="text-sm text-gray-800 whitespace-pre-wrap">{{ rs.rendered_html }}</p>
             </div>
             <p class="text-xs text-red-500 mt-1">
-                Original: {{ section.content_de if current_lang() == 'de' else section.content_en }}
+                Original: {{ rs.original }}
             </p>
             {% else %}
-            <p class="text-sm text-gray-700 whitespace-pre-wrap">
-                {% set content = section.content_de if current_lang() == 'de' else section.content_en %}
-                {% if sec_data and sec_data.get('fields') %}
-                    {% set rendered = content %}
-                    {% for key, value in sec_data.fields.items() %}
-                        {% set placeholder = '{{' + key + '}}' %}
-                        {% set rendered = rendered | replace(placeholder, '<span class="bg-blue-100 text-blue-800 px-1 rounded font-medium">' + (value or '___') + '</span>') %}
-                    {% endfor %}
-                    {{ rendered | safe }}
-                {% else %}
-                    {{ content }}
-                {% endif %}
-            </p>
+            <p class="text-sm text-gray-700 whitespace-pre-wrap">{{ rs.rendered_html | safe }}</p>
             {% endif %}
         </div>
         {% endfor %}
     </div>
 
+    <!-- Review Actions -->
     {% if submission.status == 'pending' %}
     <div class="mt-8 border-t pt-6">
         <form method="POST" class="space-y-4">

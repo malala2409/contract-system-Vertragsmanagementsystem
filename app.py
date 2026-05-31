@@ -206,13 +206,55 @@ def review_detail(id):
         flash(t('review_success'))
         return redirect(url_for('review_list'))
 
-    return render_template('review_detail.html', submission=submission)
+    # Pre-render sections with filled values for the template
+    lang = session.get('lang', 'de')
+    rendered_sections = render_submission_sections(submission, lang)
+    return render_template('review_detail.html', submission=submission,
+                           rendered_sections=rendered_sections)
 
 
 # ── Helpers ──
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+def render_submission_sections(submission, lang):
+    """Build a list of dicts for the template: each section with pre-rendered HTML."""
+    result = []
+    template = submission.template
+    filled_data = submission.filled_data or {}
+    sections_data = filled_data.get('sections', [])
+
+    for i, section in enumerate(template.sections):
+        sec_data = sections_data[i] if i < len(sections_data) else None
+        is_modified = sec_data and sec_data.get('modified') == True if sec_data else False
+        content_template = section['content_de'] if lang == 'de' else section['content_en']
+
+        if is_modified:
+            rendered_html = sec_data.get('content', '')
+            original = content_template
+        else:
+            rendered_html = content_template
+            if sec_data and sec_data.get('fields'):
+                for key, value in sec_data['fields'].items():
+                    placeholder = '{{' + key + '}}'
+                    fill = value or '___'
+                    rendered_html = rendered_html.replace(
+                        placeholder,
+                        '<span class="bg-blue-100 text-blue-800 px-1 rounded font-medium">' + fill + '</span>'
+                    )
+            original = ''
+
+        result.append({
+            'title_de': section['title_de'],
+            'title_en': section['title_en'],
+            'is_modified': is_modified,
+            'rendered_html': rendered_html,
+            'original': original,
+        })
+
+    return result
 
 
 if __name__ == '__main__':
