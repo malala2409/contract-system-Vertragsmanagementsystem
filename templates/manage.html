@@ -51,10 +51,6 @@
                     class="bg-amber-100 text-amber-700 px-3 py-2 rounded-lg text-sm font-medium hover:bg-amber-200 transition">
                 ✏️ {{ t('btn_edit_template') }}
             </button>
-            <a href="{{ url_for('fill_contract', id=tmpl.id) }}"
-               class="bg-green-500 text-white px-3 py-2 rounded-lg text-sm font-medium hover:bg-green-600 transition">
-                📝 {{ t('btn_fill') }}
-            </a>
             {% if tmpl.file_path %}
             <a href="{{ url_for('download_template', id=tmpl.id) }}"
                class="bg-brand-500 text-white px-3 py-2 rounded-lg text-sm font-medium hover:bg-brand-700 transition">
@@ -131,40 +127,49 @@
 
 <!-- ═══════════════ EDIT MODAL ═══════════════ -->
 <div id="edit-modal" class="hidden fixed inset-0 bg-black/40 flex items-center justify-center z-50 overflow-y-auto py-8">
-    <div class="bg-white rounded-xl shadow-2xl p-6 w-full max-w-lg mx-4 my-auto">
+    <div class="bg-white rounded-xl shadow-2xl p-6 w-full max-w-2xl mx-4 my-auto" style="max-height:90vh;overflow-y:auto">
         <div class="flex items-center justify-between mb-4">
             <h2 class="text-lg font-bold text-brand-700">{{ t('btn_edit_template') }}</h2>
             <button onclick="document.getElementById('edit-modal').classList.add('hidden')"
                     class="text-gray-400 hover:text-gray-600 text-xl">&times;</button>
         </div>
-        <form id="edit-form" method="POST" enctype="multipart/form-data" class="space-y-4">
+        <form id="edit-form" method="POST" enctype="multipart/form-data" onsubmit="buildSectionsJSON()" class="space-y-4">
             <div class="grid grid-cols-2 gap-3">
                 <div>
                     <label class="block text-xs font-medium text-gray-500 mb-1">Titel (DE)</label>
                     <input type="text" name="title_de" id="edit-title-de" required
-                           class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-brand-300 focus:border-brand-500 outline-none">
+                           class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-brand-300 outline-none">
                 </div>
                 <div>
                     <label class="block text-xs font-medium text-gray-500 mb-1">Title (EN)</label>
                     <input type="text" name="title_en" id="edit-title-en"
-                           class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-brand-300 focus:border-brand-500 outline-none">
+                           class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-brand-300 outline-none">
                 </div>
             </div>
             <div>
                 <label class="block text-xs font-medium text-gray-500 mb-1">{{ t('label_category') }}</label>
                 <select name="category_id" id="edit-category" required
-                        class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-brand-300 focus:border-brand-500 outline-none">
+                        class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-brand-300 outline-none">
                     {% for cat in categories %}
                     <option value="{{ cat.id }}">{{ cat.name_de }} ({{ cat.name_en }})</option>
                     {% endfor %}
                 </select>
             </div>
+
+            <!-- Section Editor -->
             <div>
-                <label class="block text-xs font-medium text-gray-500 mb-1">{{ t('label_sections_json') }}</label>
-                <textarea name="sections" id="edit-sections" rows="8"
-                          class="w-full border rounded-lg px-3 py-2 text-xs font-mono focus:ring-2 focus:ring-brand-300 focus:border-brand-500 outline-none"></textarea>
-                <p class="text-xs text-gray-400 mt-1">JSON-Format. Leer lassen, um Abschnitte nicht zu ändern.</p>
+                <div class="flex items-center justify-between mb-2">
+                    <label class="text-xs font-medium text-gray-500">Abschnitte / Sections</label>
+                    <button type="button" onclick="addSection()"
+                            class="text-xs bg-brand-100 text-brand-700 px-2 py-1 rounded hover:bg-brand-200 transition">
+                        + Abschnitt
+                    </button>
+                </div>
+                <div id="sections-editor" class="space-y-3 max-h-[50vh] overflow-y-auto"></div>
             </div>
+
+            <input type="hidden" name="sections" id="edit-sections-hidden">
+
             <div>
                 <label class="block text-xs font-medium text-gray-500 mb-1">Neue Datei (ersetzt alte)</label>
                 <input type="file" name="file" accept=".docx,.doc,.pdf,.json"
@@ -203,8 +208,9 @@
 </div>
 
 <script>
+var sectionCounter = 0;
+
 function showUploadModal() {
-    // Reset form
     document.querySelector('#upload-modal form').reset();
     document.getElementById('upload-modal').classList.remove('hidden');
 }
@@ -213,10 +219,83 @@ function showEditModal(id, tmpl) {
     document.getElementById('edit-title-de').value = tmpl.title_de || '';
     document.getElementById('edit-title-en').value = tmpl.title_en || '';
     document.getElementById('edit-category').value = tmpl.category_id || '';
-    document.getElementById('edit-sections').value = JSON.stringify(tmpl.sections || [], null, 2);
     document.getElementById('edit-form').action = '/templates/' + id + '/update';
+
+    // Build visual section editor
+    var editor = document.getElementById('sections-editor');
+    editor.innerHTML = '';
+    sectionCounter = 0;
+    var sections = tmpl.sections || [];
+    sections.forEach(function(sec) {
+        addSection(sec);
+    });
+    if (sections.length === 0) addSection();
+
     document.getElementById('edit-modal').classList.remove('hidden');
 }
+
+function addSection(data) {
+    var idx = sectionCounter++;
+    var sec = data || {title_de: '', title_en: '', content_de: '', content_en: '', fields: []};
+
+    var html = '<div class="border rounded-lg p-3 bg-gray-50" id="section-' + idx + '">' +
+        '<div class="flex items-center justify-between mb-2">' +
+            '<span class="text-xs font-medium text-brand-700">Abschnitt ' + (idx + 1) + '</span>' +
+            '<button type="button" onclick="document.getElementById(\'section-' + idx + '\').remove()" ' +
+                'class="text-xs text-red-400 hover:text-red-600">✕ Entfernen</button>' +
+        '</div>' +
+        '<div class="grid grid-cols-2 gap-2 mb-2">' +
+            '<input name="section_' + idx + '_title_de" value="' + escAttr(sec.title_de) + '" placeholder="Titel (DE)" ' +
+                'class="w-full border rounded px-2 py-1 text-xs focus:ring-1 focus:ring-brand-300 outline-none">' +
+            '<input name="section_' + idx + '_title_en" value="' + escAttr(sec.title_en) + '" placeholder="Title (EN)" ' +
+                'class="w-full border rounded px-2 py-1 text-xs focus:ring-1 focus:ring-brand-300 outline-none">' +
+        '</div>' +
+        '<textarea name="section_' + idx + '_content_de" rows="3" placeholder="Vertragstext (DE) mit {{platzhaltern}}..." ' +
+            'class="w-full border rounded px-2 py-1 text-xs font-mono focus:ring-1 focus:ring-brand-300 outline-none mb-1">' +
+            escHtml(sec.content_de || '') + '</textarea>' +
+        '<textarea name="section_' + idx + '_content_en" rows="3" placeholder="Contract text (EN) with {{placeholders}}..." ' +
+            'class="w-full border rounded px-2 py-1 text-xs font-mono focus:ring-1 focus:ring-brand-300 outline-none">' +
+            escHtml(sec.content_en || '') + '</textarea>' +
+        '</div>';
+    editor.insertAdjacentHTML('beforeend', html);
+}
+
+function buildSectionsJSON() {
+    var sections = [];
+    for (var i = 0; i < sectionCounter; i++) {
+        var titleDe = document.getElementsByName('section_' + i + '_title_de')[0];
+        if (!titleDe) continue;
+        var sec = {
+            title_de: titleDe.value,
+            title_en: document.getElementsByName('section_' + i + '_title_en')[0].value,
+            content_de: document.getElementsByName('section_' + i + '_content_de')[0].value,
+            content_en: document.getElementsByName('section_' + i + '_content_en')[0].value,
+            fields: extractFields(document.getElementsByName('section_' + i + '_content_de')[0].value)
+        };
+        sections.push(sec);
+    }
+    document.getElementById('edit-sections-hidden').value = JSON.stringify(sections);
+}
+
+function extractFields(content) {
+    // Extract {{placeholder}} names from content text
+    var fields = [];
+    var seen = {};
+    var matches = content.match(/\{\{(\w+)\}\}/g);
+    if (matches) {
+        matches.forEach(function(m) {
+            var key = m.replace(/[{}]/g, '');
+            if (!seen[key]) {
+                seen[key] = true;
+                fields.push({key: key, label_de: key, label_en: key, type: 'text', required: false});
+            }
+        });
+    }
+    return fields;
+}
+
+function escAttr(s) { return (s || '').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function escHtml(s) { return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
 function showDeleteModal(id, title) {
     document.getElementById('delete-modal-title').textContent = title;
@@ -226,7 +305,7 @@ function showDeleteModal(id, title) {
     document.getElementById('delete-password').focus();
 }
 
-// Close modals on Escape key
+// Close modals on Escape
 document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') {
         document.getElementById('upload-modal').classList.add('hidden');

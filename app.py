@@ -155,13 +155,20 @@ def update_template(id):
     if category_id:
         template.category_id = category_id
 
+    # Parse sections from either JSON or form fields
+    sections = None
     if sections_json:
         try:
             sections = json.loads(sections_json)
-            if isinstance(sections, list) and len(sections) > 0:
-                template.sections = sections
         except json.JSONDecodeError:
-            pass  # keep old sections if JSON is invalid
+            pass
+
+    # If no JSON, try the visual editor form fields
+    if not sections:
+        sections = parse_section_fields()
+
+    if sections and isinstance(sections, list) and len(sections) > 0:
+        template.sections = sections
 
     if file and file.filename and allowed_file(file.filename):
         # Remove old file if exists
@@ -404,6 +411,41 @@ def fill_contract(id):
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+def parse_section_fields():
+    """Parse section data from visual editor form fields (section_N_title_de etc.)."""
+    sections = []
+    i = 0
+    while True:
+        title_de = request.form.get(f'section_{i}_title_de', '').strip()
+        title_en = request.form.get(f'section_{i}_title_en', '').strip()
+        content_de = request.form.get(f'section_{i}_content_de', '')
+        content_en = request.form.get(f'section_{i}_content_en', '')
+        if not title_de and not content_de:
+            break
+        # Extract {{placeholder}} fields from content
+        fields = []
+        seen = set()
+        for match in re.findall(r'\{\{(\w+)\}\}', content_de + content_en):
+            if match not in seen:
+                seen.add(match)
+                fields.append({
+                    'key': match,
+                    'label_de': match,
+                    'label_en': match,
+                    'type': 'text',
+                    'required': False,
+                })
+        sections.append({
+            'title_de': title_de,
+            'title_en': title_en or title_de,
+            'content_de': content_de,
+            'content_en': content_en or content_de,
+            'fields': fields,
+        })
+        i += 1
+    return sections if sections else None
 
 
 def build_filled_data(template):
