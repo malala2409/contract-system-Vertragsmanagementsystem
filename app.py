@@ -312,13 +312,11 @@ def sales_edit(sub_id):
     template = submission.template
 
     if request.method == 'POST':
-        # Resubmit with updated data
+        # Resubmit with updated data (keep reviewer comment visible)
         filled_data = build_filled_data(template)
         submission.filled_data = filled_data
         submission.status = 'pending'
-        submission.review_comment = None
         submission.submitted_at = datetime.now(timezone.utc)
-        submission.reviewed_at = None
         db.session.commit()
         flash(t('submit_success'))
         return redirect(url_for('sales_home'))
