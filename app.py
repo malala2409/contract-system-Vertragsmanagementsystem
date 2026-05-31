@@ -179,11 +179,16 @@ def review_detail(id):
 # SALESPERSON PORTAL
 # ═══════════════════════════════════════════════
 
-@app.route('/sales', methods=['GET', 'POST'])
+@app.route('/sales', methods=['GET', 'POST'], strict_slashes=False)
 def sales_home():
     """Salesperson dashboard: set name, browse templates, view own submissions."""
-    if request.method == 'POST' and request.form.get('submitter_name'):
-        session['submitter_name'] = request.form.get('submitter_name', '').strip()
+    if request.method == 'POST':
+        if request.form.get('submitter_name'):
+            session['submitter_name'] = request.form.get('submitter_name', '').strip()
+            return redirect(url_for('sales_home'))
+        elif request.form.get('logout'):
+            session.pop('submitter_name', None)
+            return redirect(url_for('sales_home'))
 
     submitter = session.get('submitter_name', '')
     categories = Category.query.order_by(Category.id).all()

@@ -19,8 +19,10 @@
 {% else %}
 <div class="flex items-center justify-between mb-6">
     <p class="text-sm text-gray-600">{{ t('sales_logged_in') }}: <span class="font-bold text-brand-700">{{ submitter }}</span></p>
-    <a href="{{ url_for('sales_home') }}" onclick="fetch('/sales',{method:'POST',body:new URLSearchParams({submitter_name:''}),headers:{'Content-Type':'application/x-www-form-urlencoded'}}).then(()=>location.reload())"
-       class="text-xs text-red-400 hover:text-red-600">{{ t('sales_logout') }}</a>
+    <form method="POST" class="inline" onsubmit="return confirm('{{ t('sales_logout') }}?')">
+        <input type="hidden" name="logout" value="1">
+        <button type="submit" class="text-xs text-red-400 hover:text-red-600">{{ t('sales_logout') }}</button>
+    </form>
 </div>
 {% endif %}
 
