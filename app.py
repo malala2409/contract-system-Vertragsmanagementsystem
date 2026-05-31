@@ -241,9 +241,8 @@ def review_detail(id):
         comment = request.form.get('comment', '')
         now = datetime.now(timezone.utc)
 
-        # Initialize review_notes if None
-        if submission.review_notes is None:
-            submission.review_notes = []
+        # Initialize review_notes if None (use a copy to trigger SQLAlchemy change tracking)
+        notes = list(submission.review_notes or [])
 
         if action == 'approve':
             submission.status = 'approved'
@@ -263,7 +262,8 @@ def review_detail(id):
                 'comment': comment,
                 'timestamp': now.strftime('%Y-%m-%d %H:%M'),
             }
-            submission.review_notes.append(note)
+            notes.append(note)
+            submission.review_notes = notes  # Reassign to trigger change tracking
             if comment:
                 submission.review_comment = comment
 
@@ -409,6 +409,7 @@ def sales_edit(sub_id):
 
     return render_template('fill.html', template=template,
                            existing_data=submission.filled_data,
+                           submission=submission,
                            back_url=url_for('sales_home'),
                            submit_label=t('btn_submit'),
                            form_action=url_for('sales_edit', sub_id=sub_id))

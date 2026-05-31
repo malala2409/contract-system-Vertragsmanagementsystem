@@ -7,7 +7,37 @@
 <h1 class="text-2xl font-bold text-brand-700 mb-1">
     {% if current_lang() == 'en' %}{{ template.title_en }}{% else %}{{ template.title_de }}{% endif %}
 </h1>
-<p class="text-sm text-gray-400 mb-6">{{ template.category.name_de }} / {{ template.category.name_en }}</p>
+<p class="text-sm text-gray-400 mb-3">{{ template.category.name_de }} / {{ template.category.name_en }}</p>
+
+<!-- Reviewer feedback (visible when editing a rejected submission) -->
+{% if submission and submission.review_notes and (submission.review_notes | length) > 0 %}
+<div class="bg-red-50 border border-red-200 rounded-xl p-4 mb-4">
+    <h3 class="text-sm font-bold text-red-700 mb-2">📋 {{ t('review_history') }}</h3>
+    <div class="space-y-1.5 max-h-40 overflow-y-auto">
+        {% for note in submission.review_notes | reverse %}
+        <div class="flex items-start gap-2 text-xs">
+            <span class="text-gray-400 flex-shrink-0">{{ note.timestamp }}</span>
+            {% if note.action == 'approved' %}
+            <span class="text-green-600 font-medium">✅ {{ t('status_approved') }}</span>
+            {% elif note.action == 'rejected' %}
+            <span class="text-red-600 font-medium">✗ {{ t('status_rejected') }}</span>
+            {% elif note.action == 'pending' %}
+            <span class="text-yellow-600 font-medium">↩ {{ t('status_pending') }}</span>
+            {% else %}
+            <span class="text-gray-500 font-medium">💬 Notiz</span>
+            {% endif %}
+            {% if note.comment %}
+            <span class="text-gray-600">— {{ note.comment }}</span>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% elif submission and submission.review_comment %}
+<div class="bg-red-50 border border-red-200 rounded-xl p-3 mb-4">
+    <p class="text-xs text-red-600"><strong>{{ t('label_reviewer_note') }}:</strong> {{ submission.review_comment }}</p>
+</div>
+{% endif %}
 
 <form method="POST" id="contract-form" action="{{ form_action | default(url_for('fill_contract', id=template.id)) }}">
     <div class="grid lg:grid-cols-2 gap-6">
