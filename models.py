@@ -40,6 +40,7 @@ class Submission(db.Model):
     template_id = db.Column(db.Integer, db.ForeignKey('templates.id'), nullable=False)
     filled_data = db.Column(db.JSON, nullable=False)
     status = db.Column(db.String(20), nullable=False, default='pending')
+    submitter_name = db.Column(db.String(100), nullable=True)
     review_comment = db.Column(db.Text, nullable=True)
     submitted_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
     reviewed_at = db.Column(db.DateTime, nullable=True)

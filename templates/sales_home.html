@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="text-2xl font-bold text-brand-700 mb-2">{{ t('sales_title') }}</h1>
+<p class="text-sm text-gray-400 mb-6">{{ t('sales_subtitle') }}</p>
+
+<!-- Name Input (if not set) -->
+{% if not submitter %}
+<div class="bg-yellow-50 border border-yellow-200 rounded-xl p-6 mb-8 max-w-md mx-auto text-center">
+    <p class="text-sm text-yellow-700 mb-3 font-medium">{{ t('sales_enter_name') }}</p>
+    <form method="POST" class="flex gap-2 justify-center">
+        <input type="text" name="submitter_name" required
+               class="border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-brand-300 outline-none"
+               placeholder="{{ t('sales_name_placeholder') }}" autofocus>
+        <button type="submit" class="bg-brand-500 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-brand-700">
+            {{ t('btn_enter') }}
+        </button>
+    </form>
+</div>
+{% else %}
+<div class="flex items-center justify-between mb-6">
+    <p class="text-sm text-gray-600">{{ t('sales_logged_in') }}: <span class="font-bold text-brand-700">{{ submitter }}</span></p>
+    <a href="{{ url_for('sales_home') }}" onclick="fetch('/sales',{method:'POST',body:new URLSearchParams({submitter_name:''}),headers:{'Content-Type':'application/x-www-form-urlencoded'}}).then(()=>location.reload())"
+       class="text-xs text-red-400 hover:text-red-600">{{ t('sales_logout') }}</a>
+</div>
+{% endif %}
+
+{% if submitter %}
+<!-- Template Selection (read-only, no upload/delete) -->
+<h2 class="text-lg font-semibold text-brand-700 mb-3">{{ t('sales_select_template') }}</h2>
+<div class="grid md:grid-cols-2 gap-3 mb-8">
+    {% for tmpl in templates %}
+    <a href="{{ url_for('sales_fill', id=tmpl.id) }}"
+       class="flex items-center gap-3 bg-white rounded-lg border p-3 hover:shadow hover:border-brand-300 transition">
+        <span class="text-2xl">📄</span>
+        <div class="flex-1">
+            <div class="font-medium text-brand-700 text-sm">
+                {% if current_lang() == 'en' %}{{ tmpl.title_en }}{% else %}{{ tmpl.title_de }}{% endif %}
+            </div>
+            <div class="text-xs text-gray-400">{{ tmpl.category.name_de }}</div>
+        </div>
+        <span class="text-brand-400">→</span>
+    </a>
+    {% endfor %}
+</div>
+
+<!-- My Submissions -->
+<h2 class="text-lg font-semibold text-brand-700 mb-3">{{ t('sales_my_contracts') }}</h2>
+{% if my_submissions %}
+<div class="bg-white rounded-xl shadow-sm border overflow-hidden">
+    <table class="w-full text-sm">
+        <thead>
+            <tr class="bg-gray-50 text-left text-gray-500 text-xs uppercase tracking-wider">
+                <th class="px-4 py-3">#</th>
+                <th class="px-4 py-3">Template</th>
+                <th class="px-4 py-3">{{ t('label_submitted') }}</th>
+                <th class="px-4 py-3">Status</th>
+                <th class="px-4 py-3">{{ t('label_comment') }}</th>
+                <th class="px-4 py-3"></th>
+            </tr>
+        </thead>
+        <tbody class="divide-y">
+            {% for sub in my_submissions %}
+            <tr class="hover:bg-gray-50 transition">
+                <td class="px-4 py-3 text-gray-400">{{ sub.id }}</td>
+                <td class="px-4 py-3 font-medium text-brand-700">
+                    {% if current_lang() == 'en' %}{{ sub.template.title_en }}{% else %}{{ sub.template.title_de }}{% endif %}
+                </td>
+                <td class="px-4 py-3 text-xs text-gray-500">
+                    {{ sub.submitted_at.strftime('%Y-%m-%d %H:%M') if sub.submitted_at else '—' }}
+                </td>
+                <td class="px-4 py-3">
+                    {% if sub.status == 'pending' %}
+                    <span class="bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded-full text-xs font-medium">🟡 {{ t('status_pending') }}</span>
+                    {% elif sub.status == 'approved' %}
+                    <span class="bg-green-100 text-green-700 px-2 py-0.5 rounded-full text-xs font-medium">🟢 {{ t('status_approved') }}</span>
+                    {% elif sub.status == 'rejected' %}
+                    <span class="bg-red-100 text-red-700 px-2 py-0.5 rounded-full text-xs font-medium">🔴 {{ t('status_rejected') }}</span>
+                    {% endif %}
+                </td>
+                <td class="px-4 py-3 text-xs text-gray-400 max-w-[150px] truncate">
+                    {{ sub.review_comment or '—' }}
+                </td>
+                <td class="px-4 py-3 text-right">
+                    {% if sub.status == 'rejected' %}
+                    <a href="{{ url_for('sales_edit', sub_id=sub.id) }}"
+                       class="text-orange-500 hover:text-orange-700 font-medium text-xs">✏️ {{ t('btn_edit') }}</a>
+                    {% else %}
+                    <a href="{{ url_for('sales_view', sub_id=sub.id) }}"
+                       class="text-brand-500 hover:text-brand-700 font-medium text-xs">{{ t('btn_view') }}</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="text-center py-12 text-gray-400">
+    <p class="text-4xl mb-3">📋</p>
+    <p class="text-sm">{{ t('sales_no_contracts') }}</p>
+</div>
+{% endif %}
+{% endif %}
+{% endblock %}

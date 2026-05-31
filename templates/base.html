@@ -24,6 +24,7 @@
             <a href="/" class="text-xl font-bold tracking-tight">🏠 {{ t('app_name') }}</a>
             <div class="flex items-center gap-4 text-sm font-medium">
                 <a href="{{ url_for('manage_templates') }}" class="hover:text-blue-200 transition">{{ t('nav_templates') }}</a>
+                <a href="{{ url_for('sales_home') }}" class="hover:text-blue-200 transition">{{ t('home_sales_title') }}</a>
                 <a href="{{ url_for('review_list') }}" class="hover:text-blue-200 transition">{{ t('nav_review') }}</a>
                 <span class="mx-1 text-brand-300">|</span>
                 {% set lang = current_lang() %}

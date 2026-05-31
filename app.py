@@ -1,6 +1,7 @@
 """Contract Management System — Flask Application."""
 import os
 import json
+import re
 from datetime import datetime, timezone
 
 from flask import (Flask, render_template, request, redirect,
@@ -59,7 +60,9 @@ def set_language(lang):
     return redirect(request.referrer or url_for('home'))
 
 
-# ── Template Management ──
+# ═══════════════════════════════════════════════
+# TEMPLATE MANAGEMENT (Admin/Staff)
+# ═══════════════════════════════════════════════
 
 @app.route('/templates', methods=['GET', 'POST'])
 def manage_templates():
@@ -134,49 +137,9 @@ def delete_template(id):
     return redirect(url_for('manage_templates'))
 
 
-# ── Fill Contract ──
-
-@app.route('/fill/<int:id>', methods=['GET', 'POST'])
-def fill_contract(id):
-    template = Template.query.get_or_404(id)
-
-    if request.method == 'POST':
-        filled_data = {
-            'sections': [],
-        }
-        section_count = len(template.sections)
-        for i in range(section_count):
-            is_modified = request.form.get(f'modified_{i}') == '1'
-            section_entry = {
-                'index': i,
-                'modified': is_modified,
-            }
-            if is_modified:
-                # Free-edit mode: store the full section text
-                section_entry['content'] = request.form.get(f'section_content_{i}', '')
-            else:
-                # Fill mode: store individual field values
-                section_entry['fields'] = {}
-                section = template.sections[i]
-                for field in section.get('fields', []):
-                    key = field['key']
-                    section_entry['fields'][key] = request.form.get(f'field_{i}_{key}', '')
-            filled_data['sections'].append(section_entry)
-
-        submission = Submission(
-            template_id=id,
-            filled_data=filled_data,
-            status='pending',
-        )
-        db.session.add(submission)
-        db.session.commit()
-        flash(t('submit_success'))
-        return redirect(url_for('home'))
-
-    return render_template('fill.html', template=template)
-
-
-# ── Review ──
+# ═══════════════════════════════════════════════
+# REVIEW (Legal/Management)
+# ═══════════════════════════════════════════════
 
 @app.route('/review')
 def review_list():
@@ -206,11 +169,165 @@ def review_detail(id):
         flash(t('review_success'))
         return redirect(url_for('review_list'))
 
-    # Pre-render sections with filled values for the template
     lang = session.get('lang', 'de')
     rendered_sections = render_submission_sections(submission, lang)
     return render_template('review_detail.html', submission=submission,
                            rendered_sections=rendered_sections)
+
+
+# ═══════════════════════════════════════════════
+# SALESPERSON PORTAL
+# ═══════════════════════════════════════════════
+
+@app.route('/sales', methods=['GET', 'POST'])
+def sales_home():
+    """Salesperson dashboard: set name, browse templates, view own submissions."""
+    if request.method == 'POST' and request.form.get('submitter_name'):
+        session['submitter_name'] = request.form.get('submitter_name', '').strip()
+
+    submitter = session.get('submitter_name', '')
+    categories = Category.query.order_by(Category.id).all()
+    templates = Template.query.order_by(Template.created_at.desc()).all()
+
+    # Only show this salesperson's own submissions
+    my_submissions = []
+    if submitter:
+        my_submissions = Submission.query\
+            .filter_by(submitter_name=submitter)\
+            .order_by(Submission.submitted_at.desc()).all()
+
+    return render_template('sales_home.html',
+                           submitter=submitter,
+                           categories=categories,
+                           templates=templates,
+                           my_submissions=my_submissions)
+
+
+@app.route('/sales/fill/<int:id>', methods=['GET', 'POST'])
+def sales_fill(id):
+    """Fill form for salesperson. POST saves data to session, redirects to preview."""
+    if not session.get('submitter_name'):
+        flash('Bitte zuerst Namen eingeben / Please enter your name first.')
+        return redirect(url_for('sales_home'))
+
+    template = Template.query.get_or_404(id)
+
+    if request.method == 'POST':
+        # Save filled data to session for preview
+        filled_data = build_filled_data(template)
+        session['preview_data'] = filled_data
+        session['preview_template_id'] = id
+        return redirect(url_for('sales_preview', id=id))
+
+    return render_template('fill.html', template=template,
+                           back_url=url_for('sales_home'),
+                           submit_label=t('btn_review'),
+                           form_action=url_for('sales_fill', id=id))
+
+
+@app.route('/sales/preview/<int:id>', methods=['GET', 'POST'])
+def sales_preview(id):
+    """Overview of contract before final submission."""
+    if not session.get('submitter_name'):
+        return redirect(url_for('sales_home'))
+
+    template = Template.query.get_or_404(id)
+    filled_data = session.get('preview_data')
+    if not filled_data:
+        flash('Keine Daten vorhanden. Bitte Vertrag ausfüllen.')
+        return redirect(url_for('sales_fill', id=id))
+
+    if request.method == 'POST':
+        # Final submit
+        submission = Submission(
+            template_id=id,
+            filled_data=filled_data,
+            status='pending',
+            submitter_name=session.get('submitter_name', ''),
+        )
+        db.session.add(submission)
+        db.session.commit()
+        session.pop('preview_data', None)
+        session.pop('preview_template_id', None)
+        flash(t('submit_success'))
+        return redirect(url_for('sales_home'))
+
+    lang = session.get('lang', 'de')
+    rendered_sections = render_filled_sections(template, filled_data, lang)
+    return render_template('sales_overview.html',
+                           template=template,
+                           rendered_sections=rendered_sections)
+
+
+@app.route('/sales/view/<int:sub_id>')
+def sales_view(sub_id):
+    """View a submitted contract (read-only)."""
+    submission = Submission.query.get_or_404(sub_id)
+    if submission.submitter_name != session.get('submitter_name', ''):
+        flash('Kein Zugriff / Access denied.')
+        return redirect(url_for('sales_home'))
+
+    lang = session.get('lang', 'de')
+    rendered_sections = render_submission_sections(submission, lang)
+    return render_template('sales_view.html', submission=submission,
+                           rendered_sections=rendered_sections)
+
+
+@app.route('/sales/edit/<int:sub_id>', methods=['GET', 'POST'])
+def sales_edit(sub_id):
+    """Edit a rejected (or still pending) submission."""
+    submission = Submission.query.get_or_404(sub_id)
+    if submission.submitter_name != session.get('submitter_name', ''):
+        flash('Kein Zugriff / Access denied.')
+        return redirect(url_for('sales_home'))
+
+    if submission.status not in ('rejected', 'pending'):
+        flash('Nur abgelehnte oder ausstehende Verträge können bearbeitet werden.')
+        return redirect(url_for('sales_home'))
+
+    template = submission.template
+
+    if request.method == 'POST':
+        # Resubmit with updated data
+        filled_data = build_filled_data(template)
+        submission.filled_data = filled_data
+        submission.status = 'pending'
+        submission.review_comment = None
+        submission.submitted_at = datetime.now(timezone.utc)
+        submission.reviewed_at = None
+        db.session.commit()
+        flash(t('submit_success'))
+        return redirect(url_for('sales_home'))
+
+    return render_template('fill.html', template=template,
+                           existing_data=submission.filled_data,
+                           back_url=url_for('sales_home'),
+                           submit_label=t('btn_submit'),
+                           form_action=url_for('sales_edit', sub_id=sub_id))
+
+
+# ── Fill (original, for staff) ──
+
+@app.route('/fill/<int:id>', methods=['GET', 'POST'])
+def fill_contract(id):
+    template = Template.query.get_or_404(id)
+
+    if request.method == 'POST':
+        filled_data = build_filled_data(template)
+        submission = Submission(
+            template_id=id,
+            filled_data=filled_data,
+            status='pending',
+        )
+        db.session.add(submission)
+        db.session.commit()
+        flash(t('submit_success'))
+        return redirect(url_for('home'))
+
+    return render_template('fill.html', template=template,
+                           back_url=url_for('manage_templates'),
+                           submit_label=t('btn_submit'),
+                           form_action=url_for('fill_contract', id=id))
 
 
 # ── Helpers ──
@@ -219,16 +336,36 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
+def build_filled_data(template):
+    """Extract filled_data dict from POST request for a given template."""
+    filled_data = {'sections': []}
+    for i in range(len(template.sections)):
+        is_modified = request.form.get(f'modified_{i}') == '1'
+        section_entry = {'index': i, 'modified': is_modified}
+        if is_modified:
+            section_entry['content'] = request.form.get(f'section_content_{i}', '')
+        else:
+            section_entry['fields'] = {}
+            for field in template.sections[i].get('fields', []):
+                key = field['key']
+                section_entry['fields'][key] = request.form.get(f'field_{i}_{key}', '')
+        filled_data['sections'].append(section_entry)
+    return filled_data
+
+
 def render_submission_sections(submission, lang):
-    """Build a list of dicts for the template: each section with pre-rendered HTML."""
+    """Pre-render a submission's sections with filled values for display."""
+    return render_filled_sections(submission.template, submission.filled_data, lang)
+
+
+def render_filled_sections(template, filled_data, lang):
+    """Pre-render template sections filled with data. Returns list of dicts."""
     result = []
-    template = submission.template
-    filled_data = submission.filled_data or {}
-    sections_data = filled_data.get('sections', [])
+    sections_data = filled_data.get('sections', []) if filled_data else []
 
     for i, section in enumerate(template.sections):
         sec_data = sections_data[i] if i < len(sections_data) else None
-        is_modified = sec_data and sec_data.get('modified') == True if sec_data else False
+        is_modified = bool(sec_data and sec_data.get('modified'))
         content_template = section['content_de'] if lang == 'de' else section['content_en']
 
         if is_modified:
