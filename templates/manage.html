@@ -47,10 +47,11 @@
             {% endif %}
         </div>
         <div class="flex items-center gap-2 flex-shrink-0">
-            <button onclick="showEditModal({{ tmpl.id }}, {{ tmpl.to_dict() | tojson | forceescape }})"
+            <button onclick="showEditModal({{ tmpl.id }}, JSON.parse(document.getElementById('tmpl-data-{{ tmpl.id }}').textContent))"
                     class="bg-amber-100 text-amber-700 px-3 py-2 rounded-lg text-sm font-medium hover:bg-amber-200 transition">
                 ✏️ {{ t('btn_edit_template') }}
             </button>
+            <script type="application/json" id="tmpl-data-{{ tmpl.id }}">{{ tmpl.to_dict() | tojson }}</script>
             {% if tmpl.file_path %}
             <a href="{{ url_for('download_template', id=tmpl.id) }}"
                class="bg-brand-500 text-white px-3 py-2 rounded-lg text-sm font-medium hover:bg-brand-700 transition">
@@ -222,8 +223,7 @@ function showEditModal(id, tmpl) {
     document.getElementById('edit-form').action = '/templates/' + id + '/update';
 
     // Build visual section editor
-    var editor = document.getElementById('sections-editor');
-    editor.innerHTML = '';
+    getEditor().innerHTML = '';
     sectionCounter = 0;
     var sections = tmpl.sections || [];
     sections.forEach(function(sec) {
@@ -234,7 +234,12 @@ function showEditModal(id, tmpl) {
     document.getElementById('edit-modal').classList.remove('hidden');
 }
 
+function getEditor() {
+    return document.getElementById('sections-editor');
+}
+
 function addSection(data) {
+    var editor = getEditor();
     var idx = sectionCounter++;
     var sec = data || {title_de: '', title_en: '', content_de: '', content_en: '', fields: []};
 
