@@ -1,0 +1,70 @@
+{
+  "title_de": "Standard-Auftrag / Geschäftsbesorgungsvertrag",
+  "title_en": "Standard Agency/Mandate Agreement",
+  "sections": [
+    {
+      "title_de": "Parteien",
+      "title_en": "Parties",
+      "content_de": "Zwischen {{principal_name}}, {{principal_address}} (im Folgenden \"Auftraggeber\") und {{agent_name}}, {{agent_address}} (im Folgenden \"Beauftragter\") wird folgender Auftrag gemäß §§ 662 ff. BGB geschlossen:",
+      "content_en": "Between {{principal_name}}, {{principal_address}} (hereinafter \"Principal\") and {{agent_name}}, {{agent_address}} (hereinafter \"Agent\") the following mandate agreement is concluded pursuant to §§ 662 ff. BGB:",
+      "fields": [
+        {"key": "principal_name", "label_de": "Name des Auftraggebers", "label_en": "Principal Name", "type": "text", "required": true},
+        {"key": "principal_address", "label_de": "Adresse des Auftraggebers", "label_en": "Principal Address", "type": "text", "required": true},
+        {"key": "agent_name", "label_de": "Name des Beauftragten", "label_en": "Agent Name", "type": "text", "required": true},
+        {"key": "agent_address", "label_de": "Adresse des Beauftragten", "label_en": "Agent Address", "type": "text", "required": true}
+      ]
+    },
+    {
+      "title_de": "Auftragsgegenstand",
+      "title_en": "Subject Matter of the Mandate",
+      "content_de": "Der Auftraggeber beauftragt den Beauftragten mit der Besorgung folgender Angelegenheit: {{mandate_description}}. Der Beauftragte ist gemäß § 665 BGB berechtigt, von Weisungen des Auftraggebers abzuweichen, wenn er den Umständen nach annehmen darf, dass der Auftraggeber bei Kenntnis der Sachlage die Abweichung billigen würde.",
+      "content_en": "The Principal instructs the Agent to handle the following matter: {{mandate_description}}. Pursuant to § 665 BGB, the Agent is entitled to deviate from the Principal's instructions if the Agent may assume, under the circumstances, that the Principal would approve the deviation if aware of the facts.",
+      "fields": [
+        {"key": "mandate_description", "label_de": "Beschreibung des Auftrags", "label_en": "Description of the Mandate", "type": "textarea", "required": true}
+      ]
+    },
+    {
+      "title_de": "Weisungsrecht und Berichtspflicht",
+      "title_en": "Right of Instruction and Reporting",
+      "content_de": "Der Auftraggeber ist berechtigt, dem Beauftragten jederzeit Weisungen zu erteilen. Der Beauftragte ist gemäß § 666 BGB verpflichtet, dem Auftraggeber die erforderlichen Nachrichten zu geben, auf Verlangen über den Stand der Angelegenheit Auskunft zu erteilen und nach Ausführung des Auftrags Rechenschaft abzulegen.",
+      "content_en": "The Principal is entitled to give instructions to the Agent at any time. Pursuant to § 666 BGB, the Agent is obligated to provide the Principal with necessary information, to report on the status of the matter upon request, and to render an account after execution of the mandate.",
+      "fields": []
+    },
+    {
+      "title_de": "Vergütung und Aufwendungsersatz",
+      "title_en": "Remuneration and Reimbursement",
+      "content_de": "Der Beauftragte erhält für seine Tätigkeit eine Vergütung in Höhe von {{mandate_fee}} EUR. Sofern die Tätigkeit üblicherweise nur gegen Vergütung zu erwarten ist, gilt gemäß § 612 BGB eine Vergütung als stillschweigend vereinbart. Der Auftraggeber ist gemäß § 670 BGB verpflichtet, dem Beauftragten die zum Zwecke der Ausführung des Auftrags gemachten Aufwendungen zu ersetzen, soweit sie der Beauftragte den Umständen nach für erforderlich halten durfte.",
+      "content_en": "The Agent shall receive remuneration of {{mandate_fee}} EUR for its services. If the activity is customarily expected only for remuneration, compensation is deemed tacitly agreed pursuant to § 612 BGB. Pursuant to § 670 BGB, the Principal is obligated to reimburse the Agent for expenses incurred in the execution of the mandate, provided the Agent could deem them necessary under the circumstances.",
+      "fields": [
+        {"key": "mandate_fee", "label_de": "Vergütung (EUR)", "label_en": "Remuneration (EUR)", "type": "text", "required": true}
+      ]
+    },
+    {
+      "title_de": "Beendigung des Auftrags",
+      "title_en": "Termination of the Mandate",
+      "content_de": "Der Auftrag kann gemäß § 671 BGB von beiden Parteien jederzeit gekündigt werden. Die Kündigungsfrist beträgt {{termination_notice}}. Der Beauftragte darf nur in der Art kündigen, dass der Auftraggeber für die Besorgung des Geschäfts anderweitig Fürsorge treffen kann, es sei denn, ein wichtiger Grund liegt vor.",
+      "content_en": "The mandate may be terminated by either party at any time pursuant to § 671 BGB. The notice period is {{termination_notice}}. The Agent may only terminate in such a way that the Principal can make other arrangements for the handling of the matter, unless good cause exists.",
+      "fields": [
+        {"key": "termination_notice", "label_de": "Kündigungsfrist", "label_en": "Notice Period for Termination", "type": "select", "required": true, "options": ["jederzeit", "2 Wochen", "1 Monat"]}
+      ]
+    },
+    {
+      "title_de": "Herausgabepflicht",
+      "title_en": "Obligation to Return",
+      "content_de": "Der Beauftragte ist gemäß § 667 BGB verpflichtet, dem Auftraggeber alles, was er zur Ausführung des Auftrags erhält und aus der Geschäftsbesorgung erlangt, herauszugeben.",
+      "content_en": "Pursuant to § 667 BGB, the Agent is obligated to surrender to the Principal everything received for the execution of the mandate and obtained from the handling of the matter.",
+      "fields": []
+    },
+    {
+      "title_de": "Schlussbestimmungen",
+      "title_en": "Final Provisions",
+      "content_de": "Gerichtsstand ist {{court_mandate}}. Es gilt deutsches Recht. Änderungen und Ergänzungen bedürfen der Schriftform. Ort: {{place_mandate}}, Datum: {{date_mandate}}",
+      "content_en": "Place of jurisdiction is {{court_mandate}}. German law applies. Amendments and supplements require written form. Place: {{place_mandate}}, Date: {{date_mandate}}",
+      "fields": [
+        {"key": "court_mandate", "label_de": "Gerichtsstand", "label_en": "Place of Jurisdiction", "type": "text", "required": true},
+        {"key": "place_mandate", "label_de": "Ort", "label_en": "Place", "type": "text", "required": true},
+        {"key": "date_mandate", "label_de": "Datum", "label_en": "Date", "type": "date", "required": true}
+      ]
+    }
+  ]
+}

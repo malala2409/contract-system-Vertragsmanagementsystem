@@ -1,0 +1,64 @@
+{
+  "title_de": "Vertraulichkeitsvereinbarung (NDA)",
+  "title_en": "Non-Disclosure Agreement (NDA)",
+  "sections": [
+    {
+      "title_de": "Parteien",
+      "title_en": "Parties",
+      "content_de": "Zwischen {{disclosing_name}}, {{disclosing_address}} (im Folgenden \"Offenlegende Partei\") und {{receiving_name}}, {{receiving_address}} (im Folgenden \"Empfangende Partei\") wird folgende Vertraulichkeitsvereinbarung geschlossen:",
+      "content_en": "Between {{disclosing_name}}, {{disclosing_address}} (hereinafter \"Disclosing Party\") and {{receiving_name}}, {{receiving_address}} (hereinafter \"Receiving Party\") the following non-disclosure agreement is concluded:",
+      "fields": [
+        {"key": "disclosing_name", "label_de": "Name der offenlegenden Partei", "label_en": "Disclosing Party Name", "type": "text", "required": true},
+        {"key": "disclosing_address", "label_de": "Adresse der offenlegenden Partei", "label_en": "Disclosing Party Address", "type": "text", "required": true},
+        {"key": "receiving_name", "label_de": "Name der empfangenden Partei", "label_en": "Receiving Party Name", "type": "text", "required": true},
+        {"key": "receiving_address", "label_de": "Adresse der empfangenden Partei", "label_en": "Receiving Party Address", "type": "text", "required": true}
+      ]
+    },
+    {
+      "title_de": "Vertrauliche Informationen",
+      "title_en": "Confidential Information",
+      "content_de": "Vertrauliche Informationen im Sinne dieser Vereinbarung sind alle Informationen, die der offenlegenden Partei gehören oder von ihr kontrolliert werden, einschließlich: {{confidential_scope}}. Als vertraulich gelten alle Informationen, die als solche gekennzeichnet sind oder sich aus den Umständen der Offenlegung als vertraulich ergeben.",
+      "content_en": "Confidential information within the meaning of this agreement includes all information owned or controlled by the Disclosing Party, including: {{confidential_scope}}. All information marked as confidential or that is evidently confidential from the circumstances of disclosure shall be deemed confidential.",
+      "fields": [
+        {"key": "confidential_scope", "label_de": "Umfang der vertraulichen Informationen", "label_en": "Scope of Confidential Information", "type": "textarea", "required": true}
+      ]
+    },
+    {
+      "title_de": "Pflichten der empfangenden Partei",
+      "title_en": "Obligations of the Receiving Party",
+      "content_de": "Die empfangende Partei verpflichtet sich, die vertraulichen Informationen ausschließlich für folgenden Zweck zu verwenden: {{purpose_nda}}. Die Geheimhaltungspflicht gilt für einen Zeitraum von {{nda_term}} Jahren ab Offenlegung. Die empfangende Partei haftet für die Einhaltung der Vertraulichkeit durch ihre Mitarbeiter und beauftragten Dritten. Diese Verpflichtung besteht nach § 241 II BGB auch über die Beendigung dieser Vereinbarung hinaus.",
+      "content_en": "The Receiving Party undertakes to use the confidential information exclusively for the following purpose: {{purpose_nda}}. The confidentiality obligation applies for a period of {{nda_term}} years from disclosure. The Receiving Party is liable for compliance with confidentiality by its employees and contracted third parties. This obligation continues pursuant to § 241 II BGB even after termination of this agreement.",
+      "fields": [
+        {"key": "purpose_nda", "label_de": "Zweck der Offenlegung", "label_en": "Purpose of Disclosure", "type": "textarea", "required": true},
+        {"key": "nda_term", "label_de": "Geheimhaltungsdauer (Jahre)", "label_en": "Confidentiality Term (Years)", "type": "text", "required": true}
+      ]
+    },
+    {
+      "title_de": "Ausnahmen",
+      "title_en": "Exceptions",
+      "content_de": "Von der Vertraulichkeit ausgenommen sind Informationen, die (a) zum Zeitpunkt der Offenlegung bereits öffentlich bekannt sind oder später ohne Verschulden der empfangenden Partei öffentlich bekannt werden, (b) der empfangenden Partei vor der Offenlegung nachweislich bekannt waren, (c) von einem Dritten ohne Vertraulichkeitsverpflichtung rechtmäßig erlangt wurden oder (d) aufgrund gesetzlicher Verpflichtung, Gerichtsbeschluss oder behördlicher Anordnung offengelegt werden müssen.",
+      "content_en": "Excluded from confidentiality are information that (a) is publicly known at the time of disclosure or subsequently becomes publicly known without fault of the Receiving Party, (b) was demonstrably known to the Receiving Party prior to disclosure, (c) was lawfully obtained from a third party without confidentiality obligation, or (d) must be disclosed due to legal obligation, court order, or regulatory directive.",
+      "fields": []
+    },
+    {
+      "title_de": "Vertragsstrafe",
+      "title_en": "Contractual Penalty",
+      "content_de": "Bei schuldhafter Verletzung der Vertraulichkeitsverpflichtung zahlt die empfangende Partei eine Vertragsstrafe in Höhe von {{nda_penalty}} EUR. Weitergehende Schadensersatzansprüche bleiben unberührt.",
+      "content_en": "In case of culpable breach of the confidentiality obligation, the Receiving Party shall pay a contractual penalty of {{nda_penalty}} EUR. Further claims for damages remain unaffected.",
+      "fields": [
+        {"key": "nda_penalty", "label_de": "Vertragsstrafe (EUR)", "label_en": "Contractual Penalty (EUR)", "type": "text", "required": true}
+      ]
+    },
+    {
+      "title_de": "Schlussbestimmungen",
+      "title_en": "Final Provisions",
+      "content_de": "Gerichtsstand ist {{court_nda}}. Es gilt deutsches Recht. Sollte eine Bestimmung unwirksam sein, bleibt die Vereinbarung im Übrigen wirksam. Ort: {{place_nda}}, Datum: {{date_nda}}",
+      "content_en": "Place of jurisdiction is {{court_nda}}. German law applies. Should any provision be invalid, the remainder of the agreement shall remain effective. Place: {{place_nda}}, Date: {{date_nda}}",
+      "fields": [
+        {"key": "court_nda", "label_de": "Gerichtsstand", "label_en": "Place of Jurisdiction", "type": "text", "required": true},
+        {"key": "place_nda", "label_de": "Ort", "label_en": "Place", "type": "text", "required": true},
+        {"key": "date_nda", "label_de": "Datum", "label_en": "Date", "type": "date", "required": true}
+      ]
+    }
+  ]
+}

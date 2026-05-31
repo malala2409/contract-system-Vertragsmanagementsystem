@@ -1,0 +1,81 @@
+{
+  "title_de": "Standard-Kaufvertrag",
+  "title_en": "Standard Purchase Agreement",
+  "sections": [
+    {
+      "title_de": "Parteien",
+      "title_en": "Parties",
+      "content_de": "Zwischen {{seller_name}}, {{seller_address}} (im Folgenden \"Verkäufer\") und {{buyer_name}}, {{buyer_address}} (im Folgenden \"Käufer\") wird folgender Kaufvertrag geschlossen:",
+      "content_en": "Between {{seller_name}}, {{seller_address}} (hereinafter \"Seller\") and {{buyer_name}}, {{buyer_address}} (hereinafter \"Buyer\") the following purchase agreement is concluded:",
+      "fields": [
+        {"key": "seller_name", "label_de": "Name des Verkäufers", "label_en": "Seller Name", "type": "text", "required": true},
+        {"key": "seller_address", "label_de": "Adresse des Verkäufers", "label_en": "Seller Address", "type": "text", "required": true},
+        {"key": "buyer_name", "label_de": "Name des Käufers", "label_en": "Buyer Name", "type": "text", "required": true},
+        {"key": "buyer_address", "label_de": "Adresse des Käufers", "label_en": "Buyer Address", "type": "text", "required": true}
+      ]
+    },
+    {
+      "title_de": "Kaufgegenstand",
+      "title_en": "Subject Matter",
+      "content_de": "Der Verkäufer verkauft und der Käufer kauft: {{goods_description}}, Menge: {{quantity}} Stück.",
+      "content_en": "The Seller sells and the Buyer purchases: {{goods_description}}, quantity: {{quantity}} units.",
+      "fields": [
+        {"key": "goods_description", "label_de": "Beschreibung der Kaufsache", "label_en": "Description of Goods", "type": "textarea", "required": true},
+        {"key": "quantity", "label_de": "Menge", "label_en": "Quantity", "type": "text", "required": true}
+      ]
+    },
+    {
+      "title_de": "Kaufpreis und Zahlungsbedingungen",
+      "title_en": "Price and Payment Terms",
+      "content_de": "Der Kaufpreis beträgt {{price}} EUR. Zahlungsziel: {{payment_days}} Tage nach Rechnungsstellung. Zahlungsart: {{payment_method}}.",
+      "content_en": "The purchase price is {{price}} EUR. Payment term: {{payment_days}} days after invoice. Payment method: {{payment_method}}.",
+      "fields": [
+        {"key": "price", "label_de": "Kaufpreis (EUR)", "label_en": "Price (EUR)", "type": "text", "required": true},
+        {"key": "payment_days", "label_de": "Zahlungsziel (Tage)", "label_en": "Payment Term (Days)", "type": "text", "required": true},
+        {"key": "payment_method", "label_de": "Zahlungsart", "label_en": "Payment Method", "type": "select", "required": true, "options": ["Überweisung", "Lastschrift", "Barzahlung"]}
+      ]
+    },
+    {
+      "title_de": "Lieferung und Gefahrübergang",
+      "title_en": "Delivery and Transfer of Risk",
+      "content_de": "Die Lieferung erfolgt bis zum {{delivery_date}}. Lieferort: {{delivery_place}}. Der Gefahrübergang erfolgt mit Übergabe an den Käufer. Versandkosten trägt {{shipping_cost_bearer}}.",
+      "content_en": "Delivery shall be made by {{delivery_date}}. Place of delivery: {{delivery_place}}. Risk passes upon handover to the Buyer. Shipping costs are borne by {{shipping_cost_bearer}}.",
+      "fields": [
+        {"key": "delivery_date", "label_de": "Lieferdatum", "label_en": "Delivery Date", "type": "date", "required": true},
+        {"key": "delivery_place", "label_de": "Lieferort", "label_en": "Place of Delivery", "type": "text", "required": true},
+        {"key": "shipping_cost_bearer", "label_de": "Versandkosten trägt", "label_en": "Shipping Costs Borne By", "type": "select", "required": true, "options": ["Verkäufer", "Käufer"]}
+      ]
+    },
+    {
+      "title_de": "Gewährleistung",
+      "title_en": "Warranty",
+      "content_de": "Die Gewährleistungsfrist beträgt {{warranty_period}} Monate ab Lieferung. Der Verkäufer haftet für Sachmängel nach §§ 434 ff. BGB. Bei Mängeln hat der Käufer Anspruch auf Nacherfüllung (§ 439 BGB).",
+      "content_en": "The warranty period is {{warranty_period}} months from delivery. The Seller is liable for material defects in accordance with §§ 434 ff. BGB. In case of defects, the Buyer is entitled to subsequent performance (§ 439 BGB).",
+      "fields": [
+        {"key": "warranty_period", "label_de": "Gewährleistungsfrist (Monate)", "label_en": "Warranty Period (Months)", "type": "text", "required": true}
+      ]
+    },
+    {
+      "title_de": "Haftung und Vertragsstrafe",
+      "title_en": "Liability and Penalties",
+      "content_de": "Bei Lieferverzug schuldet der Verkäufer eine Vertragsstrafe in Höhe von {{penalty_percent}}% des Kaufpreises pro angefangener Woche, maximal {{penalty_max}}% des Kaufpreises. Die Haftung auf Schadensersatz richtet sich nach den gesetzlichen Bestimmungen. Die Haftung für leichte Fahrlässigkeit ist auf {{liability_cap}} EUR beschränkt. Von der Haftung ausgenommen sind Schäden aus der Verletzung des Lebens, des Körpers oder der Gesundheit.",
+      "content_en": "In case of delivery delay, the Seller shall pay a contractual penalty of {{penalty_percent}}% of the purchase price per commenced week, up to a maximum of {{penalty_max}}% of the purchase price. Liability for damages is governed by statutory provisions. Liability for slight negligence is limited to {{liability_cap}} EUR. Excluded from this limitation are damages arising from injury to life, body or health.",
+      "fields": [
+        {"key": "penalty_percent", "label_de": "Vertragsstrafe (% pro Woche)", "label_en": "Penalty (% per Week)", "type": "text", "required": true},
+        {"key": "penalty_max", "label_de": "Maximale Vertragsstrafe (%)", "label_en": "Maximum Penalty (%)", "type": "text", "required": true},
+        {"key": "liability_cap", "label_de": "Haftungsobergrenze (EUR)", "label_en": "Liability Cap (EUR)", "type": "text", "required": true}
+      ]
+    },
+    {
+      "title_de": "Schlussbestimmungen",
+      "title_en": "Final Provisions",
+      "content_de": "Gerichtsstand ist {{court}}. Es gilt deutsches Recht. Sollte eine Bestimmung unwirksam sein, bleibt der Vertrag im Übrigen wirksam. Änderungen bedürfen der Schriftform. Ort: {{place}}, Datum: {{date}}",
+      "content_en": "Place of jurisdiction is {{court}}. German law applies. Should any provision be invalid, the remainder of the contract shall remain effective. Amendments require written form. Place: {{place}}, Date: {{date}}",
+      "fields": [
+        {"key": "court", "label_de": "Gerichtsstand", "label_en": "Place of Jurisdiction", "type": "text", "required": true},
+        {"key": "place", "label_de": "Ort", "label_en": "Place", "type": "text", "required": true},
+        {"key": "date", "label_de": "Datum", "label_en": "Date", "type": "date", "required": true}
+      ]
+    }
+  ]
+}

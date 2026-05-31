@@ -1,0 +1,71 @@
+{
+  "title_de": "Standard-Darlehensvertrag",
+  "title_en": "Standard Loan Agreement",
+  "sections": [
+    {
+      "title_de": "Parteien",
+      "title_en": "Parties",
+      "content_de": "Zwischen {{lender_name}}, {{lender_address}} (im Folgenden \"Darlehensgeber\") und {{borrower_name}}, {{borrower_address}} (im Folgenden \"Darlehensnehmer\") wird folgender Darlehensvertrag gemäß §§ 488 ff. BGB geschlossen:",
+      "content_en": "Between {{lender_name}}, {{lender_address}} (hereinafter \"Lender\") and {{borrower_name}}, {{borrower_address}} (hereinafter \"Borrower\") the following loan agreement is concluded pursuant to §§ 488 ff. BGB:",
+      "fields": [
+        {"key": "lender_name", "label_de": "Name des Darlehensgebers", "label_en": "Lender Name", "type": "text", "required": true},
+        {"key": "lender_address", "label_de": "Adresse des Darlehensgebers", "label_en": "Lender Address", "type": "text", "required": true},
+        {"key": "borrower_name", "label_de": "Name des Darlehensnehmers", "label_en": "Borrower Name", "type": "text", "required": true},
+        {"key": "borrower_address", "label_de": "Adresse des Darlehensnehmers", "label_en": "Borrower Address", "type": "text", "required": true}
+      ]
+    },
+    {
+      "title_de": "Darlehenssumme und Zinsen",
+      "title_en": "Loan Amount and Interest",
+      "content_de": "Das Darlehen beträgt {{loan_amount}} EUR. Der Nominalzinssatz beträgt {{interest_rate}}% p.a. Der effektive Jahreszins beträgt {{effective_rate}}% p.a. Die Zinsen sind monatlich nachträglich zahlbar.",
+      "content_en": "The loan amounts to {{loan_amount}} EUR. The nominal interest rate is {{interest_rate}}% p.a. The effective annual interest rate is {{effective_rate}}% p.a. Interest is payable monthly in arrears.",
+      "fields": [
+        {"key": "loan_amount", "label_de": "Darlehenssumme (EUR)", "label_en": "Loan Amount (EUR)", "type": "text", "required": true},
+        {"key": "interest_rate", "label_de": "Nominalzinssatz (% p.a.)", "label_en": "Nominal Interest Rate (% p.a.)", "type": "text", "required": true},
+        {"key": "effective_rate", "label_de": "Effektiver Jahreszins (% p.a.)", "label_en": "Effective Annual Rate (% p.a.)", "type": "text", "required": true}
+      ]
+    },
+    {
+      "title_de": "Rückzahlung",
+      "title_en": "Repayment",
+      "content_de": "Das Darlehen ist in {{installments}} monatlichen Raten zu tilgen. Die monatliche Rate beträgt {{installment_amount}} EUR. Die erste Rate ist am {{first_payment_date}} fällig. Eine vorzeitige Rückzahlung ist {{early_repayment}}. Das Kündigungsrecht des Darlehensnehmers nach § 489 BGB bleibt unberührt.",
+      "content_en": "The loan shall be repaid in {{installments}} monthly installments. The monthly installment amounts to {{installment_amount}} EUR. The first installment is due on {{first_payment_date}}. Early repayment is {{early_repayment}}. The Borrower's right of termination pursuant to § 489 BGB remains unaffected.",
+      "fields": [
+        {"key": "installments", "label_de": "Anzahl der Raten", "label_en": "Number of Installments", "type": "text", "required": true},
+        {"key": "installment_amount", "label_de": "Monatliche Rate (EUR)", "label_en": "Monthly Installment (EUR)", "type": "text", "required": true},
+        {"key": "first_payment_date", "label_de": "Erste Zahlung", "label_en": "First Payment Date", "type": "date", "required": true},
+        {"key": "early_repayment", "label_de": "Vorzeitige Rückzahlung", "label_en": "Early Repayment", "type": "select", "required": true, "options": ["jederzeit", "nur mit Zustimmung", "ausgeschlossen"]}
+      ]
+    },
+    {
+      "title_de": "Sicherheiten",
+      "title_en": "Collateral",
+      "content_de": "Zur Sicherung des Darlehens werden folgende Sicherheiten bestellt: {{collateral_description}}.",
+      "content_en": "The following collateral is provided to secure the loan: {{collateral_description}}.",
+      "fields": [
+        {"key": "collateral_description", "label_de": "Sicherheiten", "label_en": "Collateral Description", "type": "textarea", "required": false}
+      ]
+    },
+    {
+      "title_de": "Kündigung und Verzug",
+      "title_en": "Termination and Default",
+      "content_de": "Bei Verzug von mindestens {{default_months}} Monaten mit der Zahlung von mindestens zwei Teilraten ist der Darlehensgeber berechtigt, das Darlehen gemäß § 498 BGB zu kündigen. Für den Verzug beträgt der Verzugszinssatz {{default_interest}}% p.a. gemäß § 288 BGB.",
+      "content_en": "If the Borrower is in arrears for at least {{default_months}} months with the payment of at least two partial installments, the Lender is entitled to terminate the loan pursuant to § 498 BGB. The default interest rate is {{default_interest}}% p.a. pursuant to § 288 BGB.",
+      "fields": [
+        {"key": "default_months", "label_de": "Verzugsmonate vor Kündigung", "label_en": "Default Months Before Termination", "type": "text", "required": true},
+        {"key": "default_interest", "label_de": "Verzugszins (% p.a.)", "label_en": "Default Interest (% p.a.)", "type": "text", "required": true}
+      ]
+    },
+    {
+      "title_de": "Schlussbestimmungen",
+      "title_en": "Final Provisions",
+      "content_de": "Gerichtsstand ist {{court_loan}}. Es gilt deutsches Recht. Änderungen und Ergänzungen bedürfen der Schriftform. Ort: {{place_loan}}, Datum: {{date_loan}}",
+      "content_en": "Place of jurisdiction is {{court_loan}}. German law applies. Amendments and supplements require written form. Place: {{place_loan}}, Date: {{date_loan}}",
+      "fields": [
+        {"key": "court_loan", "label_de": "Gerichtsstand", "label_en": "Place of Jurisdiction", "type": "text", "required": true},
+        {"key": "place_loan", "label_de": "Ort", "label_en": "Place", "type": "text", "required": true},
+        {"key": "date_loan", "label_de": "Datum", "label_en": "Date", "type": "date", "required": true}
+      ]
+    }
+  ]
+}

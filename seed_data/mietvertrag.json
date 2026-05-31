@@ -1,0 +1,86 @@
+{
+  "title_de": "Standard-Mietvertrag",
+  "title_en": "Standard Lease Agreement",
+  "sections": [
+    {
+      "title_de": "Parteien",
+      "title_en": "Parties",
+      "content_de": "Zwischen {{landlord_name}}, {{landlord_address}} (im Folgenden \"Vermieter\") und {{tenant_name}}, {{tenant_address}} (im Folgenden \"Mieter\") wird folgender Mietvertrag geschlossen:",
+      "content_en": "Between {{landlord_name}}, {{landlord_address}} (hereinafter \"Landlord\") and {{tenant_name}}, {{tenant_address}} (hereinafter \"Tenant\") the following lease agreement is concluded:",
+      "fields": [
+        {"key": "landlord_name", "label_de": "Name des Vermieters", "label_en": "Landlord Name", "type": "text", "required": true},
+        {"key": "landlord_address", "label_de": "Adresse des Vermieters", "label_en": "Landlord Address", "type": "text", "required": true},
+        {"key": "tenant_name", "label_de": "Name des Mieters", "label_en": "Tenant Name", "type": "text", "required": true},
+        {"key": "tenant_address", "label_de": "Adresse des Mieters", "label_en": "Tenant Address", "type": "text", "required": true}
+      ]
+    },
+    {
+      "title_de": "Mietobjekt",
+      "title_en": "Leased Property",
+      "content_de": "Der Vermieter vermietet an den Mieter folgende Räumlichkeiten: {{property_description}} (Adresse: {{property_address}}). Die Wohnfläche beträgt ca. {{property_area}} qm und umfasst {{property_rooms}} Zimmer. Die Nutzung erfolgt als {{usage_type}}.",
+      "content_en": "The Landlord leases to the Tenant the following premises: {{property_description}} (Address: {{property_address}}). The living area is approximately {{property_area}} sqm and comprises {{property_rooms}} rooms. Use shall be as {{usage_type}}.",
+      "fields": [
+        {"key": "property_description", "label_de": "Beschreibung des Mietobjekts", "label_en": "Description of Leased Property", "type": "textarea", "required": true},
+        {"key": "property_address", "label_de": "Adresse des Mietobjekts", "label_en": "Property Address", "type": "text", "required": true},
+        {"key": "property_rooms", "label_de": "Anzahl der Zimmer", "label_en": "Number of Rooms", "type": "text", "required": true},
+        {"key": "property_area", "label_de": "Wohnfläche (qm)", "label_en": "Living Area (sqm)", "type": "text", "required": true},
+        {"key": "usage_type", "label_de": "Nutzungsart", "label_en": "Type of Use", "type": "select", "required": true, "options": ["Wohnung", "Gewerbe", "Praxis", "Lager"]}
+      ]
+    },
+    {
+      "title_de": "Miete und Nebenkosten",
+      "title_en": "Rent and Operating Costs",
+      "content_de": "Die Kaltmiete beträgt {{cold_rent}} EUR monatlich. Die Vorauszahlung für Betriebskosten beträgt {{utilities_advance}} EUR monatlich. Die Gesamtmiete beträgt somit {{total_rent}} EUR monatlich. Die Miete ist jeweils bis zum {{payment_day}} eines jeden Monats im Voraus zu zahlen. Die Kaution beträgt {{deposit}} EUR und ist gemäß § 551 BGB auf einem separaten Konto anzulegen.",
+      "content_en": "The cold rent amounts to {{cold_rent}} EUR monthly. The advance payment for utilities amounts to {{utilities_advance}} EUR monthly. The total rent is therefore {{total_rent}} EUR monthly. Rent is payable in advance by the {{payment_day}} of each month. The security deposit amounts to {{deposit}} EUR and shall be held in a separate account in accordance with § 551 BGB.",
+      "fields": [
+        {"key": "cold_rent", "label_de": "Kaltmiete (EUR)", "label_en": "Cold Rent (EUR)", "type": "text", "required": true},
+        {"key": "utilities_advance", "label_de": "Nebenkostenvorauszahlung (EUR)", "label_en": "Utilities Advance (EUR)", "type": "text", "required": true},
+        {"key": "total_rent", "label_de": "Gesamtmiete (EUR)", "label_en": "Total Rent (EUR)", "type": "text", "required": true},
+        {"key": "payment_day", "label_de": "Zahlungstag (Monat)", "label_en": "Payment Day (Month)", "type": "select", "required": true, "options": ["1.", "3.", "5."]},
+        {"key": "deposit", "label_de": "Kaution (EUR)", "label_en": "Security Deposit (EUR)", "type": "text", "required": true}
+      ]
+    },
+    {
+      "title_de": "Mietzeit und Kündigung",
+      "title_en": "Lease Term and Termination",
+      "content_de": "Das Mietverhältnis beginnt am {{start_date}}. Es wird auf {{term_type}} geschlossen. Die Kündigungsfrist beträgt {{notice_period}} Monate und richtet sich nach § 573c BGB. Das gesetzliche Kündigungsrecht gemäß § 573 BGB bleibt unberührt.",
+      "content_en": "The tenancy commences on {{start_date}}. It is concluded for {{term_type}}. The notice period is {{notice_period}} months pursuant to § 573c BGB. The statutory right of termination pursuant to § 573 BGB remains unaffected.",
+      "fields": [
+        {"key": "start_date", "label_de": "Mietbeginn", "label_en": "Commencement Date", "type": "date", "required": true},
+        {"key": "term_type", "label_de": "Dauer des Mietverhältnisses", "label_en": "Term Type", "type": "select", "required": true, "options": ["unbefristet", "befristet auf 1 Jahr", "befristet auf 2 Jahre"]},
+        {"key": "notice_period", "label_de": "Kündigungsfrist (Monate)", "label_en": "Notice Period (Months)", "type": "text", "required": true}
+      ]
+    },
+    {
+      "title_de": "Instandhaltung und Schönheitsreparaturen",
+      "title_en": "Maintenance and Cosmetic Repairs",
+      "content_de": "Schönheitsreparaturen trägt der Mieter: {{tenant_repairs}}. Der Renovierungsplan sieht eine Durchführung nach {{renovation_schedule}} vor. Der Vermieter trägt die Kosten für Instandhaltungsmaßnahmen an der Substanz des Mietobjekts: {{landlord_maintenance}}.",
+      "content_en": "Cosmetic repairs are borne by the Tenant: {{tenant_repairs}}. The renovation schedule provides for execution every {{renovation_schedule}}. The Landlord bears the costs of maintenance measures affecting the substance of the leased property: {{landlord_maintenance}}.",
+      "fields": [
+        {"key": "tenant_repairs", "label_de": "Schönheitsreparaturen durch Mieter", "label_en": "Cosmetic Repairs by Tenant", "type": "select", "required": true, "options": ["ja", "nein", "nach Absprache"]},
+        {"key": "renovation_schedule", "label_de": "Renovierungsplan", "label_en": "Renovation Schedule", "type": "select", "required": true, "options": ["3 Jahren", "5 Jahren", "nach Bedarf"]},
+        {"key": "landlord_maintenance", "label_de": "Instandhaltung durch Vermieter", "label_en": "Landlord Maintenance", "type": "textarea", "required": true}
+      ]
+    },
+    {
+      "title_de": "Haftung",
+      "title_en": "Liability",
+      "content_de": "Die Haftung des Vermieters für anfängliche Mängel ist ausgeschlossen, es sei denn, der Vermieter hat diese arglistig verschwiegen. Die Haftung des Vermieters nach § 536a BGB wird auf {{liability_cap_rental}} EUR begrenzt, sofern kein Vorsatz oder grobe Fahrlässigkeit vorliegt.",
+      "content_en": "The Landlord's liability for initial defects is excluded unless the Landlord fraudulently concealed them. The Landlord's liability pursuant to § 536a BGB is limited to {{liability_cap_rental}} EUR, unless intent or gross negligence exists.",
+      "fields": [
+        {"key": "liability_cap_rental", "label_de": "Haftungsobergrenze (EUR)", "label_en": "Liability Cap (EUR)", "type": "text", "required": true}
+      ]
+    },
+    {
+      "title_de": "Schlussbestimmungen",
+      "title_en": "Final Provisions",
+      "content_de": "Gerichtsstand ist {{court_rental}}. Es gilt deutsches Recht. Änderungen und Ergänzungen bedürfen der Schriftform. Ort: {{place_rental}}, Datum: {{date_rental}}",
+      "content_en": "Place of jurisdiction is {{court_rental}}. German law applies. Amendments and supplements require written form. Place: {{place_rental}}, Date: {{date_rental}}",
+      "fields": [
+        {"key": "court_rental", "label_de": "Gerichtsstand", "label_en": "Place of Jurisdiction", "type": "text", "required": true},
+        {"key": "place_rental", "label_de": "Ort", "label_en": "Place", "type": "text", "required": true},
+        {"key": "date_rental", "label_de": "Datum", "label_en": "Date", "type": "date", "required": true}
+      ]
+    }
+  ]
+}

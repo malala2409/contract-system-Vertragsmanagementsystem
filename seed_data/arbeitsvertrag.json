@@ -1,0 +1,72 @@
+{
+  "title_de": "Standard-Arbeitsvertrag",
+  "title_en": "Standard Employment Contract",
+  "sections": [
+    {
+      "title_de": "Parteien",
+      "title_en": "Parties",
+      "content_de": "Zwischen {{employer_name}}, {{employer_address}} (im Folgenden \"Arbeitgeber\") und {{employee_name}}, {{employee_address}} (im Folgenden \"Arbeitnehmer\") wird folgender Arbeitsvertrag gemäß §§ 611a ff. BGB geschlossen:",
+      "content_en": "Between {{employer_name}}, {{employer_address}} (hereinafter \"Employer\") and {{employee_name}}, {{employee_address}} (hereinafter \"Employee\") the following employment contract is concluded pursuant to §§ 611a ff. BGB:",
+      "fields": [
+        {"key": "employer_name", "label_de": "Name des Arbeitgebers", "label_en": "Employer Name", "type": "text", "required": true},
+        {"key": "employer_address", "label_de": "Adresse des Arbeitgebers", "label_en": "Employer Address", "type": "text", "required": true},
+        {"key": "employee_name", "label_de": "Name des Arbeitnehmers", "label_en": "Employee Name", "type": "text", "required": true},
+        {"key": "employee_address", "label_de": "Adresse des Arbeitnehmers", "label_en": "Employee Address", "type": "text", "required": true}
+      ]
+    },
+    {
+      "title_de": "Position und Arbeitsort",
+      "title_en": "Position and Place of Work",
+      "content_de": "Der Arbeitnehmer wird als {{position}} eingestellt. Die Tätigkeit umfasst im Wesentlichen: {{job_description}}. Der Arbeitsort ist {{work_location}}. Der Arbeitgeber behält sich das Recht vor, den Arbeitnehmer vorübergehend an einem anderen Ort einzusetzen.",
+      "content_en": "The Employee is employed as {{position}}. The duties essentially comprise: {{job_description}}. The place of work is {{work_location}}. The Employer reserves the right to temporarily assign the Employee to a different location.",
+      "fields": [
+        {"key": "position", "label_de": "Position", "label_en": "Position", "type": "text", "required": true},
+        {"key": "job_description", "label_de": "Tätigkeitsbeschreibung", "label_en": "Job Description", "type": "textarea", "required": true},
+        {"key": "work_location", "label_de": "Arbeitsort", "label_en": "Work Location", "type": "text", "required": true}
+      ]
+    },
+    {
+      "title_de": "Arbeitszeit und Vergütung",
+      "title_en": "Working Hours and Remuneration",
+      "content_de": "Die regelmäßige wöchentliche Arbeitszeit beträgt {{working_hours}} Stunden. Das Bruttogehalt beträgt {{salary}} EUR monatlich. Der Arbeitnehmer hat Anspruch auf {{vacation_days}} Werktage Erholungsurlaub pro Kalenderjahr gemäß § 3 BUrlG.",
+      "content_en": "The regular weekly working hours amount to {{working_hours}} hours. The gross salary amounts to {{salary}} EUR monthly. The Employee is entitled to {{vacation_days}} working days of vacation per calendar year pursuant to § 3 BUrlG.",
+      "fields": [
+        {"key": "working_hours", "label_de": "Wöchentliche Arbeitszeit (Stunden)", "label_en": "Weekly Working Hours", "type": "text", "required": true},
+        {"key": "salary", "label_de": "Bruttogehalt (EUR/Monat)", "label_en": "Gross Salary (EUR/Month)", "type": "text", "required": true},
+        {"key": "vacation_days", "label_de": "Urlaubstage pro Jahr", "label_en": "Vacation Days per Year", "type": "text", "required": true}
+      ]
+    },
+    {
+      "title_de": "Vertragsdauer und Kündigung",
+      "title_en": "Contract Duration and Termination",
+      "content_de": "Das Arbeitsverhältnis beginnt am {{employment_start}}. Es handelt sich um ein {{contract_type_emp}} Arbeitsverhältnis. Die Probezeit beträgt {{probation_months}} Monate. Die Kündigungsfrist beträgt {{notice_period_emp}} Monate und richtet sich nach § 622 BGB.",
+      "content_en": "The employment relationship commences on {{employment_start}}. This is a {{contract_type_emp}} employment relationship. The probationary period is {{probation_months}} months. The notice period is {{notice_period_emp}} months pursuant to § 622 BGB.",
+      "fields": [
+        {"key": "employment_start", "label_de": "Arbeitsbeginn", "label_en": "Employment Start Date", "type": "date", "required": true},
+        {"key": "probation_months", "label_de": "Probezeit (Monate)", "label_en": "Probation Period (Months)", "type": "text", "required": true},
+        {"key": "notice_period_emp", "label_de": "Kündigungsfrist (Monate)", "label_en": "Notice Period (Months)", "type": "text", "required": true},
+        {"key": "contract_type_emp", "label_de": "Vertragsart", "label_en": "Contract Type", "type": "select", "required": true, "options": ["unbefristet", "befristet", "Teilzeit"]}
+      ]
+    },
+    {
+      "title_de": "Vertraulichkeit und Wettbewerb",
+      "title_en": "Confidentiality and Competition",
+      "content_de": "Der Arbeitnehmer ist verpflichtet, über Geschäftsgeheimnisse des Arbeitgebers Stillschweigen zu bewahren. Die Ausübung einer {{external_activity}} Tätigkeit außerhalb des Arbeitsverhältnisses bedarf der vorherigen Zustimmung des Arbeitgebers.",
+      "content_en": "The Employee is obligated to maintain confidentiality regarding the Employer's trade secrets. The pursuit of {{external_activity}} activity outside the employment relationship requires the prior consent of the Employer.",
+      "fields": [
+        {"key": "external_activity", "label_de": "Externe Tätigkeit", "label_en": "External Activity", "type": "select", "required": true, "options": ["wettbewerbsrelevante", "sonstige", "jede"]}
+      ]
+    },
+    {
+      "title_de": "Schlussbestimmungen",
+      "title_en": "Final Provisions",
+      "content_de": "Gerichtsstand ist {{court_emp}}. Es gilt deutsches Recht. Änderungen und Ergänzungen bedürfen der Schriftform. Ort: {{place_emp}}, Datum: {{date_emp}}",
+      "content_en": "Place of jurisdiction is {{court_emp}}. German law applies. Amendments and supplements require written form. Place: {{place_emp}}, Date: {{date_emp}}",
+      "fields": [
+        {"key": "court_emp", "label_de": "Gerichtsstand", "label_en": "Place of Jurisdiction", "type": "text", "required": true},
+        {"key": "place_emp", "label_de": "Ort", "label_en": "Place", "type": "text", "required": true},
+        {"key": "date_emp", "label_de": "Datum", "label_en": "Date", "type": "date", "required": true}
+      ]
+    }
+  ]
+}

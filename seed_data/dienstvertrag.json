@@ -1,0 +1,70 @@
+{
+  "title_de": "Standard-Dienstvertrag",
+  "title_en": "Standard Service Contract",
+  "sections": [
+    {
+      "title_de": "Parteien",
+      "title_en": "Parties",
+      "content_de": "Zwischen {{client_name}}, {{client_address}} (im Folgenden \"Auftraggeber\") und {{contractor_name}}, {{contractor_address}} (im Folgenden \"Auftragnehmer\") wird folgender Dienstvertrag gemäß §§ 611 ff. BGB geschlossen:",
+      "content_en": "Between {{client_name}}, {{client_address}} (hereinafter \"Client\") and {{contractor_name}}, {{contractor_address}} (hereinafter \"Contractor\") the following service contract is concluded pursuant to §§ 611 ff. BGB:",
+      "fields": [
+        {"key": "client_name", "label_de": "Name des Auftraggebers", "label_en": "Client Name", "type": "text", "required": true},
+        {"key": "client_address", "label_de": "Adresse des Auftraggebers", "label_en": "Client Address", "type": "text", "required": true},
+        {"key": "contractor_name", "label_de": "Name des Auftragnehmers", "label_en": "Contractor Name", "type": "text", "required": true},
+        {"key": "contractor_address", "label_de": "Adresse des Auftragnehmers", "label_en": "Contractor Address", "type": "text", "required": true}
+      ]
+    },
+    {
+      "title_de": "Leistungsgegenstand",
+      "title_en": "Scope of Services",
+      "content_de": "Der Auftragnehmer erbringt folgende Dienstleistungen für den Auftraggeber: {{service_description}}. Die Tätigkeit erfolgt am Ort {{service_location}}.",
+      "content_en": "The Contractor shall perform the following services for the Client: {{service_description}}. The activity shall take place at {{service_location}}.",
+      "fields": [
+        {"key": "service_description", "label_de": "Beschreibung der Dienstleistung", "label_en": "Description of Services", "type": "textarea", "required": true},
+        {"key": "service_location", "label_de": "Leistungsort", "label_en": "Place of Service", "type": "text", "required": true}
+      ]
+    },
+    {
+      "title_de": "Vergütung",
+      "title_en": "Remuneration",
+      "content_de": "Die Vergütung beträgt {{service_fee}} EUR. Die Zahlung erfolgt {{payment_schedule}}. Zahlungsziel: {{payment_days_service}} Tage nach Rechnungsstellung.",
+      "content_en": "The remuneration amounts to {{service_fee}} EUR. Payment shall be made {{payment_schedule}}. Payment term: {{payment_days_service}} days after invoicing.",
+      "fields": [
+        {"key": "service_fee", "label_de": "Vergütung (EUR)", "label_en": "Service Fee (EUR)", "type": "text", "required": true},
+        {"key": "payment_schedule", "label_de": "Zahlungsplan", "label_en": "Payment Schedule", "type": "select", "required": true, "options": ["Einmalig nach Abschluss", "Monatlich", "Nach Meilensteinen"]},
+        {"key": "payment_days_service", "label_de": "Zahlungsziel (Tage)", "label_en": "Payment Term (Days)", "type": "text", "required": true}
+      ]
+    },
+    {
+      "title_de": "Laufzeit und Kündigung",
+      "title_en": "Term and Termination",
+      "content_de": "Der Vertrag beginnt am {{contract_start}} und endet am {{contract_end}}, sofern nicht fristgerecht gekündigt. Die Kündigungsfrist beträgt {{notice_period_service}} Monate. Das Recht zur außerordentlichen Kündigung aus wichtigem Grund gemäß § 626 BGB bleibt unberührt.",
+      "content_en": "The contract commences on {{contract_start}} and ends on {{contract_end}}, unless terminated with due notice. The notice period is {{notice_period_service}} months. The right to extraordinary termination for good cause pursuant to § 626 BGB remains unaffected.",
+      "fields": [
+        {"key": "contract_start", "label_de": "Vertragsbeginn", "label_en": "Contract Start", "type": "date", "required": true},
+        {"key": "contract_end", "label_de": "Vertragsende", "label_en": "Contract End", "type": "date", "required": true},
+        {"key": "notice_period_service", "label_de": "Kündigungsfrist (Monate)", "label_en": "Notice Period (Months)", "type": "text", "required": true}
+      ]
+    },
+    {
+      "title_de": "Haftung",
+      "title_en": "Liability",
+      "content_de": "Der Auftragnehmer haftet für Schäden aus der Verletzung des Lebens, des Körpers oder der Gesundheit sowie für Schäden, die auf vorsätzlichem oder grob fahrlässigem Verhalten beruhen, unbeschränkt. Im Übrigen ist die Haftung auf {{service_liability_cap}} EUR beschränkt.",
+      "content_en": "The Contractor shall be liable without limitation for damages arising from injury to life, body or health, and for damages caused by intentional or grossly negligent conduct. Otherwise, liability is limited to {{service_liability_cap}} EUR.",
+      "fields": [
+        {"key": "service_liability_cap", "label_de": "Haftungsobergrenze (EUR)", "label_en": "Liability Cap (EUR)", "type": "text", "required": true}
+      ]
+    },
+    {
+      "title_de": "Schlussbestimmungen",
+      "title_en": "Final Provisions",
+      "content_de": "Gerichtsstand ist {{court_service}}. Es gilt deutsches Recht. Änderungen und Ergänzungen bedürfen der Schriftform. Ort: {{place_service}}, Datum: {{date_service}}",
+      "content_en": "Place of jurisdiction is {{court_service}}. German law applies. Amendments and supplements require written form. Place: {{place_service}}, Date: {{date_service}}",
+      "fields": [
+        {"key": "court_service", "label_de": "Gerichtsstand", "label_en": "Place of Jurisdiction", "type": "text", "required": true},
+        {"key": "place_service", "label_de": "Ort", "label_en": "Place", "type": "text", "required": true},
+        {"key": "date_service", "label_de": "Datum", "label_en": "Date", "type": "date", "required": true}
+      ]
+    }
+  ]
+}
