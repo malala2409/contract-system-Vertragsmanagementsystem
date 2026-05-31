@@ -1,10 +1,33 @@
 # Vertragsmanagementsystem (Contract Management System)
 
-Eine webbasierte Anwendung zur Verwaltung, Befüllung und Prüfung von Vertragsvorlagen nach deutschem Zivilrecht (BGB). Entwickelt mit Python Flask, SQLite und Tailwind CSS.
+Eine webbasierte Anwendung zur Verwaltung, Befüllung und Prüfung von Vertragsvorlagen nach deutschem Zivilrecht (BGB). In zwei Versionen verfügbar.
 
-![Tech Stack](https://img.shields.io/badge/stack-Flask%20%7C%20SQLite%20%7C%20Tailwind%20CSS-blue)
+| Version | Technologie | Deployment |
+|---------|------------|------------|
+| **Static** (empfohlen) | Vanilla JS, localStorage | Browser (file://) oder GitHub Pages |
+| Flask | Python Flask, SQLite | `python app.py` |
+
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![Status](https://img.shields.io/badge/status-demo-orange)
+
+---
+
+## 🚀 Quick Start
+
+### Static (keine Installation)
+
+```bash
+open index.html
+```
+
+Oder direkt: **[GitHub Pages Demo](https://malala2409.github.io/contract-system/)**
+
+### Flask (klassisch)
+
+```bash
+pip install -r requirements.txt
+python app.py  # → http://localhost:5000
+```
 
 ---
 
