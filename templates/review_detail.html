@@ -109,11 +109,11 @@
             {% if notes %}
             <div class="space-y-2 max-h-64 overflow-y-auto">
                 {% for note in notes | reverse %}
-                <div class="border-l-2 {% if note.action == 'approve' %}border-green-400{% elif note.action == 'reject' %}border-red-400{% elif note.action == 'pending' %}border-yellow-400{% else %}border-gray-300{% endif %} pl-3 py-1">
+                <div class="border-l-2 {% if note.action == 'approved' %}border-green-400{% elif note.action == 'rejected' %}border-red-400{% elif note.action == 'pending' %}border-yellow-400{% else %}border-gray-300{% endif %} pl-3 py-1">
                     <div class="flex items-center gap-1 mb-0.5">
-                        {% if note.action == 'approve' %}
+                        {% if note.action == 'approved' %}
                         <span class="text-xs text-green-600 font-medium">✅ {{ t('status_approved') }}</span>
-                        {% elif note.action == 'reject' %}
+                        {% elif note.action == 'rejected' %}
                         <span class="text-xs text-red-600 font-medium">✗ {{ t('status_rejected') }}</span>
                         {% elif note.action == 'pending' %}
                         <span class="text-xs text-yellow-600 font-medium">↩ {{ t('status_pending') }}</span>

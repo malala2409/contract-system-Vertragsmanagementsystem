@@ -166,14 +166,21 @@ def review_detail(id):
         if submission.review_notes is None:
             submission.review_notes = []
 
-        if action in ('approve', 'reject', 'pending'):
-            submission.status = action
+        if action == 'approve':
+            submission.status = 'approved'
+            submission.reviewed_at = now
+        elif action == 'reject':
+            submission.status = 'rejected'
+            submission.reviewed_at = now
+        elif action == 'pending':
+            submission.status = 'pending'
             submission.reviewed_at = now
 
         if action == 'add_note' or comment:
             # Record timestamped note in history
+            status_labels = {'approve': 'approved', 'reject': 'rejected', 'pending': 'pending'}
             note = {
-                'action': action if action in ('approve', 'reject', 'pending') else 'note',
+                'action': status_labels.get(action, 'note'),
                 'comment': comment,
                 'timestamp': now.strftime('%Y-%m-%d %H:%M'),
             }
