@@ -31,6 +31,7 @@
     <div class="grid lg:grid-cols-2 gap-6">
         <div class="space-y-6" id="form-panel">
             {% for section in template.sections %}
+            {% set si = loop.index0 %}
             <div class="bg-white rounded-xl shadow-sm border p-5">
                 <h2 class="font-bold text-brand-700 mb-3">
                     <span class="text-brand-300 text-sm mr-2">{{ loop.index }}.</span>
@@ -45,14 +46,14 @@
                             {% if field.required %}<span class="text-red-400">*</span>{% endif %}
                         </label>
                         {% if field.type == 'textarea' %}
-                        <textarea name="field_{{ loop.parent.loop.index0 }}_{{ field.key }}"
+                        <textarea name="field_{{ si }}_{{ field.key }}"
                                   class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-brand-300 focus:border-brand-500 outline-none"
                                   rows="3">{{ field.get('default', '') }}</textarea>
                         {% elif field.type == 'date' %}
-                        <input type="date" name="field_{{ loop.parent.loop.index0 }}_{{ field.key }}"
+                        <input type="date" name="field_{{ si }}_{{ field.key }}"
                                class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-brand-300 focus:border-brand-500 outline-none">
                         {% elif field.type == 'select' %}
-                        <select name="field_{{ loop.parent.loop.index0 }}_{{ field.key }}"
+                        <select name="field_{{ si }}_{{ field.key }}"
                                 class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-brand-300 focus:border-brand-500 outline-none">
                             <option value="">—</option>
                             {% for opt in field.get('options', []) %}
@@ -60,7 +61,7 @@
                             {% endfor %}
                         </select>
                         {% else %}
-                        <input type="text" name="field_{{ loop.parent.loop.index0 }}_{{ field.key }}"
+                        <input type="text" name="field_{{ si }}_{{ field.key }}"
                                class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-brand-300 focus:border-brand-500 outline-none"
                                value="{{ field.get('default', '') }}" placeholder="...">
                         {% endif %}
