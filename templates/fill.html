@@ -30,6 +30,12 @@
 
                 <!-- Fill Mode: individual fields (all optional) -->
                 <div class="fill-fields space-y-3" id="fill-fields-{{ si }}">
+                    {% if section.get('fields', []) | length == 0 %}
+                    <!-- No fields: show static clause text -->
+                    <div class="bg-gray-50 rounded-lg p-4 text-sm text-gray-600 leading-relaxed whitespace-pre-wrap">
+                        {{ section.content_de if current_lang() == 'de' else section.content_en }}
+                    </div>
+                    {% endif %}
                     {% for field in section.get('fields', []) %}
                     <div>
                         <label class="block text-xs font-medium text-gray-500 mb-1">

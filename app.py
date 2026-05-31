@@ -224,7 +224,10 @@ def sales_fill(id):
         session['preview_template_id'] = id
         return redirect(url_for('sales_preview', id=id))
 
+    # Pass existing preview data so user can go back and edit without losing data
+    existing_data = session.get('preview_data') if session.get('preview_template_id') == id else None
     return render_template('fill.html', template=template,
+                           existing_data=existing_data,
                            back_url=url_for('sales_home'),
                            submit_label=t('btn_review'),
                            form_action=url_for('sales_fill', id=id))
