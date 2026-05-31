@@ -8,62 +8,117 @@
       "content_de": "Zwischen {{client_name}}, {{client_address}} (im Folgenden \"Auftraggeber\") und {{contractor_name}}, {{contractor_address}} (im Folgenden \"Auftragnehmer\") wird folgender Dienstvertrag gemäß §§ 611 ff. BGB geschlossen:",
       "content_en": "Between {{client_name}}, {{client_address}} (hereinafter \"Client\") and {{contractor_name}}, {{contractor_address}} (hereinafter \"Contractor\") the following service contract is concluded pursuant to §§ 611 ff. BGB:",
       "fields": [
-        {"key": "client_name", "label_de": "Name des Auftraggebers", "label_en": "Client Name", "type": "text", "required": true},
-        {"key": "client_address", "label_de": "Adresse des Auftraggebers", "label_en": "Client Address", "type": "text", "required": true},
-        {"key": "contractor_name", "label_de": "Name des Auftragnehmers", "label_en": "Contractor Name", "type": "text", "required": true},
-        {"key": "contractor_address", "label_de": "Adresse des Auftragnehmers", "label_en": "Contractor Address", "type": "text", "required": true}
+        {"key": "client_name", "label_de": "Name des Auftraggebers", "label_en": "Client Name", "type": "text", "required": false},
+        {"key": "client_address", "label_de": "Adresse des Auftraggebers", "label_en": "Client Address", "type": "text", "required": false},
+        {"key": "contractor_name", "label_de": "Name des Auftragnehmers", "label_en": "Contractor Name", "type": "text", "required": false},
+        {"key": "contractor_address", "label_de": "Adresse des Auftragnehmers", "label_en": "Contractor Address", "type": "text", "required": false}
       ]
     },
     {
-      "title_de": "Leistungsgegenstand",
-      "title_en": "Scope of Services",
-      "content_de": "Der Auftragnehmer erbringt folgende Dienstleistungen für den Auftraggeber: {{service_description}}. Die Tätigkeit erfolgt am Ort {{service_location}}.",
-      "content_en": "The Contractor shall perform the following services for the Client: {{service_description}}. The activity shall take place at {{service_location}}.",
+      "title_de": "Vertragsgegenstand und Leistungsumfang",
+      "title_en": "Subject and Scope of Services",
+      "content_de": "Der Auftragnehmer erbringt für den Auftraggeber folgende Dienstleistungen: {{service_description}}. Der Leistungsumfang umfasst die im Einzelnen in der Anlage/Leistungsbeschreibung ({{service_spec_document}}) definierten Tätigkeiten. Meilensteine sind: {{milestones}}. Der Auftragnehmer schuldet die sorgfältige Erbringung der Dienstleistungen als solche, nicht einen bestimmten Erfolg. Änderungen des Leistungsumfangs bedürfen der Schriftform.",
+      "content_en": "The Contractor shall perform the following services for the Client: {{service_description}}. The scope of services includes the activities defined in detail in the appendix/service specification ({{service_spec_document}}). Milestones are: {{milestones}}. The Contractor owes the careful performance of the services as such, not a specific result. Changes to the scope of services require written form.",
       "fields": [
-        {"key": "service_description", "label_de": "Beschreibung der Dienstleistung", "label_en": "Description of Services", "type": "textarea", "required": true},
-        {"key": "service_location", "label_de": "Leistungsort", "label_en": "Place of Service", "type": "text", "required": true}
+        {"key": "service_description", "label_de": "Beschreibung der Dienstleistungen", "label_en": "Description of Services", "type": "textarea", "required": false},
+        {"key": "service_spec_document", "label_de": "Leistungsbeschreibung/Anlage", "label_en": "Service Specification/Appendix", "type": "text", "required": false},
+        {"key": "milestones", "label_de": "Meilensteine", "label_en": "Milestones", "type": "textarea", "required": false}
+      ]
+    },
+    {
+      "title_de": "Leistungsort und -zeit",
+      "title_en": "Place and Time of Performance",
+      "content_de": "Die Dienstleistungen werden an folgendem Ort erbracht: {{service_location}}. Sofern nichts anderes vereinbart ist, bestimmt der Auftragnehmer den Ort der Leistungserbringung nach pflichtgemäßem Ermessen. Der Auftragnehmer wird die Leistungen im Zeitraum vom {{service_start_date}} bis zum {{service_end_date}} erbringen. Die wöchentliche Einsatzzeit beträgt ca. {{weekly_hours}} Stunden. Die genauen Termine werden zwischen den Parteien abgestimmt. Der Auftragnehmer ist berechtigt, die Leistungen durch qualifizierte Mitarbeiter oder Subunternehmer erbringen zu lassen, bleibt jedoch stets persönlich verantwortlich.",
+      "content_en": "The services shall be performed at the following location: {{service_location}}. Unless otherwise agreed, the Contractor determines the place of performance in its reasonable discretion. The Contractor shall perform the services in the period from {{service_start_date}} to {{service_end_date}}. The weekly engagement is approximately {{weekly_hours}} hours. The exact dates shall be coordinated between the parties. The Contractor is entitled to have the services performed by qualified employees or subcontractors, but remains personally responsible at all times.",
+      "fields": [
+        {"key": "service_location", "label_de": "Leistungsort", "label_en": "Place of Service", "type": "text", "required": false},
+        {"key": "service_start_date", "label_de": "Leistungsbeginn", "label_en": "Service Start Date", "type": "date", "required": false},
+        {"key": "service_end_date", "label_de": "Leistungsende", "label_en": "Service End Date", "type": "date", "required": false},
+        {"key": "weekly_hours", "label_de": "Wöchentliche Einsatzzeit (ca. Stunden)", "label_en": "Weekly Engagement (approx. Hours)", "type": "text", "required": false}
       ]
     },
     {
       "title_de": "Vergütung",
       "title_en": "Remuneration",
-      "content_de": "Die Vergütung beträgt {{service_fee}} EUR. Die Zahlung erfolgt {{payment_schedule}}. Zahlungsziel: {{payment_days_service}} Tage nach Rechnungsstellung.",
-      "content_en": "The remuneration amounts to {{service_fee}} EUR. Payment shall be made {{payment_schedule}}. Payment term: {{payment_days_service}} days after invoicing.",
+      "content_de": "Der Auftraggeber zahlt dem Auftragnehmer eine Vergütung in Höhe von {{service_fee}} EUR (netto zzgl. gesetzlicher Umsatzsteuer). Die Vergütung wird wie folgt fällig: {{payment_schedule}}. Rechnungen sind mit Angabe von Rechnungsnummer, Leistungszeitraum und Umsatzsteuer-Identifikationsnummer zu stellen. Zahlung erfolgt innerhalb von {{payment_days_service}} Tagen nach Rechnungserhalt. Der Auftragnehmer ist berechtigt, angemessene Vorschusszahlungen zu verlangen. Darüber hinaus hat der Auftragnehmer Anspruch auf Ersatz folgender Auslagen und Spesen: {{expenses}}. Reisekosten werden nach dem Bundesreisekostengesetz (BRKG) oder nach folgender Regelung abgerechnet: {{travel_expenses}}. Bei Verzug des Auftraggebers mit Zahlungen ist der Auftragnehmer berechtigt, die weitere Tätigkeit bis zur Zahlung einzustellen.",
+      "content_en": "The Client shall pay the Contractor a fee of {{service_fee}} EUR (net plus statutory VAT). The fee shall become due as follows: {{payment_schedule}}. Invoices shall state the invoice number, service period and VAT identification number. Payment is due within {{payment_days_service}} days of receipt of invoice. The Contractor is entitled to request reasonable advance payments. In addition, the Contractor is entitled to reimbursement of the following expenses: {{expenses}}. Travel costs are settled in accordance with the Federal Travel Expenses Act (BRKG) or the following regulation: {{travel_expenses}}. If the Client defaults on payments, the Contractor is entitled to suspend further work until payment is made.",
       "fields": [
-        {"key": "service_fee", "label_de": "Vergütung (EUR)", "label_en": "Service Fee (EUR)", "type": "text", "required": true},
-        {"key": "payment_schedule", "label_de": "Zahlungsplan", "label_en": "Payment Schedule", "type": "select", "required": true, "options": ["Einmalig nach Abschluss", "Monatlich", "Nach Meilensteinen"]},
-        {"key": "payment_days_service", "label_de": "Zahlungsziel (Tage)", "label_en": "Payment Term (Days)", "type": "text", "required": true}
+        {"key": "service_fee", "label_de": "Vergütung netto (EUR)", "label_en": "Fee Net (EUR)", "type": "text", "required": false},
+        {"key": "payment_schedule", "label_de": "Zahlungsplan", "label_en": "Payment Schedule", "type": "select", "required": false, "options": ["einmalig nach Rechnungsstellung", "monatlich nach erbrachter Leistung", "nach Meilensteinen", "als Pauschalvergütung"]},
+        {"key": "payment_days_service", "label_de": "Zahlungsziel (Tage)", "label_en": "Payment Term (Days)", "type": "text", "required": false},
+        {"key": "expenses", "label_de": "Auslagen und Spesen", "label_en": "Expenses", "type": "textarea", "required": false},
+        {"key": "travel_expenses", "label_de": "Reisekostenregelung", "label_en": "Travel Expenses Regulation", "type": "textarea", "required": false}
       ]
     },
     {
-      "title_de": "Laufzeit und Kündigung",
-      "title_en": "Term and Termination",
-      "content_de": "Der Vertrag beginnt am {{contract_start}} und endet am {{contract_end}}, sofern nicht fristgerecht gekündigt. Die Kündigungsfrist beträgt {{notice_period_service}} Monate. Das Recht zur außerordentlichen Kündigung aus wichtigem Grund gemäß § 626 BGB bleibt unberührt.",
-      "content_en": "The contract commences on {{contract_start}} and ends on {{contract_end}}, unless terminated with due notice. The notice period is {{notice_period_service}} months. The right to extraordinary termination for good cause pursuant to § 626 BGB remains unaffected.",
+      "title_de": "Mitwirkungspflichten des Auftraggebers",
+      "title_en": "Client's Cooperation Duties",
+      "content_de": "Der Auftraggeber ist verpflichtet, dem Auftragnehmer alle für die Erbringung der Dienstleistungen erforderlichen Informationen, Unterlagen und Daten rechtzeitig zur Verfügung zu stellen: {{client_cooperation}}. Der Auftraggeber wird dem Auftragnehmer den erforderlichen Zugang zu seinen Geschäftsräumen, IT-Systemen und sonstigen Ressourcen gewähren: {{client_access}}. Der Auftraggeber stellt sicher, dass die von ihm bereitgestellten Informationen und Materialien vollständig, richtig und aktuell sind. Kommt der Auftraggeber seinen Mitwirkungspflichten nicht oder nicht rechtzeitig nach, ist der Auftragnehmer berechtigt, die Leistung zu verweigern und einen veränderten Zeitplan einseitig festzulegen. Der Auftraggeber trägt die Kosten etwaiger Verzögerungen, die auf die Verletzung seiner Mitwirkungspflichten zurückzuführen sind.",
+      "content_en": "The Client is obligated to provide the Contractor with all information, documents and data required for the performance of the services in a timely manner: {{client_cooperation}}. The Client shall grant the Contractor the necessary access to its premises, IT systems and other resources: {{client_access}}. The Client ensures that the information and materials provided are complete, correct and up to date. If the Client fails to fulfill its cooperation duties in whole or in part, the Contractor is entitled to refuse performance and unilaterally determine a revised schedule. The Client bears the costs of any delays resulting from the breach of its cooperation duties.",
       "fields": [
-        {"key": "contract_start", "label_de": "Vertragsbeginn", "label_en": "Contract Start", "type": "date", "required": true},
-        {"key": "contract_end", "label_de": "Vertragsende", "label_en": "Contract End", "type": "date", "required": true},
-        {"key": "notice_period_service", "label_de": "Kündigungsfrist (Monate)", "label_en": "Notice Period (Months)", "type": "text", "required": true}
+        {"key": "client_cooperation", "label_de": "Vom Auftraggeber bereitzustellende Informationen/Unterlagen", "label_en": "Information/Documents to be Provided by Client", "type": "textarea", "required": false},
+        {"key": "client_access", "label_de": "Zugang zu Ressourcen des Auftraggebers", "label_en": "Access to Client Resources", "type": "textarea", "required": false}
+      ]
+    },
+    {
+      "title_de": "Datenschutz und Vertraulichkeit",
+      "title_en": "Data Protection and Confidentiality",
+      "content_de": "Die Parteien verpflichten sich, die Bestimmungen der Datenschutz-Grundverordnung (DSGVO) sowie des Bundesdatenschutzgesetzes (BDSG) einzuhalten. Sofern der Auftragnehmer personenbezogene Daten im Auftrag des Auftraggebers verarbeitet, schließen die Parteien eine gesonderte Vereinbarung zur Auftragsverarbeitung gemäß Art. 28 DSGVO. Der Auftragnehmer verpflichtet sich, über alle ihm im Rahmen der Vertragsdurchführung bekannt werdenden vertraulichen Informationen und Geschäftsgeheimnisse des Auftraggebers auch über Vertragsbeendigung hinaus Stillschweignis zu bewahren. Vertrauliche Informationen umfassen alle technischen, kaufmännischen und betrieblichen Details, die nicht offenkundig sind. Die Vertraulichkeitsverpflichtung gilt für einen Zeitraum von {{confidentiality_years}} Jahren nach Vertragsbeendigung.",
+      "content_en": "The parties undertake to comply with the provisions of the General Data Protection Regulation (GDPR) and the Federal Data Protection Act (BDSG). If the Contractor processes personal data on behalf of the Client, the parties shall conclude a separate data processing agreement pursuant to Art. 28 GDPR. The Contractor undertakes to maintain secrecy about all confidential information and trade secrets of the Client that become known during the performance of the contract, even after termination. Confidential information includes all technical, commercial and operational details that are not obvious. The confidentiality obligation applies for a period of {{confidentiality_years}} years after termination of the contract.",
+      "fields": [
+        {"key": "confidentiality_years", "label_de": "Vertraulichkeitsdauer nach Vertragsende (Jahre)", "label_en": "Confidentiality Period After Contract End (Years)", "type": "text", "required": false},
+        {"key": "dpa_required", "label_de": "Auftragsverarbeitungsvereinbarung (AVV) erforderlich", "label_en": "Data Processing Agreement Required", "type": "select", "required": false, "options": ["ja, gesonderte AVV erforderlich", "nein, keine Personenbezug", "wird geprüft"]}
       ]
     },
     {
       "title_de": "Haftung",
       "title_en": "Liability",
-      "content_de": "Der Auftragnehmer haftet für Schäden aus der Verletzung des Lebens, des Körpers oder der Gesundheit sowie für Schäden, die auf vorsätzlichem oder grob fahrlässigem Verhalten beruhen, unbeschränkt. Im Übrigen ist die Haftung auf {{service_liability_cap}} EUR beschränkt.",
-      "content_en": "The Contractor shall be liable without limitation for damages arising from injury to life, body or health, and for damages caused by intentional or grossly negligent conduct. Otherwise, liability is limited to {{service_liability_cap}} EUR.",
+      "content_de": "Der Auftragnehmer haftet unbeschränkt für Schäden aus der Verletzung des Lebens, des Körpers oder der Gesundheit sowie für Schäden, die auf Vorsatz oder grober Fahrlässigkeit des Auftragnehmers, seiner gesetzlichen Vertreter oder leitenden Angestellten beruhen. Für leichte Fahrlässigkeit haftet der Auftragnehmer nur, soweit eine wesentliche Vertragspflicht (Kardinalpflicht) verletzt wird, deren Erfüllung die ordnungsgemäße Durchführung des Vertrags erst ermöglicht und auf deren Einhaltung der Auftraggeber regelmäßig vertrauen darf. In diesem Fall ist die Haftung auf den vertragstypischen, vorhersehbaren Schaden begrenzt, höchstens jedoch auf {{service_liability_cap}} EUR. Die Haftung für Sach- und Vermögensschäden ist auf {{service_liability_cap}} EUR begrenzt. Die vorstehenden Haftungsbeschränkungen gelten nicht für Ansprüche aus Produkthaftungsgesetz, aus arglistig verschwiegenen Mängeln oder aus der Übernahme einer Garantie.",
+      "content_en": "The Contractor is liable without limitation for damages arising from injury to life, body or health, and for damages caused by intent or gross negligence of the Contractor, its legal representatives or senior employees. For slight negligence, the Contractor is liable only insofar as an essential contractual obligation (cardinal obligation) is breached, the fulfillment of which enables proper performance of the contract in the first place and on whose compliance the Client may regularly rely. In such case, liability is limited to the contract-typical, foreseeable damage, but no more than {{service_liability_cap}} EUR. Liability for property and financial losses is limited to {{service_liability_cap}} EUR. The foregoing limitations of liability do not apply to claims under the Product Liability Act, for fraudulently concealed defects, or arising from a guarantee.",
       "fields": [
-        {"key": "service_liability_cap", "label_de": "Haftungsobergrenze (EUR)", "label_en": "Liability Cap (EUR)", "type": "text", "required": true}
+        {"key": "service_liability_cap", "label_de": "Haftungsobergrenze (EUR)", "label_en": "Liability Cap (EUR)", "type": "text", "required": false}
+      ]
+    },
+    {
+      "title_de": "Versicherung",
+      "title_en": "Insurance",
+      "content_de": "Der Auftragnehmer hat eine Berufshaftpflichtversicherung (Vermögensschadenhaftpflichtversicherung) mit einer Deckungssumme von {{professional_liability_coverage}} EUR abgeschlossen und während der Vertragsdauer aufrechtzuerhalten. Die Versicherung muss auch für Tätigkeiten im Ausland gelten, soweit diese vereinbart sind. Der Auftragnehmer weist die Versicherung auf Verlangen des Auftraggebers nach. Der Auftraggeber ist berechtigt, die Versicherungspolice beim Versicherer zur Prüfung einzusehen.",
+      "content_en": "The Contractor has taken out professional liability insurance with coverage of {{professional_liability_coverage}} EUR and shall maintain it for the duration of the contract. The insurance must also cover activities abroad, to the extent agreed. The Contractor shall provide evidence of insurance at the Client's request. The Client is entitled to inspect the insurance policy at the insurer for verification.",
+      "fields": [
+        {"key": "professional_liability_coverage", "label_de": "Deckungssumme Berufshaftpflicht (EUR)", "label_en": "Professional Liability Coverage (EUR)", "type": "text", "required": false}
+      ]
+    },
+    {
+      "title_de": "Laufzeit und Kündigung",
+      "title_en": "Term and Termination",
+      "content_de": "Der Vertrag beginnt am {{contract_start}} und endet am {{contract_end}}, sofern er nicht gemäß den nachfolgenden Bestimmungen früher endet. Die Kündigungsfrist für die ordentliche Kündigung beträgt {{notice_period_service}} Monate zum Ende des Kalendermonats. Das Recht zur außerordentlichen Kündigung aus wichtigem Grund gemäß § 626 BGB bleibt unberührt. Ein wichtiger Grund liegt insbesondere vor, wenn eine Partei ihre wesentlichen Vertragspflichten trotz schriftlicher Abmahnung und Fristsetzung nicht erfüllt. Bei Kündigung durch den Auftraggeber hat der Auftragnehmer Anspruch auf anteilige Vergütung bis zum Wirksamwerden der Kündigung sowie auf Ersatz der bis dahin entstandenen Aufwendungen. Im Falle der Kündigung aus wichtigem Grund, den der Auftraggeber zu vertreten hat, steht dem Auftragnehmer die vereinbarte Vergütung für den gesamten Vertragszeitraum abzüglich ersparter Aufwendungen zu.",
+      "content_en": "The contract commences on {{contract_start}} and ends on {{contract_end}}, unless it ends earlier in accordance with the following provisions. The notice period for ordinary termination is {{notice_period_service}} months to the end of the calendar month. The right to extraordinary termination for good cause pursuant to § 626 BGB remains unaffected. Good cause exists in particular if a party fails to fulfill its essential contractual obligations despite written warning and setting of a deadline. In the event of termination by the Client, the Contractor is entitled to a pro-rata fee until the termination takes effect, as well as reimbursement of expenses incurred up to that point. In the event of termination for good cause attributable to the Client, the Contractor is entitled to the agreed fee for the entire contract period less saved expenses.",
+      "fields": [
+        {"key": "contract_start", "label_de": "Vertragsbeginn", "label_en": "Contract Start", "type": "date", "required": false},
+        {"key": "contract_end", "label_de": "Vertragsende", "label_en": "Contract End", "type": "date", "required": false},
+        {"key": "notice_period_service", "label_de": "Ordentliche Kündigungsfrist (Monate)", "label_en": "Ordinary Notice Period (Months)", "type": "text", "required": false}
+      ]
+    },
+    {
+      "title_de": "Abnahme und Mängel",
+      "title_en": "Acceptance and Defects",
+      "content_de": "Die Abnahme der erbrachten Leistungen erfolgt nach Erbringung der jeweiligen Leistungsstufe durch schriftliche Erklärung des Auftraggebers ({{acceptance_procedure}}). Der Auftraggeber hat erbrachte Leistungen unverzüglich zu prüfen und etwaige Mängel innerhalb von {{defect_notification_days}} Tagen schriftlich und detailliert zu rügen. Unterlässt der Auftraggeber die rechtzeitige Mängelrüge, gilt die Leistung als abgenommen. Der Auftragnehmer ist verpflichtet, berechtigte Mängel innerhalb angemessener Frist zu beseitigen. Der Anspruch auf Nacherfüllung verjährt innerhalb von {{warranty_period_service}} Monaten nach Abnahme.",
+      "content_en": "Acceptance of the services rendered shall occur after completion of the respective service stage by written declaration of the Client ({{acceptance_procedure}}). The Client shall examine services immediately and report any defects in writing and in detail within {{defect_notification_days}} days. If the Client fails to give timely notice of defects, the service shall be deemed accepted. The Contractor is obligated to remedy justified defects within a reasonable period. The claim for subsequent performance becomes statute-barred within {{warranty_period_service}} months after acceptance.",
+      "fields": [
+        {"key": "acceptance_procedure", "label_de": "Abnahmeverfahren", "label_en": "Acceptance Procedure", "type": "select", "required": false, "options": ["schriftliche Abnahmeerklärung", "konkludent durch Ingebrauchnahme", "Abnahme durch Fristablauf (fiktive Abnahme)", "Einzelabnahme nach jedem Meilenstein"]},
+        {"key": "defect_notification_days", "label_de": "Mängelrügefrist (Tage)", "label_en": "Defect Notification Period (Days)", "type": "text", "required": false},
+        {"key": "warranty_period_service", "label_de": "Gewährleistungsfrist (Monate)", "label_en": "Warranty Period (Months)", "type": "text", "required": false}
       ]
     },
     {
       "title_de": "Schlussbestimmungen",
       "title_en": "Final Provisions",
-      "content_de": "Gerichtsstand ist {{court_service}}. Es gilt deutsches Recht. Änderungen und Ergänzungen bedürfen der Schriftform. Ort: {{place_service}}, Datum: {{date_service}}",
-      "content_en": "Place of jurisdiction is {{court_service}}. German law applies. Amendments and supplements require written form. Place: {{place_service}}, Date: {{date_service}}",
+      "content_de": "Gerichtsstand ist {{court_service}}. Es gilt das Recht der Bundesrepublik Deutschland unter Ausschluss des UN-Kaufrechts (CISG). Sollte eine Bestimmung dieses Vertrags unwirksam sein oder werden, bleibt der Vertrag im Übrigen wirksam. Anstelle der unwirksamen Bestimmung gilt eine wirksame Regelung, die dem wirtschaftlichen Zweck der unwirksamen Bestimmung möglichst nahekommt. Änderungen und Ergänzungen dieses Vertrags bedürfen der Schriftform; dies gilt auch für die Aufhebung dieser Schriftformklausel. Ausschließlicher Gerichtsstand für alle Streitigkeiten aus und im Zusammenhang mit diesem Vertrag ist, soweit gesetzlich zulässig, der Sitz des Auftraggebers. Ort: {{place_service}}, Datum: {{date_service}}.",
+      "content_en": "Place of jurisdiction is {{court_service}}. The law of the Federal Republic of Germany applies, excluding the UN Convention on Contracts for the International Sale of Goods (CISG). Should any provision of this contract be or become invalid, the remainder of the contract shall remain effective. In place of the invalid provision, a valid provision shall apply that comes as close as possible to the economic purpose of the invalid provision. Amendments and supplements to this contract require written form; this also applies to the waiver of this written form clause. The exclusive place of jurisdiction for all disputes arising from and in connection with this contract is, to the extent legally permissible, the registered office of the Client. Place: {{place_service}}, Date: {{date_service}}.",
       "fields": [
-        {"key": "court_service", "label_de": "Gerichtsstand", "label_en": "Place of Jurisdiction", "type": "text", "required": true},
-        {"key": "place_service", "label_de": "Ort", "label_en": "Place", "type": "text", "required": true},
-        {"key": "date_service", "label_de": "Datum", "label_en": "Date", "type": "date", "required": true}
+        {"key": "court_service", "label_de": "Gerichtsstand", "label_en": "Place of Jurisdiction", "type": "text", "required": false},
+        {"key": "place_service", "label_de": "Ort der Vertragsunterzeichnung", "label_en": "Place of Signing", "type": "text", "required": false},
+        {"key": "date_service", "label_de": "Datum der Vertragsunterzeichnung", "label_en": "Date of Signing", "type": "date", "required": false}
       ]
     }
   ]

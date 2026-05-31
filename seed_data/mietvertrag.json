@@ -5,81 +5,136 @@
     {
       "title_de": "Parteien",
       "title_en": "Parties",
-      "content_de": "Zwischen {{landlord_name}}, {{landlord_address}} (im Folgenden \"Vermieter\") und {{tenant_name}}, {{tenant_address}} (im Folgenden \"Mieter\") wird folgender Mietvertrag geschlossen:",
-      "content_en": "Between {{landlord_name}}, {{landlord_address}} (hereinafter \"Landlord\") and {{tenant_name}}, {{tenant_address}} (hereinafter \"Tenant\") the following lease agreement is concluded:",
+      "content_de": "Zwischen {{landlord_name}}, {{landlord_address}} (im Folgenden \"Vermieter\") und {{tenant_name}}, {{tenant_address}} (im Folgenden \"Mieter\") wird folgender Mietvertrag über Wohnraum gemäß §§ 535 ff. BGB geschlossen:",
+      "content_en": "Between {{landlord_name}}, {{landlord_address}} (hereinafter \"Landlord\") and {{tenant_name}}, {{tenant_address}} (hereinafter \"Tenant\") the following lease agreement for residential premises is concluded pursuant to §§ 535 ff. BGB:",
       "fields": [
-        {"key": "landlord_name", "label_de": "Name des Vermieters", "label_en": "Landlord Name", "type": "text", "required": true},
-        {"key": "landlord_address", "label_de": "Adresse des Vermieters", "label_en": "Landlord Address", "type": "text", "required": true},
-        {"key": "tenant_name", "label_de": "Name des Mieters", "label_en": "Tenant Name", "type": "text", "required": true},
-        {"key": "tenant_address", "label_de": "Adresse des Mieters", "label_en": "Tenant Address", "type": "text", "required": true}
+        {"key": "landlord_name", "label_de": "Name des Vermieters", "label_en": "Landlord Name", "type": "text", "required": false},
+        {"key": "landlord_address", "label_de": "Adresse des Vermieters", "label_en": "Landlord Address", "type": "text", "required": false},
+        {"key": "tenant_name", "label_de": "Name des Mieters", "label_en": "Tenant Name", "type": "text", "required": false},
+        {"key": "tenant_address", "label_de": "Adresse des Mieters", "label_en": "Tenant Address", "type": "text", "required": false}
       ]
     },
     {
-      "title_de": "Mietobjekt",
+      "title_de": "Mietgegenstand",
       "title_en": "Leased Property",
-      "content_de": "Der Vermieter vermietet an den Mieter folgende Räumlichkeiten: {{property_description}} (Adresse: {{property_address}}). Die Wohnfläche beträgt ca. {{property_area}} qm und umfasst {{property_rooms}} Zimmer. Die Nutzung erfolgt als {{usage_type}}.",
-      "content_en": "The Landlord leases to the Tenant the following premises: {{property_description}} (Address: {{property_address}}). The living area is approximately {{property_area}} sqm and comprises {{property_rooms}} rooms. Use shall be as {{usage_type}}.",
+      "content_de": "Der Vermieter vermietet an den Mieter die im Folgenden bezeichnete Wohnung/Räumlichkeit: {{property_description}}. Die genaue Adresse lautet {{property_address}}, {{property_floor}}. OG, {{property_location_description}}. Die Wohnfläche beträgt ca. {{property_area}} m². Die Wohnung besteht aus {{property_rooms}} Zimmern (davon {{property_bedrooms}} Schlafzimmer). Zur Wohnung gehört {{property_balcony}}. Die Wohnung ist ausgestattet mit {{property_furnishings}}.",
+      "content_en": "The Landlord leases to the Tenant the following apartment/premises: {{property_description}}. The exact address is {{property_address}}, floor {{property_floor}}, {{property_location_description}}. The living area is approximately {{property_area}} sqm. The apartment comprises {{property_rooms}} rooms (including {{property_bedrooms}} bedrooms). The apartment includes {{property_balcony}}. The apartment is furnished with {{property_furnishings}}.",
       "fields": [
-        {"key": "property_description", "label_de": "Beschreibung des Mietobjekts", "label_en": "Description of Leased Property", "type": "textarea", "required": true},
-        {"key": "property_address", "label_de": "Adresse des Mietobjekts", "label_en": "Property Address", "type": "text", "required": true},
-        {"key": "property_rooms", "label_de": "Anzahl der Zimmer", "label_en": "Number of Rooms", "type": "text", "required": true},
-        {"key": "property_area", "label_de": "Wohnfläche (qm)", "label_en": "Living Area (sqm)", "type": "text", "required": true},
-        {"key": "usage_type", "label_de": "Nutzungsart", "label_en": "Type of Use", "type": "select", "required": true, "options": ["Wohnung", "Gewerbe", "Praxis", "Lager"]}
+        {"key": "property_description", "label_de": "Beschreibung des Mietobjekts", "label_en": "Description of Leased Property", "type": "textarea", "required": false},
+        {"key": "property_address", "label_de": "Adresse des Mietobjekts", "label_en": "Property Address", "type": "text", "required": false},
+        {"key": "property_floor", "label_de": "Etage", "label_en": "Floor", "type": "text", "required": false},
+        {"key": "property_location_description", "label_de": "Lagebeschreibung", "label_en": "Location Description", "type": "textarea", "required": false},
+        {"key": "property_area", "label_de": "Wohnfläche (m²)", "label_en": "Living Area (sqm)", "type": "text", "required": false},
+        {"key": "property_rooms", "label_de": "Anzahl der Zimmer insgesamt", "label_en": "Total Number of Rooms", "type": "text", "required": false},
+        {"key": "property_bedrooms", "label_de": "Anzahl der Schlafzimmer", "label_en": "Number of Bedrooms", "type": "text", "required": false},
+        {"key": "property_balcony", "label_de": "Balkon/Terrasse/Garten", "label_en": "Balcony/Terrace/Garden", "type": "text", "required": false},
+        {"key": "property_furnishings", "label_de": "Ausstattung (Einbauküche, Bad, Bodenbeläge etc.)", "label_en": "Furnishings (Fitted Kitchen, Bathroom, Flooring etc.)", "type": "textarea", "required": false}
+      ]
+    },
+    {
+      "title_de": "Mietzweck",
+      "title_en": "Purpose of Lease",
+      "content_de": "Die Mietsache wird zu folgendem Zweck gemietet: {{lease_purpose}}. Eine Nutzung zu anderen als dem vereinbarten Zweck bedarf der vorherigen schriftlichen Zustimmung des Vermieters. Bei gewerblicher Mitnutzung gelten die vereinbarten Regelungen der gewerblichen Zwischenvermietung nach Maßgabe der Parteien.",
+      "content_en": "The leased property is rented for the following purpose: {{lease_purpose}}. Use for purposes other than the agreed purpose requires the prior written consent of the Landlord. In the case of partial commercial use, the agreed regulations for commercial subletting apply as determined by the parties.",
+      "fields": [
+        {"key": "lease_purpose", "label_de": "Nutzungszweck", "label_en": "Purpose of Use", "type": "select", "required": false, "options": ["reine Wohnnutzung", "Wohnen mit gelegentlicher Homeoffice-Nutzung", "Wohnen und gewerbliche Mitnutzung", "reine gewerbliche Nutzung"]}
       ]
     },
     {
       "title_de": "Miete und Nebenkosten",
       "title_en": "Rent and Operating Costs",
-      "content_de": "Die Kaltmiete beträgt {{cold_rent}} EUR monatlich. Die Vorauszahlung für Betriebskosten beträgt {{utilities_advance}} EUR monatlich. Die Gesamtmiete beträgt somit {{total_rent}} EUR monatlich. Die Miete ist jeweils bis zum {{payment_day}} eines jeden Monats im Voraus zu zahlen. Die Kaution beträgt {{deposit}} EUR und ist gemäß § 551 BGB auf einem separaten Konto anzulegen.",
-      "content_en": "The cold rent amounts to {{cold_rent}} EUR monthly. The advance payment for utilities amounts to {{utilities_advance}} EUR monthly. The total rent is therefore {{total_rent}} EUR monthly. Rent is payable in advance by the {{payment_day}} of each month. The security deposit amounts to {{deposit}} EUR and shall be held in a separate account in accordance with § 551 BGB.",
+      "content_de": "Die monatliche Grundmiete (Kaltmiete) beträgt {{cold_rent}} EUR. Die Vorauszahlung für Betriebskosten beträgt {{utilities_advance}} EUR monatlich. Die Vorauszahlung für Heizkosten beträgt {{heating_advance}} EUR monatlich. Die Gesamtmiete beträgt somit {{total_rent}} EUR monatlich. Die Miete ist spätestens am {{rent_payment_day}}. Werktag eines jeden Monats im Voraus auf das folgende Konto zu zahlen: {{landlord_account}}. Eine Mieterhöhung ist gemäß § 557 BGB (Miethöhe bei Mietbeginn, Mieterhöhung bis zur ortsüblichen Vergleichsmiete) möglich. Die Zustimmung des Mieters zu einer Mieterhöhung nach § 558 BGB kann verlangt werden. Staffelmietvereinbarungen und Indexmietvereinbarungen bleiben vorbehalten.",
+      "content_en": "The monthly base rent (cold rent) amounts to {{cold_rent}} EUR. The advance payment for operating costs amounts to {{utilities_advance}} EUR monthly. The advance payment for heating costs amounts to {{heating_advance}} EUR monthly. The total rent is thus {{total_rent}} EUR monthly. Rent shall be paid by the {{rent_payment_day}}th working day of each month in advance to the following account: {{landlord_account}}. Rent increases are possible pursuant to § 557 BGB (rent level at commencement, rent increase up to local comparative rent). Consent to a rent increase pursuant to § 558 BGB may be requested. Stepped rent agreements and index-linked rent agreements remain reserved.",
       "fields": [
-        {"key": "cold_rent", "label_de": "Kaltmiete (EUR)", "label_en": "Cold Rent (EUR)", "type": "text", "required": true},
-        {"key": "utilities_advance", "label_de": "Nebenkostenvorauszahlung (EUR)", "label_en": "Utilities Advance (EUR)", "type": "text", "required": true},
-        {"key": "total_rent", "label_de": "Gesamtmiete (EUR)", "label_en": "Total Rent (EUR)", "type": "text", "required": true},
-        {"key": "payment_day", "label_de": "Zahlungstag (Monat)", "label_en": "Payment Day (Month)", "type": "select", "required": true, "options": ["1.", "3.", "5."]},
-        {"key": "deposit", "label_de": "Kaution (EUR)", "label_en": "Security Deposit (EUR)", "type": "text", "required": true}
+        {"key": "cold_rent", "label_de": "Kaltmiete (EUR/Monat)", "label_en": "Cold Rent (EUR/Month)", "type": "text", "required": false},
+        {"key": "utilities_advance", "label_de": "Betriebskostenvorauszahlung (EUR/Monat)", "label_en": "Operating Costs Advance (EUR/Month)", "type": "text", "required": false},
+        {"key": "heating_advance", "label_de": "Heizkostenvorauszahlung (EUR/Monat)", "label_en": "Heating Cost Advance (EUR/Month)", "type": "text", "required": false},
+        {"key": "total_rent", "label_de": "Gesamtmiete (EUR/Monat)", "label_en": "Total Rent (EUR/Month)", "type": "text", "required": false},
+        {"key": "rent_payment_day", "label_de": "Zahlungstag (Werktag des Monats)", "label_en": "Payment Day (Working Day of Month)", "type": "select", "required": false, "options": ["1.", "2.", "3.", "5."]},
+        {"key": "landlord_account", "label_de": "Konto des Vermieters (IBAN)", "label_en": "Landlord's Account (IBAN)", "type": "text", "required": false}
       ]
     },
     {
-      "title_de": "Mietzeit und Kündigung",
-      "title_en": "Lease Term and Termination",
-      "content_de": "Das Mietverhältnis beginnt am {{start_date}}. Es wird auf {{term_type}} geschlossen. Die Kündigungsfrist beträgt {{notice_period}} Monate und richtet sich nach § 573c BGB. Das gesetzliche Kündigungsrecht gemäß § 573 BGB bleibt unberührt.",
-      "content_en": "The tenancy commences on {{start_date}}. It is concluded for {{term_type}}. The notice period is {{notice_period}} months pursuant to § 573c BGB. The statutory right of termination pursuant to § 573 BGB remains unaffected.",
+      "title_de": "Kaution",
+      "title_en": "Security Deposit",
+      "content_de": "Der Mieter leistet eine Kaution in Höhe von {{deposit_amount}} EUR (maximal drei Nettokaltmieten gemäß § 551 BGB). Die Kaution ist wie folgt zu erbringen: {{deposit_method}}. Bei Zahlung in bar ist die Kaution vom Vermieter getrennt von seinem Vermögen bei einem Kreditinstitut zu dem für Spareinlagen üblichen Zinssatz anzulegen (§ 551 Abs. 3 BGB). Die Zinsen stehen dem Mieter zu. Die Rückzahlung der Kaution erfolgt nach Beendigung des Mietverhältnisses und vollständiger Abrechnung der Betriebskosten, längstens jedoch {{deposit_return_months}} Monate nach Rückgabe der Mietsache, sofern keine Gegenansprüche des Vermieters bestehen.",
+      "content_en": "The Tenant provides a security deposit of {{deposit_amount}} EUR (maximum three months' net cold rent pursuant to § 551 BGB). The deposit shall be provided as follows: {{deposit_method}}. In case of cash payment, the Landlord must hold the deposit separately from its assets in an account at a credit institution at the customary interest rate for savings deposits (§ 551 para. 3 BGB). Interest accrues to the Tenant. The deposit shall be returned after termination of the tenancy and full settlement of operating costs, but no later than {{deposit_return_months}} months after return of the leased property, provided the Landlord has no counterclaims.",
       "fields": [
-        {"key": "start_date", "label_de": "Mietbeginn", "label_en": "Commencement Date", "type": "date", "required": true},
-        {"key": "term_type", "label_de": "Dauer des Mietverhältnisses", "label_en": "Term Type", "type": "select", "required": true, "options": ["unbefristet", "befristet auf 1 Jahr", "befristet auf 2 Jahre"]},
-        {"key": "notice_period", "label_de": "Kündigungsfrist (Monate)", "label_en": "Notice Period (Months)", "type": "text", "required": true}
+        {"key": "deposit_amount", "label_de": "Kautionshöhe (EUR)", "label_en": "Deposit Amount (EUR)", "type": "text", "required": false},
+        {"key": "deposit_method", "label_de": "Art der Kautionsleistung", "label_en": "Method of Deposit", "type": "select", "required": false, "options": ["Barkaution", "Sparbuch/Kaution auf Mietkautionskonto", "Mietkautionsbürgschaft", "Ratenzahlung (§ 551 Abs. 2 BGB)"]},
+        {"key": "deposit_return_months", "label_de": "Rückzahlungsfrist der Kaution (Monate)", "label_en": "Deposit Repayment Period (Months)", "type": "text", "required": false}
+      ]
+    },
+    {
+      "title_de": "Mietdauer und Kündigung",
+      "title_en": "Term and Termination",
+      "content_de": "Das Mietverhältnis beginnt am {{start_date}}. Es wird auf {{lease_term}} geschlossen. Die gesetzlichen Kündigungsfristen gemäß § 573c Abs. 1 BGB betragen: für den Mieter drei Monate; für den Vermieter gestaffelt nach Mietdauer (drei Monate bis fünf Jahre, sechs Monate ab fünf Jahren, neun Monate ab acht Jahren). Das Recht zur außerordentlichen Kündigung aus wichtigem Grund gemäß § 543 BGB und zur Kündigung bei vertragswidrigem Gebrauch gemäß § 569 BGB bleibt unberührt. Die Kündigung bedarf der Schriftform (§ 568 BGB). Der Vermieter kann nur kündigen, wenn ein berechtigtes Interesse im Sinne von § 573 BGB vorliegt.",
+      "content_en": "The tenancy commences on {{start_date}}. It is concluded for {{lease_term}}. The statutory notice periods pursuant to § 573c para. 1 BGB are: for the Tenant three months; for the Landlord graduated by duration of tenancy (three months up to five years, six months from five years, nine months from eight years). The right to extraordinary termination for good cause pursuant to § 543 BGB and termination due to improper use pursuant to § 569 BGB remains unaffected. Termination requires written form (§ 568 BGB). The Landlord may only terminate if it has a legitimate interest within the meaning of § 573 BGB.",
+      "fields": [
+        {"key": "start_date", "label_de": "Mietbeginn", "label_en": "Commencement Date", "type": "date", "required": false},
+        {"key": "lease_term", "label_de": "Vertragslaufzeit", "label_en": "Lease Term", "type": "select", "required": false, "options": ["unbefristet", "befristet auf 1 Jahr", "befristet auf 2 Jahre", "befristet auf 3 Jahre", "befristet auf 5 Jahre"]}
+      ]
+    },
+    {
+      "title_de": "Betriebskosten",
+      "title_en": "Operating Costs",
+      "content_de": "Die Betriebskosten werden gemäß der Betriebskostenverordnung (BetrKV) abgerechnet. Umlagefähige Betriebskosten im Sinne von § 556 BGB i.V.m. § 2 BetrKV umfassen insbesondere: (1) laufende öffentliche Lasten (Grundsteuer), (2) Kosten der Wasserversorgung, (3) Kosten der Entwässerung (Abwasser), (4) Heizkosten gemäß Heizkostenverordnung, (5) Kosten der Warmwasserversorgung, (6) Kosten der Gebäudereinigung, (7) Kosten der Gartenpflege, (8) Kosten der Beleuchtung, (9) Schornsteinfegerkosten, (10) Gebäudereinigungskosten, (11) Hauswartkosten, (12) Kosten der Hausverwaltung, (13) Kosten der Gebäudeversicherung, (14) Kosten der Haftpflichtversicherung, (15) Kosten für Aufzug, (16) Kosten für Müllbeseitigung. Die Abrechnung erfolgt jährlich bis zum Ablauf des {{utility_settlement_months}}. Folgenden Monats nach Ende des Abrechnungszeitraums. Nachzahlungen oder Guthaben sind innerhalb von {{utility_payment_days}} Tagen nach Zugang der Abrechnung fällig. Heizkosten sind nach der Heizkostenverordnung (HeizKV) zu verteilen.",
+      "content_en": "Operating costs are settled in accordance with the Operating Costs Regulation (BetrKV). Service charges within the meaning of § 556 BGB in conjunction with § 2 BetrKV include in particular: (1) ongoing public charges (property tax), (2) water supply costs, (3) drainage/wastewater costs, (4) heating costs pursuant to the Heating Costs Regulation, (5) hot water supply costs, (6) building cleaning costs, (7) garden maintenance costs, (8) lighting costs, (9) chimney sweep costs, (10) building cleaning costs, (11) caretaker costs, (12) property management costs, (13) building insurance costs, (14) liability insurance costs, (15) elevator costs, (16) waste disposal costs. The settlement is made annually by the end of the {{utility_settlement_months}}th month following the end of the billing period. Additional payments or credits are due within {{utility_payment_days}} days of receipt of the settlement. Heating costs are to be allocated according to the Heating Costs Regulation (HeizKV).",
+      "fields": [
+        {"key": "utility_settlement_months", "label_de": "Abrechnungsfrist nach Abrechnungszeitraum (Monate)", "label_en": "Settlement Period After Billing Period (Months)", "type": "text", "required": false},
+        {"key": "utility_payment_days", "label_de": "Zahlungsfrist für Nachzahlungen (Tage)", "label_en": "Payment Period for Additional Charges (Days)", "type": "text", "required": false}
       ]
     },
     {
       "title_de": "Instandhaltung und Schönheitsreparaturen",
       "title_en": "Maintenance and Cosmetic Repairs",
-      "content_de": "Schönheitsreparaturen trägt der Mieter: {{tenant_repairs}}. Der Renovierungsplan sieht eine Durchführung nach {{renovation_schedule}} vor. Der Vermieter trägt die Kosten für Instandhaltungsmaßnahmen an der Substanz des Mietobjekts: {{landlord_maintenance}}.",
-      "content_en": "Cosmetic repairs are borne by the Tenant: {{tenant_repairs}}. The renovation schedule provides for execution every {{renovation_schedule}}. The Landlord bears the costs of maintenance measures affecting the substance of the leased property: {{landlord_maintenance}}.",
+      "content_de": "Der Vermieter trägt die Kosten für die Instandhaltung und Instandsetzung der Mietsache, insbesondere für die Instandhaltung von Dach, Fach, Außenwänden, Fensterrahmen, Versorgungsleitungen und gemeinschaftlichen Einrichtungen. Schönheitsreparaturen sind {{cosmetic_repairs_clause}}. Die Schönheitsreparaturen umfassen Tapezieren, Anstreichen von Wänden und Decken, Streichen von Heizkörpern einschließlich Heizungsrohren, Streichen von Innentüren sowie Streichen von Fenstern und Außentüren von innen. Die Fristen für Schönheitsreparaturen betragen in der Regel: für Küchen, Bäder und Duschen alle {{renovation_kitchen_years}} Jahre, für Wohn- und Schlafräume, Flure, Dielen und Toiletten alle {{renovation_living_years}} Jahre und für andere Nebenräume alle {{renovation_other_years}} Jahre. Kleinreparaturen bis zu {{minor_repair_limit}} EUR pro Schadensfall und maximal {{minor_repair_annual_limit}} EUR jährlich trägt der Mieter, wenn sie an häufig genutzten Gegenständen (Armaturen, Steckdosen, Tür- und Fenstergriffe etc.) anfallen.",
+      "content_en": "The Landlord bears the costs for the maintenance and repair of the leased property, in particular for the maintenance of the roof, structural elements, exterior walls, window frames, supply lines and common facilities. Cosmetic repairs are {{cosmetic_repairs_clause}}. Cosmetic repairs include papering, painting walls and ceilings, painting radiators including heating pipes, painting interior doors, and painting windows and exterior doors from the inside. The intervals for cosmetic repairs are generally: for kitchens, bathrooms and showers every {{renovation_kitchen_years}} years, for living and sleeping rooms, corridors, hallways and toilets every {{renovation_living_years}} years, and for other ancillary rooms every {{renovation_other_years}} years. Minor repairs up to {{minor_repair_limit}} EUR per damage event and a maximum of {{minor_repair_annual_limit}} EUR per year are borne by the Tenant if they occur on frequently used items (fittings, sockets, door and window handles, etc.).",
       "fields": [
-        {"key": "tenant_repairs", "label_de": "Schönheitsreparaturen durch Mieter", "label_en": "Cosmetic Repairs by Tenant", "type": "select", "required": true, "options": ["ja", "nein", "nach Absprache"]},
-        {"key": "renovation_schedule", "label_de": "Renovierungsplan", "label_en": "Renovation Schedule", "type": "select", "required": true, "options": ["3 Jahren", "5 Jahren", "nach Bedarf"]},
-        {"key": "landlord_maintenance", "label_de": "Instandhaltung durch Vermieter", "label_en": "Landlord Maintenance", "type": "textarea", "required": true}
+        {"key": "cosmetic_repairs_clause", "label_de": "Schönheitsreparaturen-Regelung", "label_en": "Cosmetic Repairs Clause", "type": "select", "required": false, "options": ["Mieter verpflichtet sich zur Durchführung", "nicht auf Mieter übertragen (Vermieter trägt Kosten)", "nach Absprache und gegen Kostenbeteiligung"]},
+        {"key": "renovation_kitchen_years", "label_de": "Renovierungsintervall Küche/Bad (Jahre)", "label_en": "Renovation Interval Kitchen/Bath (Years)", "type": "text", "required": false},
+        {"key": "renovation_living_years", "label_de": "Renovierungsintervall Wohnräume (Jahre)", "label_en": "Renovation Interval Living Rooms (Years)", "type": "text", "required": false},
+        {"key": "renovation_other_years", "label_de": "Renovierungsintervall Nebenräume (Jahre)", "label_en": "Renovation Interval Ancillary Rooms (Years)", "type": "text", "required": false},
+        {"key": "minor_repair_limit", "label_de": "Kleinreparaturgrenze pro Fall (EUR)", "label_en": "Minor Repair Limit per Case (EUR)", "type": "text", "required": false},
+        {"key": "minor_repair_annual_limit", "label_de": "Kleinreparatur-Jahresgrenze (EUR)", "label_en": "Minor Repair Annual Limit (EUR)", "type": "text", "required": false}
+      ]
+    },
+    {
+      "title_de": "Versicherungen",
+      "title_en": "Insurance",
+      "content_de": "Der Vermieter hat eine Wohngebäudeversicherung (einschließlich Feuer-, Sturm-, Hagel-, Leitungswasser- und Elementarschäden) sowie eine Haftpflichtversicherung für das Gebäude abgeschlossen. Der Mieter wird gebeten, den Abschluss einer Haftpflichtversicherung (Privathaftpflicht) nachzuweisen. Der Mieter wird ermutigt, eine Hausratversicherung für seine Einrichtungsgegenstände abzuschließen, da diese nicht durch die Gebäudeversicherung des Vermieters gedeckt sind. Eine Glasversicherung kann auf Wunsch des Vermieters abgeschlossen werden: {{glass_insurance_required}}.",
+      "content_en": "The Landlord has taken out building insurance (including fire, storm, hail, water damage and elemental damage) as well as liability insurance for the building. The Tenant is requested to provide evidence of personal liability insurance. The Tenant is encouraged to take out household contents insurance for their furnishings, as these are not covered by the Landlord's building insurance. Glass insurance may be taken out at the Landlord's request: {{glass_insurance_required}}.",
+      "fields": [
+        {"key": "glass_insurance_required", "label_de": "Glasversicherung erforderlich", "label_en": "Glass Insurance Required", "type": "select", "required": false, "options": ["ja", "nein", "optional"]}
+      ]
+    },
+    {
+      "title_de": "Haustiere, Untervermietung, bauliche Änderungen",
+      "title_en": "Pets, Subletting, Structural Changes",
+      "content_de": "Das Halten von Haustieren ist {{pets_allowed}}. Die Untervermietung von Wohnraum an Dritte bedarf der vorherigen schriftlichen Zustimmung des Vermieters (§ 540 BGB). Der Mieter hat bei berechtigtem Interesse (§ 553 BGB) einen Anspruch auf Erlaubnis zur Untervermietung eines Teils des Wohnraums. Bauliche Veränderungen an der Mietsache (insbesondere Bohrungen durch Außenwände, Veränderungen an Elektro- oder Wasserinstallationen, Einbau von Satellitenschüsseln) bedürfen der vorherigen schriftlichen Zustimmung des Vermieters. Der Mieter ist verpflichtet, auf Verlangen des Vermieters den ursprünglichen Zustand wiederherzustellen, es sei denn, es wurde ein Ausgleich in Geld vereinbart.",
+      "content_en": "Keeping pets is {{pets_allowed}}. Subletting of premises to third parties requires the prior written consent of the Landlord (§ 540 BGB). If the Tenant has a legitimate interest (§ 553 BGB), the Tenant is entitled to permission for subletting part of the premises. Structural alterations to the leased property (in particular drilling through exterior walls, modifications to electrical or water installations, installation of satellite dishes) require the prior written consent of the Landlord. The Tenant is obligated, at the Landlord's request, to restore the original condition, unless monetary compensation has been agreed.",
+      "fields": [
+        {"key": "pets_allowed", "label_de": "Haustierhaltung", "label_en": "Pets Allowed", "type": "select", "required": false, "options": ["keine Haustiere", "Kleintiere erlaubt, Hunde/Katzen nach Absprache", "alle Haustiere nach vorheriger Zustimmung", "Haustiere grundsätzlich erlaubt"]}
       ]
     },
     {
       "title_de": "Haftung",
       "title_en": "Liability",
-      "content_de": "Die Haftung des Vermieters für anfängliche Mängel ist ausgeschlossen, es sei denn, der Vermieter hat diese arglistig verschwiegen. Die Haftung des Vermieters nach § 536a BGB wird auf {{liability_cap_rental}} EUR begrenzt, sofern kein Vorsatz oder grobe Fahrlässigkeit vorliegt.",
-      "content_en": "The Landlord's liability for initial defects is excluded unless the Landlord fraudulently concealed them. The Landlord's liability pursuant to § 536a BGB is limited to {{liability_cap_rental}} EUR, unless intent or gross negligence exists.",
+      "content_de": "Der Vermieter haftet für anfängliche Mängel der Mietsache nach § 536a BGB. Für Mängel, die während der Mietzeit entstehen, haftet der Vermieter nur, wenn er die Mängel zu vertreten hat oder mit der Mängelbeseitigung in Verzug ist. Die Haftung des Vermieters für Sach- und Vermögensschäden des Mieters ist auf {{landlord_liability_cap}} EUR beschränkt, es sei denn, die Schäden beruhen auf Vorsatz oder grober Fahrlässigkeit des Vermieters oder seiner Erfüllungsgehilfen oder betreffen die Verletzung von Leben, Körper oder Gesundheit. Der Mieter haftet für Schäden an der Mietsache, die durch seinen Gebrauch verursacht werden, es sei denn, sie beruhen auf normaler Abnutzung. Schadensersatzansprüche des Vermieters wegen Veränderungen oder Verschlechterungen der Mietsache verjähren gemäß § 548 BGB sechs Monate nach Rückgabe der Mietsache.",
+      "content_en": "The Landlord is liable for initial defects of the leased property pursuant to § 536a BGB. For defects arising during the tenancy, the Landlord is liable only if it is responsible for the defects or is in default of defect remediation. The Landlord's liability for the Tenant's property and financial losses is limited to {{landlord_liability_cap}} EUR, unless the damages are based on intent or gross negligence of the Landlord or its agents, or involve injury to life, body or health. The Tenant is liable for damage to the leased property caused by its use, unless based on normal wear and tear. The Landlord's claims for damages due to changes or deterioration of the leased property become statute-barred pursuant to § 548 BGB six months after return of the leased property.",
       "fields": [
-        {"key": "liability_cap_rental", "label_de": "Haftungsobergrenze (EUR)", "label_en": "Liability Cap (EUR)", "type": "text", "required": true}
+        {"key": "landlord_liability_cap", "label_de": "Haftungsobergrenze Vermieter (EUR)", "label_en": "Landlord Liability Cap (EUR)", "type": "text", "required": false}
       ]
     },
     {
       "title_de": "Schlussbestimmungen",
       "title_en": "Final Provisions",
-      "content_de": "Gerichtsstand ist {{court_rental}}. Es gilt deutsches Recht. Änderungen und Ergänzungen bedürfen der Schriftform. Ort: {{place_rental}}, Datum: {{date_rental}}",
-      "content_en": "Place of jurisdiction is {{court_rental}}. German law applies. Amendments and supplements require written form. Place: {{place_rental}}, Date: {{date_rental}}",
+      "content_de": "Gerichtsstand ist {{court_rental}}. Es gilt das Recht der Bundesrepublik Deutschland. Sollte eine Bestimmung dieses Vertrags unwirksam sein oder werden, bleibt der Vertrag im Übrigen wirksam. Die unwirksame Bestimmung gilt als durch eine wirksame Regelung ersetzt, die dem wirtschaftlichen Zweck möglichst nahekommt. Änderungen und Ergänzungen dieses Vertrags bedürfen der Schriftform; dies gilt auch für die Aufhebung dieses Schriftformerfordernisses. Ort: {{place_rental}}, Datum: {{date_rental}}. Es werden zwei Ausfertigungen erstellt, jede Partei erhält eine.",
+      "content_en": "Place of jurisdiction is {{court_rental}}. The law of the Federal Republic of Germany applies. Should any provision of this contract be or become invalid, the remainder of the contract shall remain effective. The invalid provision shall be deemed replaced by a valid provision that comes as close as possible to the economic purpose. Amendments and supplements to this contract require written form; this also applies to the waiver of this written form requirement. Place: {{place_rental}}, Date: {{date_rental}}. Two copies shall be executed, each party receives one.",
       "fields": [
-        {"key": "court_rental", "label_de": "Gerichtsstand", "label_en": "Place of Jurisdiction", "type": "text", "required": true},
-        {"key": "place_rental", "label_de": "Ort", "label_en": "Place", "type": "text", "required": true},
-        {"key": "date_rental", "label_de": "Datum", "label_en": "Date", "type": "date", "required": true}
+        {"key": "court_rental", "label_de": "Gerichtsstand", "label_en": "Place of Jurisdiction", "type": "text", "required": false},
+        {"key": "place_rental", "label_de": "Ort der Vertragsunterzeichnung", "label_en": "Place of Signing", "type": "text", "required": false},
+        {"key": "date_rental", "label_de": "Datum der Vertragsunterzeichnung", "label_en": "Date of Signing", "type": "date", "required": false}
       ]
     }
   ]

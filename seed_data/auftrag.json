@@ -1,69 +1,104 @@
 {
-  "title_de": "Standard-Auftrag / Geschäftsbesorgungsvertrag",
-  "title_en": "Standard Agency/Mandate Agreement",
+  "title_de": "Auftrag / Geschäftsbesorgungsvertrag",
+  "title_en": "Agency / Mandate Agreement",
   "sections": [
     {
       "title_de": "Parteien",
       "title_en": "Parties",
-      "content_de": "Zwischen {{principal_name}}, {{principal_address}} (im Folgenden \"Auftraggeber\") und {{agent_name}}, {{agent_address}} (im Folgenden \"Beauftragter\") wird folgender Auftrag gemäß §§ 662 ff. BGB geschlossen:",
-      "content_en": "Between {{principal_name}}, {{principal_address}} (hereinafter \"Principal\") and {{agent_name}}, {{agent_address}} (hereinafter \"Agent\") the following mandate agreement is concluded pursuant to §§ 662 ff. BGB:",
+      "content_de": "Zwischen {{principal_name}}, {{principal_address}} (im Folgenden \"Auftraggeber\") und {{agent_name}}, {{agent_address}} (im Folgenden \"Beauftragter\") wird folgender Auftrag gemäß §§ 662 ff. BGB bzw. Geschäftsbesorgungsvertrag gemäß § 675 BGB geschlossen:",
+      "content_en": "Between {{principal_name}}, {{principal_address}} (hereinafter \"Principal\") and {{agent_name}}, {{agent_address}} (hereinafter \"Agent\") the following mandate agreement is concluded pursuant to §§ 662 ff. BGB or agency agreement pursuant to § 675 BGB:",
       "fields": [
-        {"key": "principal_name", "label_de": "Name des Auftraggebers", "label_en": "Principal Name", "type": "text", "required": true},
-        {"key": "principal_address", "label_de": "Adresse des Auftraggebers", "label_en": "Principal Address", "type": "text", "required": true},
-        {"key": "agent_name", "label_de": "Name des Beauftragten", "label_en": "Agent Name", "type": "text", "required": true},
-        {"key": "agent_address", "label_de": "Adresse des Beauftragten", "label_en": "Agent Address", "type": "text", "required": true}
+        {"key": "principal_name", "label_de": "Name des Auftraggebers", "label_en": "Principal Name", "type": "text", "required": false},
+        {"key": "principal_address", "label_de": "Adresse des Auftraggebers", "label_en": "Principal Address", "type": "text", "required": false},
+        {"key": "agent_name", "label_de": "Name des Beauftragten", "label_en": "Agent Name", "type": "text", "required": false},
+        {"key": "agent_address", "label_de": "Adresse des Beauftragten", "label_en": "Agent Address", "type": "text", "required": false}
       ]
     },
     {
-      "title_de": "Auftragsgegenstand",
-      "title_en": "Subject Matter of the Mandate",
-      "content_de": "Der Auftraggeber beauftragt den Beauftragten mit der Besorgung folgender Angelegenheit: {{mandate_description}}. Der Beauftragte ist gemäß § 665 BGB berechtigt, von Weisungen des Auftraggebers abzuweichen, wenn er den Umständen nach annehmen darf, dass der Auftraggeber bei Kenntnis der Sachlage die Abweichung billigen würde.",
-      "content_en": "The Principal instructs the Agent to handle the following matter: {{mandate_description}}. Pursuant to § 665 BGB, the Agent is entitled to deviate from the Principal's instructions if the Agent may assume, under the circumstances, that the Principal would approve the deviation if aware of the facts.",
+      "title_de": "Auftrag und Geschäftsbesorgung",
+      "title_en": "Mandate and Business Management",
+      "content_de": "Der Auftraggeber beauftragt den Beauftragten mit der Besorgung folgender Angelegenheit: {{mandate_description}}. Der Beauftragte übernimmt die Durchführung des Auftrags im eigenen Namen oder im Namen des Auftraggebers ({{mandate_type}}). Der Beauftragte handelt dabei nach den Grundsätzen der eigenverantwortlichen Erledigung. Die Tätigkeit umfasst insbesondere: {{mandate_details}}. Der Beauftragte ist berechtigt, zur Durchführung des Auftrags Hilfspersonen und Subunternehmer einzusetzen, sofern nichts anderes vereinbart ist.",
+      "content_en": "The Principal instructs the Agent to handle the following matter: {{mandate_description}}. The Agent undertakes the execution of the mandate in its own name or in the name of the Principal ({{mandate_type}}). The Agent acts according to the principles of independent execution. The activity includes in particular: {{mandate_details}}. The Agent is entitled to use assistants and subcontractors for the execution of the mandate, unless otherwise agreed.",
       "fields": [
-        {"key": "mandate_description", "label_de": "Beschreibung des Auftrags", "label_en": "Description of the Mandate", "type": "textarea", "required": true}
+        {"key": "mandate_description", "label_de": "Beschreibung des Auftrags", "label_en": "Description of the Mandate", "type": "textarea", "required": false},
+        {"key": "mandate_type", "label_de": "Art des Auftrags", "label_en": "Type of Mandate", "type": "select", "required": false, "options": ["offene Stellvertretung (im Namen des AG)", "verdeckte Stellvertretung (im eigenen Namen)", "Eigenbesorgung mit Vollmacht", "Geschäftsbesorgung (§ 675 BGB)"]},
+        {"key": "mandate_details", "label_de": "Detaillierte Aufgabenbeschreibung", "label_en": "Detailed Task Description", "type": "textarea", "required": false}
       ]
     },
     {
-      "title_de": "Weisungsrecht und Berichtspflicht",
-      "title_en": "Right of Instruction and Reporting",
-      "content_de": "Der Auftraggeber ist berechtigt, dem Beauftragten jederzeit Weisungen zu erteilen. Der Beauftragte ist gemäß § 666 BGB verpflichtet, dem Auftraggeber die erforderlichen Nachrichten zu geben, auf Verlangen über den Stand der Angelegenheit Auskunft zu erteilen und nach Ausführung des Auftrags Rechenschaft abzulegen.",
-      "content_en": "The Principal is entitled to give instructions to the Agent at any time. Pursuant to § 666 BGB, the Agent is obligated to provide the Principal with necessary information, to report on the status of the matter upon request, and to render an account after execution of the mandate.",
-      "fields": []
+      "title_de": "Weisungsrecht",
+      "title_en": "Right of Instruction",
+      "content_de": "Der Auftraggeber ist berechtigt, dem Beauftragten jederzeit Weisungen hinsichtlich der Durchführung des Auftrags zu erteilen. Der Beauftragte ist gemäß § 665 BGB berechtigt, von den Weisungen des Auftraggebers abzuweichen, wenn er den Umständen nach annehmen darf, dass der Auftraggeber bei Kenntnis der Sachlage die Abweichung billigen würde. Vor einer Abweichung von Weisungen hat der Beauftragte dem Auftraggeber die beabsichtigte Abweichung mitzuteilen und dessen Entscheidung abzuwarten, sofern nicht Gefahr im Verzug ist. Der Beauftragte hat bei Zweifeln über den Umfang des Auftrags oder über die Auslegung von Weisungen unverzüglich eine Klarstellung des Auftraggebers einzuholen.",
+      "content_en": "The Principal is entitled to give instructions to the Agent at any time regarding the execution of the mandate. Pursuant to § 665 BGB, the Agent is entitled to deviate from the Principal's instructions if the Agent may assume, under the circumstances, that the Principal would approve the deviation if aware of the facts. Before deviating from instructions, the Agent shall inform the Principal of the intended deviation and await the Principal's decision, unless there is imminent danger. If the Agent has doubts about the scope of the mandate or the interpretation of instructions, the Agent shall promptly seek clarification from the Principal.",
+      "fields": [
+        {"key": "instruction_form", "label_de": "Form der Weisungserteilung", "label_en": "Form of Instruction", "type": "select", "required": false, "options": ["schriftlich oder elektronisch", "mündlich, schriftlich oder elektronisch", "ausschließlich schriftlich"]}
+      ]
+    },
+    {
+      "title_de": "Pflichten des Beauftragten",
+      "title_en": "Agent's Duties",
+      "content_de": "Der Beauftragte hat den Auftrag mit der Sorgfalt eines ordentlichen Kaufmanns auszuführen. Der Beauftragte ist zur persönlichen Leistungserbringung verpflichtet, soweit nichts anderes vereinbart ist (§ 664 BGB). Der Beauftragte hat dem Auftraggeber gemäß § 666 BGB die erforderlichen Nachrichten zu geben, auf Verlangen über den Stand der Angelegenheit Auskunft zu erteilen und nach der Ausführung des Auftrags Rechenschaft abzulegen. Die Berichterstattung erfolgt {{reporting_frequency}}. Der Beauftragte hat Interessenkonflikte zu vermeiden und bestehende oder potenzielle Interessenkonflikte dem Auftraggeber unverzüglich offenzulegen. Der Beauftragte darf keine Geschenke, Provisionen oder sonstige Vorteile von Dritten annehmen, die im Zusammenhang mit dem Auftrag stehen, es sei denn, der Auftraggeber hat eingewilligt.",
+      "content_en": "The Agent shall execute the mandate with the diligence of a prudent merchant. The Agent is obligated to perform services personally, unless otherwise agreed (§ 664 BGB). Pursuant to § 666 BGB, the Agent shall provide the Principal with necessary information, report on the status of the matter upon request, and render an account after execution of the mandate. Reporting shall occur {{reporting_frequency}}. The Agent shall avoid conflicts of interest and shall immediately disclose any existing or potential conflicts of interest to the Principal. The Agent shall not accept gifts, commissions or other advantages from third parties in connection with the mandate unless the Principal has consented.",
+      "fields": [
+        {"key": "reporting_frequency", "label_de": "Berichtspflicht / Berichtsintervall", "label_en": "Reporting Frequency", "type": "select", "required": false, "options": ["monatlich", "vierteljährlich", "nach Meilensteinen", "auf Anforderung des Auftraggebers"]}
+      ]
     },
     {
       "title_de": "Vergütung und Aufwendungsersatz",
-      "title_en": "Remuneration and Reimbursement",
-      "content_de": "Der Beauftragte erhält für seine Tätigkeit eine Vergütung in Höhe von {{mandate_fee}} EUR. Sofern die Tätigkeit üblicherweise nur gegen Vergütung zu erwarten ist, gilt gemäß § 612 BGB eine Vergütung als stillschweigend vereinbart. Der Auftraggeber ist gemäß § 670 BGB verpflichtet, dem Beauftragten die zum Zwecke der Ausführung des Auftrags gemachten Aufwendungen zu ersetzen, soweit sie der Beauftragte den Umständen nach für erforderlich halten durfte.",
-      "content_en": "The Agent shall receive remuneration of {{mandate_fee}} EUR for its services. If the activity is customarily expected only for remuneration, compensation is deemed tacitly agreed pursuant to § 612 BGB. Pursuant to § 670 BGB, the Principal is obligated to reimburse the Agent for expenses incurred in the execution of the mandate, provided the Agent could deem them necessary under the circumstances.",
+      "title_en": "Remuneration and Expenses",
+      "content_de": "Der Beauftragte erhält für seine Tätigkeit eine Vergütung in Höhe von {{mandate_fee}} EUR (netto zzgl. gesetzlicher Umsatzsteuer). Die Vergütung ist fällig {{fee_due_date}}. Sofern die Tätigkeit üblicherweise nur gegen Vergütung zu erwarten ist, gilt gemäß § 612 BGB eine Vergütung als stillschweigend vereinbart. Der Auftraggeber ist gemäß § 670 BGB verpflichtet, dem Beauftragten die zum Zwecke der Ausführung des Auftrags gemachten Aufwendungen zu ersetzen, soweit sie der Beauftragte den Umständen nach für erforderlich halten durfte. Aufwendungen umfassen insbesondere: {{reimbursable_expenses}}. Der Beauftragte ist berechtigt, einen angemessenen Vorschuss auf die Aufwendungen zu verlangen (§ 669 BGB). Über die Aufwendungen ist dem Auftraggehr im Rahmen der Rechenschaftslegung nach § 666 BGB Nachweis zu führen. Reisekosten werden nach {{travel_cost_regulation}} abgerechnet.",
+      "content_en": "The Agent shall receive remuneration of {{mandate_fee}} EUR (net plus statutory VAT). The remuneration is due {{fee_due_date}}. If the activity is customarily expected only for remuneration, compensation is deemed tacitly agreed pursuant to § 612 BGB. Pursuant to § 670 BGB, the Principal is obligated to reimburse the Agent for expenses incurred in the execution of the mandate, provided the Agent could deem them necessary under the circumstances. Expenses include in particular: {{reimbursable_expenses}}. The Agent is entitled to demand a reasonable advance on expenses (§ 669 BGB). Evidence of expenses shall be provided to the Principal as part of the accounting pursuant to § 666 BGB. Travel costs are settled according to {{travel_cost_regulation}}.",
       "fields": [
-        {"key": "mandate_fee", "label_de": "Vergütung (EUR)", "label_en": "Remuneration (EUR)", "type": "text", "required": true}
-      ]
-    },
-    {
-      "title_de": "Beendigung des Auftrags",
-      "title_en": "Termination of the Mandate",
-      "content_de": "Der Auftrag kann gemäß § 671 BGB von beiden Parteien jederzeit gekündigt werden. Die Kündigungsfrist beträgt {{termination_notice}}. Der Beauftragte darf nur in der Art kündigen, dass der Auftraggeber für die Besorgung des Geschäfts anderweitig Fürsorge treffen kann, es sei denn, ein wichtiger Grund liegt vor.",
-      "content_en": "The mandate may be terminated by either party at any time pursuant to § 671 BGB. The notice period is {{termination_notice}}. The Agent may only terminate in such a way that the Principal can make other arrangements for the handling of the matter, unless good cause exists.",
-      "fields": [
-        {"key": "termination_notice", "label_de": "Kündigungsfrist", "label_en": "Notice Period for Termination", "type": "select", "required": true, "options": ["jederzeit", "2 Wochen", "1 Monat"]}
+        {"key": "mandate_fee", "label_de": "Vergütung netto (EUR)", "label_en": "Fee Net (EUR)", "type": "text", "required": false},
+        {"key": "fee_due_date", "label_de": "Fälligkeit der Vergütung", "label_en": "Fee Due Date", "type": "select", "required": false, "options": ["nach Abschluss des Auftrags", "monatlich nach erbrachter Leistung", "nach Meilensteinen", "sofort nach Rechnungsstellung"]},
+        {"key": "reimbursable_expenses", "label_de": "Erstattungsfähige Aufwendungen", "label_en": "Reimbursable Expenses", "type": "textarea", "required": false},
+        {"key": "travel_cost_regulation", "label_de": "Reisekostenregelung", "label_en": "Travel Cost Regulation", "type": "select", "required": false, "options": ["Bundesreisekostengesetz (BRKG)", "Pauschale pro km", "tatsächliche Kosten gegen Nachweis", "nicht erstattungsfähig"]}
       ]
     },
     {
       "title_de": "Herausgabepflicht",
       "title_en": "Obligation to Return",
-      "content_de": "Der Beauftragte ist gemäß § 667 BGB verpflichtet, dem Auftraggeber alles, was er zur Ausführung des Auftrags erhält und aus der Geschäftsbesorgung erlangt, herauszugeben.",
-      "content_en": "Pursuant to § 667 BGB, the Agent is obligated to surrender to the Principal everything received for the execution of the mandate and obtained from the handling of the matter.",
+      "content_de": "Der Beauftragte ist gemäß § 667 BGB verpflichtet, dem Auftraggeber alles, was er zur Ausführung des Auftrags erhält und aus der Geschäftsbesorgung erlangt, herauszugeben. Dies umfasst insbesondere alle erhaltenen Dokumente, Unterlagen, Zahlungen, Wertpapiere und sonstigen Gegenstände sowie alle Früchte und Nutzungen aus der Geschäftsbesorgung. Der Beauftragte hat über erhaltene Gelder gemäß § 666 BGB Rechnung zu legen und diese getrennt von seinem eigenen Vermögen zu verwahren. Der Beauftragte hat Geld, das er für den Auftraggeber empfangen hat, zu dem für die Verwaltung fremder Gelder üblichen Zinssatz zu verzinsen (§ 668 BGB). Die Herausgabe erfolgt unverzüglich nach Aufforderung durch den Auftraggeber oder spätestens bei Beendigung des Auftrags.",
+      "content_en": "Pursuant to § 667 BGB, the Agent is obligated to surrender to the Principal everything received for the execution of the mandate and obtained from the handling of the matter. This includes in particular all received documents, files, payments, securities and other items as well as all fruits and benefits from the business management. The Agent shall account for funds received pursuant to § 666 BGB and keep them separate from the Agent's own assets. The Agent shall pay interest on money received for the Principal at the customary rate for the management of third-party funds (§ 668 BGB). Surrender shall occur immediately upon request by the Principal or no later than upon termination of the mandate.",
       "fields": []
+    },
+    {
+      "title_de": "Beendigung",
+      "title_en": "Termination",
+      "content_de": "Der Auftrag endet mit seiner Erledigung, durch Widerruf des Auftraggebers oder durch Kündigung des Beauftragten gemäß § 671 BGB. Der Auftraggeber kann den Auftrag jederzeit widerrufen. Der Beauftragte kann den Auftrag jederzeit kündigen, jedoch nur in der Art, dass der Auftraggeber für die Besorgung des Geschäfts anderweitig Fürsorge treffen kann, es sei denn, ein wichtiger Grund liegt vor. Die Kündigungsfrist beträgt {{termination_notice}}. Bei einem Widerruf oder einer Kündigung ohne wichtigen Grund hat der Beauftragte Anspruch auf einen angemessenen Teil der Vergütung entsprechend dem bis dahin erreichten Stand der Auftragsdurchführung sowie auf Ersatz der bis dahin entstandenen Aufwendungen. Bei Tod des Beauftragten erlischt der Auftrag gemäß § 673 BGB, sofern nichts anderes vereinbart ist. Bei Tod des Auftraggebers gilt § 672 BGB.",
+      "content_en": "The mandate ends upon its completion, by revocation by the Principal or by termination by the Agent pursuant to § 671 BGB. The Principal may revoke the mandate at any time. The Agent may terminate the mandate at any time, but only in such a way that the Principal can make other arrangements for the handling of the matter, unless good cause exists. The notice period is {{termination_notice}}. In the event of revocation or termination without good cause, the Agent is entitled to an appropriate portion of the fee corresponding to the status of mandate execution achieved up to that point, as well as reimbursement of expenses incurred up to that point. Upon the death of the Agent, the mandate lapses pursuant to § 673 BGB, unless otherwise agreed. Upon the death of the Principal, § 672 BGB applies.",
+      "fields": [
+        {"key": "termination_notice", "label_de": "Kündigungsfrist", "label_en": "Notice Period", "type": "select", "required": false, "options": ["jederzeit (§ 671 BGB)", "2 Wochen", "1 Monat zum Monatsende", "3 Monate zum Quartalsende"]}
+      ]
+    },
+    {
+      "title_de": "Haftung",
+      "title_en": "Liability",
+      "content_de": "Der Beauftragte haftet für Schäden, die durch vorsätzliche oder grob fahrlässige Pflichtverletzung entstehen, unbeschränkt. Für leichte Fahrlässigkeit haftet der Beauftragte nur bei Verletzung wesentlicher Vertragspflichten (Kardinalpflichten); in diesem Fall ist die Haftung auf den vorhersehbaren, vertragstypischen Schaden begrenzt, höchstens jedoch auf {{agent_liability_cap}} EUR. Vorstehende Haftungsbeschränkungen gelten nicht bei Verletzung von Leben, Körper oder Gesundheit, bei arglistig verschwiegenen Mängeln oder bei Übernahme einer Garantie. Der Auftraggeber haftet dem Beauftragten für Schäden, die durch pflichtwidriges Verhalten des Auftraggebers oder durch Mängel der vom Auftraggeber bereitgestellten Informationen oder Materialien entstehen. Der Beauftragte haftet für das Verschulden von eingeschalteten Hilfspersonen und Subunternehmern wie für eigenes Verschulden (§ 278 BGB). Ansprüche des Auftraggebers verjähren innerhalb der gesetzlichen Verjährungsfrist von drei Jahren, beginnend mit dem Schluss des Jahres, in dem der Anspruch entstanden ist und der Auftraggeber von den anspruchsbegründenden Umständen Kenntnis erlangt hat oder ohne grobe Fahrlässigkeit erlangen müsste.",
+      "content_en": "The Agent is liable without limitation for damages caused by intentional or grossly negligent breach of duty. For slight negligence, the Agent is liable only for breach of essential contractual obligations (cardinal obligations); in this case, liability is limited to the foreseeable, contract-typical damage, but no more than {{agent_liability_cap}} EUR. The foregoing limitations of liability do not apply to injury to life, body or health, fraudulently concealed defects, or assumption of a guarantee. The Principal is liable to the Agent for damages caused by culpable conduct of the Principal or defects in the information or materials provided by the Principal. The Agent is liable for the fault of assistants and subcontractors as for its own fault (§ 278 BGB). Claims of the Principal become statute-barred within the statutory limitation period of three years, commencing at the end of the year in which the claim arose and the Principal obtained knowledge of the circumstances giving rise to the claim or should have obtained such knowledge without gross negligence.",
+      "fields": [
+        {"key": "agent_liability_cap", "label_de": "Haftungsobergrenze Beauftragter (EUR)", "label_en": "Agent Liability Cap (EUR)", "type": "text", "required": false}
+      ]
+    },
+    {
+      "title_de": "Datenschutz und Vertraulichkeit",
+      "title_en": "Data Protection and Confidentiality",
+      "content_de": "Der Beauftragte verpflichtet sich, die Bestimmungen der Datenschutz-Grundverordnung (DSGVO) und des Bundesdatenschutzgesetzes (BDSG) einzuhalten, soweit er im Rahmen des Auftrags Zugang zu personenbezogenen Daten erhält. Sofern der Beauftragte personenbezogene Daten im Auftrag des Auftraggebers verarbeitet, schließen die Parteien eine gesonderte Vereinbarung zur Auftragsverarbeitung gemäß Art. 28 DSGVO. Der Beauftragte verpflichtet sich, über alle im Rahmen des Auftrags bekannt gewordenen vertraulichen Informationen des Auftraggebers Stillschweigen zu bewahren. Diese Verpflichtung gilt auch über die Beendigung des Auftrags hinaus für einen Zeitraum von {{agent_confidentiality_years}} Jahren. Der Beauftragte stellt sicher, dass seine Mitarbeiter und Subunternehmer ebenfalls zur Vertraulichkeit verpflichtet werden. Der Beauftragte darf durch den Auftraggeber überlassene Unterlagen, Daten und Informationen weder kopieren noch an Dritte weitergeben oder für eigene Zwecke nutzen.",
+      "content_en": "The Agent undertakes to comply with the provisions of the General Data Protection Regulation (GDPR) and the Federal Data Protection Act (BDSG) insofar as the Agent obtains access to personal data in the course of the mandate. If the Agent processes personal data on behalf of the Principal, the parties shall conclude a separate data processing agreement pursuant to Art. 28 GDPR. The Agent undertakes to maintain confidentiality regarding all confidential information of the Principal that becomes known in the course of the mandate. This obligation also applies beyond termination of the mandate for a period of {{agent_confidentiality_years}} years. The Agent ensures that its employees and subcontractors are also bound to confidentiality. The Agent shall not copy, pass on to third parties or use for its own purposes any documents, data and information provided by the Principal.",
+      "fields": [
+        {"key": "agent_confidentiality_years", "label_de": "Vertraulichkeitsdauer über Auftragsende hinaus (Jahre)", "label_en": "Confidentiality Period Beyond Mandate End (Years)", "type": "text", "required": false},
+        {"key": "agent_dpa_required", "label_de": "Auftragsverarbeitungsvereinbarung erforderlich", "label_en": "Data Processing Agreement Required", "type": "select", "required": false, "options": ["ja", "nein", "wird geprüft"]}
+      ]
     },
     {
       "title_de": "Schlussbestimmungen",
       "title_en": "Final Provisions",
-      "content_de": "Gerichtsstand ist {{court_mandate}}. Es gilt deutsches Recht. Änderungen und Ergänzungen bedürfen der Schriftform. Ort: {{place_mandate}}, Datum: {{date_mandate}}",
-      "content_en": "Place of jurisdiction is {{court_mandate}}. German law applies. Amendments and supplements require written form. Place: {{place_mandate}}, Date: {{date_mandate}}",
+      "content_de": "Gerichtsstand ist {{court_mandate}}. Es gilt das Recht der Bundesrepublik Deutschland. Sollte eine Bestimmung dieses Vertrags unwirksam sein oder werden, bleibt der Vertrag im Übrigen wirksam. Anstelle der unwirksamen Bestimmung gilt eine wirksame Regelung, die dem wirtschaftlich Gewollten möglichst nahekommt. Änderungen und Ergänzungen bedürfen der Schriftform; dies gilt auch für die Aufhebung dieses Schriftformerfordernisses. Der Auftraggeber erteilt dem Beauftragten die erforderliche Vollmacht zur Vornahme der Rechtshandlungen, die zur Durchführung des Auftrags erforderlich sind, soweit eine Vertretung erforderlich ist. Der Umfang der Vollmacht ergibt sich aus der Anlage zu diesem Vertrag. Ort: {{place_mandate}}, Datum: {{date_mandate}}.",
+      "content_en": "Place of jurisdiction is {{court_mandate}}. The law of the Federal Republic of Germany applies. Should any provision of this contract be or become invalid, the remainder of the contract shall remain effective. In place of the invalid provision, a valid provision shall apply that comes as close as possible to the economic intent. Amendments and supplements require written form; this also applies to the waiver of this written form requirement. The Principal grants the Agent the necessary power of attorney to perform the legal acts required for the execution of the mandate, insofar as representation is necessary. The scope of the power of attorney is set out in the appendix to this contract. Place: {{place_mandate}}, Date: {{date_mandate}}.",
       "fields": [
-        {"key": "court_mandate", "label_de": "Gerichtsstand", "label_en": "Place of Jurisdiction", "type": "text", "required": true},
-        {"key": "place_mandate", "label_de": "Ort", "label_en": "Place", "type": "text", "required": true},
-        {"key": "date_mandate", "label_de": "Datum", "label_en": "Date", "type": "date", "required": true}
+        {"key": "court_mandate", "label_de": "Gerichtsstand", "label_en": "Place of Jurisdiction", "type": "text", "required": false},
+        {"key": "place_mandate", "label_de": "Ort der Vertragsunterzeichnung", "label_en": "Place of Signing", "type": "text", "required": false},
+        {"key": "date_mandate", "label_de": "Datum der Vertragsunterzeichnung", "label_en": "Date of Signing", "type": "date", "required": false}
       ]
     }
   ]

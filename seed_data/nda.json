@@ -5,59 +5,92 @@
     {
       "title_de": "Parteien",
       "title_en": "Parties",
-      "content_de": "Zwischen {{disclosing_name}}, {{disclosing_address}} (im Folgenden \"Offenlegende Partei\") und {{receiving_name}}, {{receiving_address}} (im Folgenden \"Empfangende Partei\") wird folgende Vertraulichkeitsvereinbarung geschlossen:",
+      "content_de": "Zwischen {{disclosing_name}}, {{disclosing_address}} (im Folgenden \"Offenlegende Partei\") und {{receiving_name}}, {{receiving_address}} (im Folgenden \"Empfangende Partei\") wird folgende Vertraulichkeitsvereinbarung (Non-Disclosure Agreement) geschlossen:",
       "content_en": "Between {{disclosing_name}}, {{disclosing_address}} (hereinafter \"Disclosing Party\") and {{receiving_name}}, {{receiving_address}} (hereinafter \"Receiving Party\") the following non-disclosure agreement is concluded:",
       "fields": [
-        {"key": "disclosing_name", "label_de": "Name der offenlegenden Partei", "label_en": "Disclosing Party Name", "type": "text", "required": true},
-        {"key": "disclosing_address", "label_de": "Adresse der offenlegenden Partei", "label_en": "Disclosing Party Address", "type": "text", "required": true},
-        {"key": "receiving_name", "label_de": "Name der empfangenden Partei", "label_en": "Receiving Party Name", "type": "text", "required": true},
-        {"key": "receiving_address", "label_de": "Adresse der empfangenden Partei", "label_en": "Receiving Party Address", "type": "text", "required": true}
+        {"key": "disclosing_name", "label_de": "Name der offenlegenden Partei", "label_en": "Disclosing Party Name", "type": "text", "required": false},
+        {"key": "disclosing_address", "label_de": "Adresse der offenlegenden Partei", "label_en": "Disclosing Party Address", "type": "text", "required": false},
+        {"key": "receiving_name", "label_de": "Name der empfangenden Partei", "label_en": "Receiving Party Name", "type": "text", "required": false},
+        {"key": "receiving_address", "label_de": "Adresse der empfangenden Partei", "label_en": "Receiving Party Address", "type": "text", "required": false}
+      ]
+    },
+    {
+      "title_de": "Zweck der Offenlegung",
+      "title_en": "Purpose of Disclosure",
+      "content_de": "Die Offenlegung vertraulicher Informationen erfolgt im Rahmen der Prüfung und Vorbereitung einer möglichen Geschäftsbeziehung oder Transaktion im Zusammenhang mit folgendem Projekt: {{nda_project_description}}. Die vertraulichen Informationen dürfen von der empfangenden Partei ausschließlich für diesen Zweck verwendet werden (Zweckbindung). Eine darüber hinausgehende Nutzung ist nicht gestattet.",
+      "content_en": "The disclosure of confidential information takes place in the context of evaluating and preparing a potential business relationship or transaction in connection with the following project: {{nda_project_description}}. The confidential information may be used by the Receiving Party exclusively for this purpose (purpose limitation). Use beyond this purpose is not permitted.",
+      "fields": [
+        {"key": "nda_project_description", "label_de": "Projektbeschreibung / Zweck der Offenlegung", "label_en": "Project Description / Purpose of Disclosure", "type": "textarea", "required": false}
       ]
     },
     {
       "title_de": "Vertrauliche Informationen",
       "title_en": "Confidential Information",
-      "content_de": "Vertrauliche Informationen im Sinne dieser Vereinbarung sind alle Informationen, die der offenlegenden Partei gehören oder von ihr kontrolliert werden, einschließlich: {{confidential_scope}}. Als vertraulich gelten alle Informationen, die als solche gekennzeichnet sind oder sich aus den Umständen der Offenlegung als vertraulich ergeben.",
-      "content_en": "Confidential information within the meaning of this agreement includes all information owned or controlled by the Disclosing Party, including: {{confidential_scope}}. All information marked as confidential or that is evidently confidential from the circumstances of disclosure shall be deemed confidential.",
+      "content_de": "Vertrauliche Informationen im Sinne dieser Vereinbarung sind sämtliche Informationen, die der offenlegenden Partei gehören oder von ihr kontrolliert werden, unabhängig von der Form der Offenlegung (schriftlich, mündlich, elektronisch, visuell oder auf sonstigem Wege). Dazu gehören insbesondere: (a) Geschäfts- und Handelsgeheimnisse, (b) technische Daten, Spezifikationen, Erfindungen, Patente, Know-how, (c) Finanzinformationen, Bilanzen, Geschäftspläne, (d) Kunden- und Lieferantenlisten, (e) Strategien, Marketingpläne, Marktanalysen, (f) Informationen über Mitarbeiter, Organisationsstruktur und interne Abläufe, (g) Software, Quellcode, Datenbanken und Algorithmen. Der konkrete Umfang der vertraulichen Informationen ist: {{confidential_scope}}. Informationen gelten auch dann als vertraulich, wenn sie nicht ausdrücklich als solche gekennzeichnet sind, sich aber aus den Umständen der Offenlegung oder der Art der Information ihre Vertraulichkeit ergibt.",
+      "content_en": "Confidential information within the meaning of this agreement includes all information owned or controlled by the Disclosing Party, regardless of the form of disclosure (written, oral, electronic, visual or otherwise). This includes in particular: (a) business and trade secrets, (b) technical data, specifications, inventions, patents, know-how, (c) financial information, balance sheets, business plans, (d) customer and supplier lists, (e) strategies, marketing plans, market analyses, (f) information about employees, organizational structure and internal processes, (g) software, source code, databases and algorithms. The specific scope of confidential information is: {{confidential_scope}}. Information is deemed confidential even if it is not expressly marked as such, if its confidentiality arises from the circumstances of disclosure or the nature of the information.",
       "fields": [
-        {"key": "confidential_scope", "label_de": "Umfang der vertraulichen Informationen", "label_en": "Scope of Confidential Information", "type": "textarea", "required": true}
+        {"key": "confidential_scope", "label_de": "Umfang der vertraulichen Informationen", "label_en": "Scope of Confidential Information", "type": "textarea", "required": false}
       ]
     },
     {
-      "title_de": "Pflichten der empfangenden Partei",
+      "title_de": "Pflichten des Empfängers",
       "title_en": "Obligations of the Receiving Party",
-      "content_de": "Die empfangende Partei verpflichtet sich, die vertraulichen Informationen ausschließlich für folgenden Zweck zu verwenden: {{purpose_nda}}. Die Geheimhaltungspflicht gilt für einen Zeitraum von {{nda_term}} Jahren ab Offenlegung. Die empfangende Partei haftet für die Einhaltung der Vertraulichkeit durch ihre Mitarbeiter und beauftragten Dritten. Diese Verpflichtung besteht nach § 241 II BGB auch über die Beendigung dieser Vereinbarung hinaus.",
-      "content_en": "The Receiving Party undertakes to use the confidential information exclusively for the following purpose: {{purpose_nda}}. The confidentiality obligation applies for a period of {{nda_term}} years from disclosure. The Receiving Party is liable for compliance with confidentiality by its employees and contracted third parties. This obligation continues pursuant to § 241 II BGB even after termination of this agreement.",
+      "content_de": "Die empfangende Partei verpflichtet sich: (1) Die vertraulichen Informationen geheim zu halten und Dritten nicht zugänglich zu machen. (2) Die vertraulichen Informationen ausschließlich für den vereinbarten Zweck zu verwenden. (3) Den Zugang zu vertraulichen Informationen auf diejenigen Mitarbeiter, Berater und Beauftragten zu beschränken, die diese Informationen zur Erfüllung des Zwecks zwingend benötigen (Need-to-Know-Prinzip). (4) Die vorgenannten Personen zur Vertraulichkeit zu verpflichten und für deren Einhaltung wie für eigenes Verschulden einzustehen. (5) Die vertraulichen Informationen nicht zu kopieren, zu reproduzieren oder zu vervielfältigen, es sei denn, dies ist für den Zweck erforderlich. (6) Angemessene technische und organisatorische Maßnahmen (TOM) zum Schutz der vertraulichen Informationen zu treffen. (7) Die vertraulichen Informationen nicht zu dekompilieren, zu reverse-engineeren oder zu disassemblieren.",
+      "content_en": "The Receiving Party undertakes: (1) To keep the confidential information secret and not to make it accessible to third parties. (2) To use the confidential information exclusively for the agreed purpose. (3) To restrict access to confidential information to those employees, consultants and agents who need this information for the fulfillment of the purpose (need-to-know principle). (4) To obligate the aforementioned persons to confidentiality and to answer for their compliance as for its own fault. (5) Not to copy, reproduce or duplicate the confidential information unless necessary for the purpose. (6) To implement appropriate technical and organizational measures (TOM) to protect the confidential information. (7) Not to decompile, reverse-engineer or disassemble the confidential information.",
+      "fields": []
+    },
+    {
+      "title_de": "Ausnahmen von der Vertraulichkeit",
+      "title_en": "Exceptions to Confidentiality",
+      "content_de": "Die Pflichten der empfangenden Partei gelten nicht für Informationen, die: (a) zum Zeitpunkt der Offenlegung bereits öffentlich bekannt sind oder danach ohne Verstoß gegen diese Vereinbarung öffentlich bekannt werden; (b) der empfangenden Partei vor der Offenlegung durch die offenlegende Partei nachweislich bereits bekannt waren; (c) von einem Dritten ohne Verletzung einer Vertraulichkeitsverpflichtung rechtmäßig erlangt wurden; (d) von der empfangenden Partei unabhängig entwickelt wurden, ohne Rückgriff auf vertrauliche Informationen (Nachweis durch schriftliche Aufzeichnungen); (e) aufgrund einer gesetzlichen Verpflichtung, einer gerichtlichen oder behördlichen Anordnung offengelegt werden müssen. Im Fall des Buchstaben (e) wird die empfangende Partei die offenlegende Partei unverzüglich vor der Offenlegung informieren, soweit rechtlich zulässig, und den Umfang der Offenlegung auf das rechtlich erforderliche Mindestmaß beschränken.",
+      "content_en": "The obligations of the Receiving Party shall not apply to information that: (a) is publicly known at the time of disclosure or subsequently becomes publicly known without breach of this agreement; (b) was demonstrably known to the Receiving Party prior to disclosure by the Disclosing Party; (c) was lawfully obtained from a third party without breach of a confidentiality obligation; (d) was independently developed by the Receiving Party without recourse to confidential information (as evidenced by written records); (e) must be disclosed due to a legal obligation, court order or regulatory directive. In the case of (e), the Receiving Party shall promptly inform the Disclosing Party prior to disclosure, to the extent legally permissible, and shall limit the scope of disclosure to the legally required minimum.",
+      "fields": []
+    },
+    {
+      "title_de": "Dauer der Geheimhaltung",
+      "title_en": "Duration of Confidentiality",
+      "content_de": "Die Verpflichtung der empfangenden Partei zur Geheimhaltung der vertraulichen Informationen gilt für einen Zeitraum von {{nda_term}} Jahren ab dem Datum der Offenlegung der jeweiligen vertraulichen Information. Nach Ablauf dieser Frist ist die empfangende Partei von ihren Geheimhaltungsverpflichtungen befreit, soweit gesetzlich zulässig. Die Verpflichtung zur vertraulichen Behandlung von Geschäftsgeheimnissen im Sinne des Geschäftsgeheimnisgesetzes (GeschGehG) besteht jedoch ohne zeitliche Begrenzung fort, solange die Informationen die Voraussetzungen eines Geschäftsgeheimnisses erfüllen.",
+      "content_en": "The Receiving Party's obligation to maintain the confidentiality of the confidential information applies for a period of {{nda_term}} years from the date of disclosure of the respective confidential information. After expiry of this period, the Receiving Party is released from its confidentiality obligations, to the extent legally permitted. However, the obligation to maintain the confidentiality of trade secrets within the meaning of the Trade Secrets Act (GeschGehG) continues without temporal limitation as long as the information meets the requirements of a trade secret.",
       "fields": [
-        {"key": "purpose_nda", "label_de": "Zweck der Offenlegung", "label_en": "Purpose of Disclosure", "type": "textarea", "required": true},
-        {"key": "nda_term", "label_de": "Geheimhaltungsdauer (Jahre)", "label_en": "Confidentiality Term (Years)", "type": "text", "required": true}
+        {"key": "nda_term", "label_de": "Geheimhaltungsdauer (Jahre)", "label_en": "Confidentiality Period (Years)", "type": "text", "required": false}
       ]
     },
     {
-      "title_de": "Ausnahmen",
-      "title_en": "Exceptions",
-      "content_de": "Von der Vertraulichkeit ausgenommen sind Informationen, die (a) zum Zeitpunkt der Offenlegung bereits öffentlich bekannt sind oder später ohne Verschulden der empfangenden Partei öffentlich bekannt werden, (b) der empfangenden Partei vor der Offenlegung nachweislich bekannt waren, (c) von einem Dritten ohne Vertraulichkeitsverpflichtung rechtmäßig erlangt wurden oder (d) aufgrund gesetzlicher Verpflichtung, Gerichtsbeschluss oder behördlicher Anordnung offengelegt werden müssen.",
-      "content_en": "Excluded from confidentiality are information that (a) is publicly known at the time of disclosure or subsequently becomes publicly known without fault of the Receiving Party, (b) was demonstrably known to the Receiving Party prior to disclosure, (c) was lawfully obtained from a third party without confidentiality obligation, or (d) must be disclosed due to legal obligation, court order, or regulatory directive.",
-      "fields": []
+      "title_de": "Rückgabe und Löschung",
+      "title_en": "Return and Deletion",
+      "content_de": "Die empfangende Partei ist verpflichtet, der offenlegenden Partei auf deren Verlangen oder bei Beendigung des zugrunde liegenden Projekts (spätestens jedoch innerhalb von {{return_days}} Tagen nach Aufforderung) alle vertraulichen Informationen in verkörperter Form (einschließlich sämtlicher Kopien, Auszüge, Zusammenfassungen, Analysen und Notizen) unverzüglich herauszugeben oder zu vernichten. Digitale Dateien und Datenbankinhalte sind vollständig und unwiederbringlich zu löschen. Die empfangende Partei bestätigt der offenlegenden Partei auf Verlangen schriftlich die vollständige Rückgabe und Löschung. Die empfangende Partei ist berechtigt, eine Kopie aufzubewahren, soweit dies zur Erfüllung gesetzlicher Aufbewahrungspflichten erforderlich ist; diese Kopie unterliegt weiterhin der Vertraulichkeit.",
+      "content_en": "The Receiving Party is obligated, at the Disclosing Party's request or upon termination of the underlying project (but in any event within {{return_days}} days of request), to immediately return or destroy all confidential information in tangible form (including all copies, extracts, summaries, analyses and notes). Digital files and database contents shall be completely and irrevocably deleted. The Receiving Party shall confirm in writing to the Disclosing Party upon request the complete return and deletion. The Receiving Party is entitled to retain one copy insofar as this is necessary to fulfill statutory retention obligations; this copy shall remain subject to confidentiality.",
+      "fields": [
+        {"key": "return_days", "label_de": "Frist für Rückgabe/Löschung (Tage)", "label_en": "Period for Return/Deletion (Days)", "type": "text", "required": false}
+      ]
     },
     {
       "title_de": "Vertragsstrafe",
       "title_en": "Contractual Penalty",
-      "content_de": "Bei schuldhafter Verletzung der Vertraulichkeitsverpflichtung zahlt die empfangende Partei eine Vertragsstrafe in Höhe von {{nda_penalty}} EUR. Weitergehende Schadensersatzansprüche bleiben unberührt.",
-      "content_en": "In case of culpable breach of the confidentiality obligation, the Receiving Party shall pay a contractual penalty of {{nda_penalty}} EUR. Further claims for damages remain unaffected.",
+      "content_de": "Die empfangende Partei zahlt der offenlegenden Partei für jeden nachweislichen Verstoß gegen die Verpflichtungen aus dieser Vereinbarung eine Vertragsstrafe in Höhe von {{nda_penalty}} EUR ({{nda_penalty_currency}}). Bei fortdauernden Verstößen gilt jeder Tag der Zuwiderhandlung als eigener Verstoß. Die Vertragsstrafe ist auf maximal {{nda_penalty_max}} EUR begrenzt. Die Geltendmachung weitergehender Schadensersatzansprüche bleibt ausdrücklich vorbehalten; die Vertragsstrafe wird auf einen etwaigen Schadensersatzanspruch angerechnet. Die Vertragsstrafe ist unverzüglich nach erstmaliger Aufforderung durch die offenlegende Partei fällig.",
+      "content_en": "The Receiving Party shall pay to the Disclosing Party for each proven breach of the obligations under this agreement a contractual penalty of {{nda_penalty}} EUR ({{nda_penalty_currency}}). In the case of continuing violations, each day of infringement shall constitute a separate breach. The contractual penalty is limited to a maximum of {{nda_penalty_max}} EUR. The assertion of further claims for damages remains expressly reserved; the contractual penalty shall be credited against any claim for damages. The contractual penalty shall be due immediately upon first demand by the Disclosing Party.",
       "fields": [
-        {"key": "nda_penalty", "label_de": "Vertragsstrafe (EUR)", "label_en": "Contractual Penalty (EUR)", "type": "text", "required": true}
+        {"key": "nda_penalty", "label_de": "Vertragsstrafe pro Verstoß (EUR)", "label_en": "Contractual Penalty per Violation (EUR)", "type": "text", "required": false},
+        {"key": "nda_penalty_currency", "label_de": "Währung der Vertragsstrafe", "label_en": "Currency of Penalty", "type": "select", "required": false, "options": ["EUR", "USD", "CHF"]},
+        {"key": "nda_penalty_max", "label_de": "Maximale Vertragsstrafe insgesamt (EUR)", "label_en": "Maximum Total Penalty (EUR)", "type": "text", "required": false}
       ]
+    },
+    {
+      "title_de": "Rechtsfolgen bei Verstoß",
+      "title_en": "Legal Consequences of Breach",
+      "content_de": "Bei einem Verstoß gegen die Vertraulichkeitsverpflichtungen ist die offenlegende Partei berechtigt, (a) Unterlassung gemäß § 1004 BGB analog zu verlangen, (b) einstweiligen Rechtsschutz ohne Darlegung besonderer Dringlichkeit zu beantragen, (c) Schadensersatz nach den gesetzlichen Bestimmungen zu fordern, (d) die Vertragsstrafe nach Maßgabe der vorstehenden Ziffer geltend zu machen. Die Verletzung von Geschäftsgeheimnissen kann nach dem Geschäftsgeheimnisgesetz (GeschGehG) und strafrechtlich nach § 23 GeschGehG verfolgt werden. Die offenlegende Partei behält sich das Recht vor, die sofortige Unterlassung der Nutzung und die Herausgabe aller vertraulichen Informationen zu verlangen. Die Geltendmachung von Ansprüchen aus dieser Vereinbarung steht Ansprüchen aus anderen Rechtsgrundlagen (insbesondere unerlaubte Handlung, Eigentumsverletzung) nicht entgegen.",
+      "content_en": "In the event of a breach of the confidentiality obligations, the Disclosing Party is entitled to (a) demand injunctive relief pursuant to § 1004 BGB analog, (b) apply for interim legal protection without demonstrating special urgency, (c) claim damages in accordance with statutory provisions, (d) assert the contractual penalty in accordance with the preceding clause. The violation of trade secrets may be prosecuted under the Trade Secrets Act (GeschGehG) and as a criminal offense under § 23 GeschGehG. The Disclosing Party reserves the right to demand immediate cessation of use and the return of all confidential information. The assertion of claims under this agreement does not preclude claims under other legal bases (in particular tort, infringement of property rights).",
+      "fields": []
     },
     {
       "title_de": "Schlussbestimmungen",
       "title_en": "Final Provisions",
-      "content_de": "Gerichtsstand ist {{court_nda}}. Es gilt deutsches Recht. Sollte eine Bestimmung unwirksam sein, bleibt die Vereinbarung im Übrigen wirksam. Ort: {{place_nda}}, Datum: {{date_nda}}",
-      "content_en": "Place of jurisdiction is {{court_nda}}. German law applies. Should any provision be invalid, the remainder of the agreement shall remain effective. Place: {{place_nda}}, Date: {{date_nda}}",
+      "content_de": "Gerichtsstand ist {{court_nda}}. Es gilt das Recht der Bundesrepublik Deutschland. Sollte eine Bestimmung dieser Vereinbarung unwirksam sein oder werden, bleibt die Vereinbarung im Übrigen wirksam. Anstelle der unwirksamen Bestimmung gilt eine angemessene Regelung, die dem wirtschaftlichen Zweck der unwirksamen Bestimmung möglichst nahekommt. Änderungen und Ergänzungen dieser Vereinbarung bedürfen der Schriftform; dies gilt auch für die Aufhebung dieser Schriftformklausel. Diese Vereinbarung begründet kein Vertragsverhältnis, kein Joint Venture, keine Partnerschaft oder kein sonstiges Gesellschaftsverhältnis zwischen den Parteien. Ansprüche aus dieser Vereinbarung verjähren innerhalb der gesetzlichen Verjährungsfrist, längstens jedoch innerhalb von drei Jahren ab dem Zeitpunkt, in dem die offenlegende Partei Kenntnis von den anspruchsbegründenden Umständen erlangt hat oder ohne grobe Fahrlässigkeit erlangt haben müsste. Ort: {{place_nda}}, Datum: {{date_nda}}.",
+      "content_en": "Place of jurisdiction is {{court_nda}}. The law of the Federal Republic of Germany applies. Should any provision of this agreement be or become invalid, the remainder of the agreement shall remain effective. In place of the invalid provision, a reasonable provision shall apply that comes as close as possible to the economic purpose of the invalid provision. Amendments and supplements to this agreement require written form; this also applies to the waiver of this written form clause. This agreement does not create a contractual relationship, joint venture, partnership or other corporate relationship between the parties. Claims under this agreement become statute-barred within the statutory limitation period, but no later than three years from the time the Disclosing Party obtained knowledge of the circumstances giving rise to the claim or should have obtained such knowledge without gross negligence. Place: {{place_nda}}, Date: {{date_nda}}.",
       "fields": [
-        {"key": "court_nda", "label_de": "Gerichtsstand", "label_en": "Place of Jurisdiction", "type": "text", "required": true},
-        {"key": "place_nda", "label_de": "Ort", "label_en": "Place", "type": "text", "required": true},
-        {"key": "date_nda", "label_de": "Datum", "label_en": "Date", "type": "date", "required": true}
+        {"key": "court_nda", "label_de": "Gerichtsstand", "label_en": "Place of Jurisdiction", "type": "text", "required": false},
+        {"key": "place_nda", "label_de": "Ort der Vertragsunterzeichnung", "label_en": "Place of Signing", "type": "text", "required": false},
+        {"key": "date_nda", "label_de": "Datum der Vertragsunterzeichnung", "label_en": "Date of Signing", "type": "date", "required": false}
       ]
     }
   ]

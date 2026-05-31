@@ -8,63 +8,121 @@
       "content_de": "Zwischen {{lender_name}}, {{lender_address}} (im Folgenden \"Darlehensgeber\") und {{borrower_name}}, {{borrower_address}} (im Folgenden \"Darlehensnehmer\") wird folgender Darlehensvertrag gemäß §§ 488 ff. BGB geschlossen:",
       "content_en": "Between {{lender_name}}, {{lender_address}} (hereinafter \"Lender\") and {{borrower_name}}, {{borrower_address}} (hereinafter \"Borrower\") the following loan agreement is concluded pursuant to §§ 488 ff. BGB:",
       "fields": [
-        {"key": "lender_name", "label_de": "Name des Darlehensgebers", "label_en": "Lender Name", "type": "text", "required": true},
-        {"key": "lender_address", "label_de": "Adresse des Darlehensgebers", "label_en": "Lender Address", "type": "text", "required": true},
-        {"key": "borrower_name", "label_de": "Name des Darlehensnehmers", "label_en": "Borrower Name", "type": "text", "required": true},
-        {"key": "borrower_address", "label_de": "Adresse des Darlehensnehmers", "label_en": "Borrower Address", "type": "text", "required": true}
+        {"key": "lender_name", "label_de": "Name des Darlehensgebers", "label_en": "Lender Name", "type": "text", "required": false},
+        {"key": "lender_address", "label_de": "Anschrift des Darlehensgebers", "label_en": "Lender Address", "type": "text", "required": false},
+        {"key": "borrower_name", "label_de": "Name des Darlehensnehmers", "label_en": "Borrower Name", "type": "text", "required": false},
+        {"key": "borrower_address", "label_de": "Anschrift des Darlehensnehmers", "label_en": "Borrower Address", "type": "text", "required": false}
       ]
     },
     {
-      "title_de": "Darlehenssumme und Zinsen",
-      "title_en": "Loan Amount and Interest",
-      "content_de": "Das Darlehen beträgt {{loan_amount}} EUR. Der Nominalzinssatz beträgt {{interest_rate}}% p.a. Der effektive Jahreszins beträgt {{effective_rate}}% p.a. Die Zinsen sind monatlich nachträglich zahlbar.",
-      "content_en": "The loan amounts to {{loan_amount}} EUR. The nominal interest rate is {{interest_rate}}% p.a. The effective annual interest rate is {{effective_rate}}% p.a. Interest is payable monthly in arrears.",
+      "title_de": "Darlehenssumme und Auszahlung",
+      "title_en": "Loan Amount and Disbursement",
+      "content_de": "Der Darlehensgeber gewährt dem Darlehensnehmer ein Darlehen in Höhe von {{loan_amount}} EUR (in Worten: {{loan_amount_words}}). Die Auszahlung des Darlehens erfolgt am {{disbursement_date}} auf folgendes Konto des Darlehensnehmers: {{borrower_account}}. Voraussetzung für die Auszahlung ist das Vorliegen folgender Bedingungen (Auszahlungsvoraussetzungen): {{disbursement_conditions}}. Der Darlehensgeber ist berechtigt, die Auszahlung zu verweigern, wenn Umstände eintreten oder bekannt werden, die eine wesentliche Verschlechterung der Vermögensverhältnisse des Darlehensnehmers begründen oder auf eine solche schließen lassen.",
+      "content_en": "The Lender grants the Borrower a loan in the amount of {{loan_amount}} EUR (in words: {{loan_amount_words}}). The loan shall be disbursed on {{disbursement_date}} to the following account of the Borrower: {{borrower_account}}. The disbursement is subject to the following conditions precedent: {{disbursement_conditions}}. The Lender is entitled to refuse disbursement if circumstances arise or become known that constitute or indicate a material deterioration of the Borrower's financial circumstances.",
       "fields": [
-        {"key": "loan_amount", "label_de": "Darlehenssumme (EUR)", "label_en": "Loan Amount (EUR)", "type": "text", "required": true},
-        {"key": "interest_rate", "label_de": "Nominalzinssatz (% p.a.)", "label_en": "Nominal Interest Rate (% p.a.)", "type": "text", "required": true},
-        {"key": "effective_rate", "label_de": "Effektiver Jahreszins (% p.a.)", "label_en": "Effective Annual Rate (% p.a.)", "type": "text", "required": true}
+        {"key": "loan_amount", "label_de": "Darlehenssumme (EUR)", "label_en": "Loan Amount (EUR)", "type": "text", "required": false},
+        {"key": "loan_amount_words", "label_de": "Darlehenssumme in Worten", "label_en": "Loan Amount in Words", "type": "text", "required": false},
+        {"key": "disbursement_date", "label_de": "Auszahlungstermin", "label_en": "Disbursement Date", "type": "date", "required": false},
+        {"key": "borrower_account", "label_de": "Konto des Darlehensnehmers (IBAN)", "label_en": "Borrower's Account (IBAN)", "type": "text", "required": false},
+        {"key": "disbursement_conditions", "label_de": "Auszahlungsvoraussetzungen", "label_en": "Disbursement Conditions", "type": "textarea", "required": false}
+      ]
+    },
+    {
+      "title_de": "Zinsen und Effektivzins",
+      "title_en": "Interest and APR",
+      "content_de": "Das Darlehen wird mit einem Nominalzinssatz in Höhe von {{interest_rate}}% p.a. verzinst. Der effektive Jahreszins beträgt {{effective_rate}}% p.a.; dieser entspricht dem Gesamtbetrag der Kosten als jährlicher Prozentsatz des Darlehensnennbetrags. Die Zinsberechnung erfolgt nach der Methode {{interest_calculation_method}}. Die Zinsen sind monatlich/vierteljährlich/jährlich nachträglich jeweils zum {{interest_payment_date}} fällig. Bei erstmaliger Fälligkeit der Zinsen sind die bis dahin aufgelaufenen Zinsen gesondert abzurechnen. Eine Zinsanpassung erfolgt gemäß der vertraglichen Zinsbindungsdauer: {{interest_fix_period}}. Nach Ablauf der Zinsbindungsdauer gelten die dann marktüblichen Zinssätze.",
+      "content_en": "The loan bears interest at a nominal rate of {{interest_rate}}% p.a. The effective annual percentage rate (APR) is {{effective_rate}}% p.a.; this represents the total cost as an annual percentage of the loan amount. Interest is calculated according to the {{interest_calculation_method}} method. Interest is payable monthly/quarterly/annually in arrears on {{interest_payment_date}} each period. Upon the first due date of interest, the interest accrued up to that point shall be accounted for separately. Interest adjustment occurs according to the agreed interest rate fixation period: {{interest_fix_period}}. After expiry of the interest rate fixation period, the customary market interest rates shall apply.",
+      "fields": [
+        {"key": "interest_rate", "label_de": "Nominalzinssatz (% p.a.)", "label_en": "Nominal Interest Rate (% p.a.)", "type": "text", "required": false},
+        {"key": "effective_rate", "label_de": "Effektiver Jahreszins (% p.a.)", "label_en": "Effective Annual Rate (% p.a.)", "type": "text", "required": false},
+        {"key": "interest_calculation_method", "label_de": "Zinsberechnungsmethode", "label_en": "Interest Calculation Method", "type": "select", "required": false, "options": ["30/360 (deutsche Methode)", "act/360 (EU-Methode)", "act/365 (englische Methode)", "act/act (tagesgenau)"]},
+        {"key": "interest_payment_date", "label_de": "Zinszahlungstag", "label_en": "Interest Payment Date", "type": "text", "required": false},
+        {"key": "interest_fix_period", "label_de": "Zinsbindungsdauer", "label_en": "Interest Rate Fixation Period", "type": "select", "required": false, "options": ["1 Jahr", "3 Jahre", "5 Jahre", "10 Jahre", "15 Jahre", "variabel (marktabhängig)"]}
       ]
     },
     {
       "title_de": "Rückzahlung",
       "title_en": "Repayment",
-      "content_de": "Das Darlehen ist in {{installments}} monatlichen Raten zu tilgen. Die monatliche Rate beträgt {{installment_amount}} EUR. Die erste Rate ist am {{first_payment_date}} fällig. Eine vorzeitige Rückzahlung ist {{early_repayment}}. Das Kündigungsrecht des Darlehensnehmers nach § 489 BGB bleibt unberührt.",
-      "content_en": "The loan shall be repaid in {{installments}} monthly installments. The monthly installment amounts to {{installment_amount}} EUR. The first installment is due on {{first_payment_date}}. Early repayment is {{early_repayment}}. The Borrower's right of termination pursuant to § 489 BGB remains unaffected.",
+      "content_de": "Das Darlehen ist in {{installments}} monatlichen Raten zurückzuzahlen. Die Höhe der monatlichen Rate beträgt {{installment_amount}} EUR, bestehend aus einem Tilgungsanteil von {{repayment_portion}} EUR und einem Zinsanteil von {{interest_portion}} EUR (anfänglich). Die erste Rate ist am {{first_payment_date}} fällig, die letzte Rate am {{last_payment_date}}. Der Darlehensnehmer ist berechtigt, das Darlehen ganz oder teilweise vorzeitig zurückzuzahlen ({{early_repayment_right}}). Bei vorzeitiger Rückzahlung hat der Darlehensgeber Anspruch auf eine Vorfälligkeitsentschädigung nach Maßgabe des § 502 BGB. Der Darlehensnehmer kann das Darlehen nach § 489 BGB unter Einhaltung einer Kündigungsfrist von sechs Monaten ganz oder teilweise kündigen, wenn die Zinsbindungsdauer abgelaufen ist. Ein Tilgungsplan (Amortisationsplan) ist als Anlage beigefügt.",
+      "content_en": "The loan shall be repaid in {{installments}} monthly installments. The monthly installment amounts to {{installment_amount}} EUR, consisting of a repayment portion of {{repayment_portion}} EUR and an interest portion of {{interest_portion}} EUR (initial). The first installment is due on {{first_payment_date}}, the last installment on {{last_payment_date}}. The Borrower is entitled to repay the loan in whole or in part before the agreed date ({{early_repayment_right}}). In the event of early repayment, the Lender is entitled to an early repayment penalty in accordance with § 502 BGB. The Borrower may terminate the loan in whole or in part pursuant to § 489 BGB with six months' notice if the interest rate fixation period has expired. An amortization schedule is attached as an appendix.",
       "fields": [
-        {"key": "installments", "label_de": "Anzahl der Raten", "label_en": "Number of Installments", "type": "text", "required": true},
-        {"key": "installment_amount", "label_de": "Monatliche Rate (EUR)", "label_en": "Monthly Installment (EUR)", "type": "text", "required": true},
-        {"key": "first_payment_date", "label_de": "Erste Zahlung", "label_en": "First Payment Date", "type": "date", "required": true},
-        {"key": "early_repayment", "label_de": "Vorzeitige Rückzahlung", "label_en": "Early Repayment", "type": "select", "required": true, "options": ["jederzeit", "nur mit Zustimmung", "ausgeschlossen"]}
+        {"key": "installments", "label_de": "Anzahl der Raten", "label_en": "Number of Installments", "type": "text", "required": false},
+        {"key": "installment_amount", "label_de": "Monatliche Rate (EUR)", "label_en": "Monthly Installment (EUR)", "type": "text", "required": false},
+        {"key": "repayment_portion", "label_de": "Tilgungsanteil anfänglich (EUR)", "label_en": "Initial Repayment Portion (EUR)", "type": "text", "required": false},
+        {"key": "interest_portion", "label_de": "Zinsanteil anfänglich (EUR)", "label_en": "Initial Interest Portion (EUR)", "type": "text", "required": false},
+        {"key": "first_payment_date", "label_de": "Erste Rate fällig am", "label_en": "First Installment Due On", "type": "date", "required": false},
+        {"key": "last_payment_date", "label_de": "Letzte Rate fällig am", "label_en": "Last Installment Due On", "type": "date", "required": false},
+        {"key": "early_repayment_right", "label_de": "Vorzeitiges Rückzahlungsrecht", "label_en": "Early Repayment Right", "type": "select", "required": false, "options": ["jederzeit ohne Kosten", "jederzeit mit Vorfälligkeitsentschädigung (§ 502 BGB)", "nach Ablauf der Zinsbindung (§ 489 BGB)", "nicht vorgesehen"]}
       ]
     },
     {
       "title_de": "Sicherheiten",
       "title_en": "Collateral",
-      "content_de": "Zur Sicherung des Darlehens werden folgende Sicherheiten bestellt: {{collateral_description}}.",
-      "content_en": "The following collateral is provided to secure the loan: {{collateral_description}}.",
+      "content_de": "Zur Sicherung aller bestehenden und künftigen Forderungen des Darlehensgebers aus diesem Darlehensvertrag werden folgende Sicherheiten bestellt: {{collateral_description}}. Die Sicherheiten sind {{collateral_valuation}}. Der Darlehensnehmer verpflichtet sich, die Sicherheiten instand zu halten und ausreichend zu versichern. Auf Verlangen des Darlehensgebers ist der Versicherungsnachweis zu erbringen. Der Darlehensnehmer verpflichtet sich, die Sicherheiten nicht mit Rechten Dritter zu belasten und nicht zu veräußern. Bei Veräußerung oder wesentlicher Verschlechterung der Sicherheiten ist der Darlehensnehmer verpflichtet, dem Darlehensgeber auf Verlangen gleichwertige Ersatzsicherheiten zu bestellen.",
+      "content_en": "To secure all existing and future claims of the Lender arising from this loan agreement, the following collateral is provided: {{collateral_description}}. The collateral is valued at {{collateral_valuation}}. The Borrower undertakes to maintain the collateral in good condition and to insure it adequately. Proof of insurance shall be provided at the Lender's request. The Borrower undertakes not to encumber the collateral with third-party rights and not to dispose of it. In the event of disposal or material deterioration of the collateral, the Borrower is obligated to provide equivalent replacement collateral at the Lender's request.",
       "fields": [
-        {"key": "collateral_description", "label_de": "Sicherheiten", "label_en": "Collateral Description", "type": "textarea", "required": false}
+        {"key": "collateral_description", "label_de": "Beschreibung der Sicherheiten", "label_en": "Description of Collateral", "type": "textarea", "required": false},
+        {"key": "collateral_valuation", "label_de": "Bewertung der Sicherheiten (EUR)", "label_en": "Collateral Valuation (EUR)", "type": "text", "required": false}
       ]
     },
     {
-      "title_de": "Kündigung und Verzug",
-      "title_en": "Termination and Default",
-      "content_de": "Bei Verzug von mindestens {{default_months}} Monaten mit der Zahlung von mindestens zwei Teilraten ist der Darlehensgeber berechtigt, das Darlehen gemäß § 498 BGB zu kündigen. Für den Verzug beträgt der Verzugszinssatz {{default_interest}}% p.a. gemäß § 288 BGB.",
-      "content_en": "If the Borrower is in arrears for at least {{default_months}} months with the payment of at least two partial installments, the Lender is entitled to terminate the loan pursuant to § 498 BGB. The default interest rate is {{default_interest}}% p.a. pursuant to § 288 BGB.",
+      "title_de": "Verzug und Kündigung",
+      "title_en": "Default and Termination",
+      "content_de": "Der Darlehensnehmer befindet sich in Verzug, wenn er eine fällige Zahlung nicht innerhalb von {{grace_period_days}} Tagen nach Fälligkeit leistet. Der Verzugszinssatz beträgt {{default_interest_rate}} Prozentpunkte über dem Basiszinssatz gemäß § 288 BGB. Der Darlehensgeber ist berechtigt, das Darlehen gemäß § 498 BGB zu kündigen, wenn der Darlehensnehmer mit mindestens zwei aufeinanderfolgenden Teilzahlungen ganz oder teilweise in Verzug ist und die Rückstände mindestens {{default_percent}}% des Darlehennennbetrags betragen. Der Darlehensgeber ist ferner zur außerordentlichen Kündigung aus wichtigem Grund berechtigt, insbesondere bei wesentlicher Verschlechterung der Vermögensverhältnisse des Darlehensnehmers, bei falschen Angaben des Darlehensnehmers oder bei Verletzung der Sicherungsabrede. Der Darlehensnehmer ist berechtigt, den Darlehensvertrag gemäß § 489 BGB unter Einhaltung der gesetzlichen Fristen zu kündigen, sofern die Zinsbindung abgelaufen ist.",
+      "content_en": "The Borrower is in default if a due payment is not made within {{grace_period_days}} days after the due date. The default interest rate is {{default_interest_rate}} percentage points above the base rate pursuant to § 288 BGB. The Lender is entitled to terminate the loan pursuant to § 498 BGB if the Borrower is in default with at least two consecutive partial payments in whole or in part and the arrears amount to at least {{default_percent}}% of the nominal loan amount. The Lender is further entitled to extraordinary termination for good cause, in particular in the event of a material deterioration of the Borrower's financial circumstances, false statements by the Borrower, or breach of the security agreement. The Borrower is entitled to terminate the loan agreement pursuant to § 489 BGB in compliance with the statutory periods insofar as the interest rate fixation period has expired.",
       "fields": [
-        {"key": "default_months", "label_de": "Verzugsmonate vor Kündigung", "label_en": "Default Months Before Termination", "type": "text", "required": true},
-        {"key": "default_interest", "label_de": "Verzugszins (% p.a.)", "label_en": "Default Interest (% p.a.)", "type": "text", "required": true}
+        {"key": "grace_period_days", "label_de": "Nachfrist vor Verzug (Tage)", "label_en": "Grace Period Before Default (Days)", "type": "text", "required": false},
+        {"key": "default_interest_rate", "label_de": "Verzugszinssatz (Prozentpunkte über Basiszinssatz)", "label_en": "Default Interest Rate (Percentage Points Above Base Rate)", "type": "text", "required": false},
+        {"key": "default_percent", "label_de": "Mindestrückstand für Kündigung (% des Nennbetrags)", "label_en": "Minimum Arrears for Termination (% of Principal)", "type": "text", "required": false}
+      ]
+    },
+    {
+      "title_de": "Zweckbindung",
+      "title_en": "Purpose Limitation",
+      "content_de": "Das Darlehen wird zu folgendem Zweck gewährt: {{loan_purpose}}. Der Darlehensnehmer verpflichtet sich, die Darlehensvaluta ausschließlich für den genannten Zweck zu verwenden. Eine zweckwidrige Verwendung berechtigt den Darlehensgeber zur außerordentlichen Kündigung des Darlehensvertrags. Der Darlehensgeber ist berechtigt, die zweckentsprechende Verwendung der Darlehensmittel durch Vorlage entsprechender Nachweise (Rechnungen, Zahlungsbelege) zu überprüfen.",
+      "content_en": "The loan is granted for the following purpose: {{loan_purpose}}. The Borrower undertakes to use the loan proceeds exclusively for the stated purpose. Use contrary to the purpose entitles the Lender to extraordinary termination of the loan agreement. The Lender is entitled to verify the use of the loan proceeds in accordance with the purpose by requesting appropriate evidence (invoices, payment receipts).",
+      "fields": [
+        {"key": "loan_purpose", "label_de": "Verwendungszweck des Darlehens", "label_en": "Purpose of the Loan", "type": "textarea", "required": false}
+      ]
+    },
+    {
+      "title_de": "Informationspflichten",
+      "title_en": "Information Obligations",
+      "content_de": "Der Darlehensnehmer ist verpflichtet, dem Darlehensgeber auf Verlangen jederzeit Auskunft über seine wirtschaftlichen Verhältnisse zu erteilen, insbesondere durch Vorlage von Jahresabschlüssen, betriebswirtschaftlichen Auswertungen, Steuerbescheiden und Vermögensübersichten: {{financial_info_provision}}. Der Darlehensnehmer hat dem Darlehensgeber unverzüglich alle Umstände mitzuteilen, die für die Beurteilung der Kreditwürdigkeit von Bedeutung sein können, insbesondere den Eintritt von Vermögensverfall, die Stellung von Insolvenzanträgen, wesentliche Verluste, den Wegfall von Sicherheiten oder die Änderung der rechtlichen Verhältnisse des Darlehensnehmers. Bei Verletzung der Informationspflichten ist der Darlehensgeber zur außerordentlichen Kündigung des Darlehens berechtigt.",
+      "content_en": "The Borrower is obligated to provide the Lender with information on its financial circumstances at any time upon request, in particular by submitting annual financial statements, management reports, tax assessments and asset overviews: {{financial_info_provision}}. The Borrower shall immediately notify the Lender of all circumstances that may be relevant for the assessment of creditworthiness, in particular the onset of financial decline, filing for insolvency, material losses, loss of collateral, or changes in the Borrower's legal circumstances. In the event of breach of information obligations, the Lender is entitled to extraordinary termination of the loan.",
+      "fields": [
+        {"key": "financial_info_provision", "label_de": "Vorlage von Finanzinformationen", "label_en": "Provision of Financial Information", "type": "select", "required": false, "options": ["jährliche Vorlage des Jahresabschlusses", "vierteljährliche BWA und Liquiditätsplan", "auf Anforderung", "nicht vereinbart"]}
+      ]
+    },
+    {
+      "title_de": "Vorfälligkeitsentschädigung",
+      "title_en": "Early Repayment Penalty",
+      "content_de": "Bei vorzeitiger Rückzahlung des Darlehens ist der Darlehensgeber berechtigt, eine Vorfälligkeitsentschädigung zu verlangen, die nach der Aktiv-Passiv-Methode oder der vereinbarten Berechnungsmethode zu ermitteln ist: {{prepayment_penalty_method}}. Die Berechnung erfolgt gemäß § 502 BGB. Der Darlehensgeber wird dem Darlehensnehmer auf Verlangen eine detaillierte Berechnung der Vorfälligkeitsentschädigung vorlegen. Die Vorfälligkeitsentschädigung ist begrenzt auf {{prepayment_penalty_max}}% des vorzeitig zurückgezahlten Darlehensbetrags. Bei einer Kündigung nach § 489 BGB (Kündigung nach Zinsbindungsende) wird keine Vorfälligkeitsentschädigung fällig.",
+      "content_en": "In the event of early repayment of the loan, the Lender is entitled to demand an early repayment penalty, to be determined according to the asset-liability method or the agreed calculation method: {{prepayment_penalty_method}}. The calculation is made in accordance with § 502 BGB. The Lender shall provide the Borrower with a detailed calculation of the early repayment penalty upon request. The early repayment penalty is limited to {{prepayment_penalty_max}}% of the early repaid loan amount. In the event of termination pursuant to § 489 BGB (termination after expiry of the interest rate fixation period), no early repayment penalty is due.",
+      "fields": [
+        {"key": "prepayment_penalty_method", "label_de": "Berechnungsmethode Vorfälligkeitsentschädigung", "label_en": "Early Repayment Penalty Calculation Method", "type": "select", "required": false, "options": ["Aktiv-Passiv-Methode", "Kapitalwertmethode", "Richtsatzmethode der BVI", "nach individueller Vereinbarung"]},
+        {"key": "prepayment_penalty_max", "label_de": "Maximale Vorfälligkeitsentschädigung (% des Betrags)", "label_en": "Maximum Early Repayment Penalty (% of Amount)", "type": "text", "required": false}
+      ]
+    },
+    {
+      "title_de": "Versicherung",
+      "title_en": "Insurance",
+      "content_de": "Der Darlehensnehmer hat auf eigenen Wunsch folgende Versicherungen abgeschlossen oder wird diese abschließen: {{loan_insurances}}. Eine Restschuldversicherung (Darlehensausfallversicherung) besteht: {{residual_debt_insurance}}. Im Falle des Versicherungsfalls (Arbeitsunfähigkeit, Arbeitslosigkeit, Tod) tritt die Versicherung für die ausstehenden Darlehensraten ein, soweit die Versicherungsbedingungen dies vorsehen. Der Darlehensnehmer verpflichtet sich, die Versicherungsbeiträge regelmäßig zu zahlen und den Versicherungsschutz während der gesamten Darlehenslaufzeit aufrechtzuerhalten. Der Darlehensgeber ist berechtigt, den Versicherungsschein und die Zahlungsnachweise anzufordern.",
+      "content_en": "The Borrower has taken out or will take out the following insurances at its own request: {{loan_insurances}}. Residual debt insurance (loan default insurance) exists: {{residual_debt_insurance}}. In the event of an insured event (incapacity for work, unemployment, death), the insurance covers the outstanding loan installments to the extent provided by the insurance terms and conditions. The Borrower undertakes to pay the insurance premiums regularly and to maintain insurance coverage for the entire term of the loan. The Lender is entitled to request the insurance policy and proof of payment.",
+      "fields": [
+        {"key": "loan_insurances", "label_de": "Vereinbarte Versicherungen", "label_en": "Agreed Insurances", "type": "textarea", "required": false},
+        {"key": "residual_debt_insurance", "label_de": "Restschuldversicherung", "label_en": "Residual Debt Insurance", "type": "select", "required": false, "options": ["ja, abgeschlossen", "nein, nicht gewünscht", "wird noch geprüft"]}
       ]
     },
     {
       "title_de": "Schlussbestimmungen",
       "title_en": "Final Provisions",
-      "content_de": "Gerichtsstand ist {{court_loan}}. Es gilt deutsches Recht. Änderungen und Ergänzungen bedürfen der Schriftform. Ort: {{place_loan}}, Datum: {{date_loan}}",
-      "content_en": "Place of jurisdiction is {{court_loan}}. German law applies. Amendments and supplements require written form. Place: {{place_loan}}, Date: {{date_loan}}",
+      "content_de": "Gerichtsstand ist {{court_loan}}. Es gilt das Recht der Bundesrepublik Deutschland. Sollte eine Bestimmung dieses Vertrags unwirksam sein oder werden, wird der Vertrag im Übrigen nicht berührt. Anstelle der unwirksamen Bestimmung gilt eine dem wirtschaftlich Gewollten möglichst nahekommende Regelung. Sämtliche Änderungen und Ergänzungen dieses Vertrags bedürfen der Schriftform; dies gilt auch für die Abänderung dieser Schriftformklausel. Ausschließlicher Gerichtsstand für Streitigkeiten aus diesem Vertrag ist, soweit gesetzlich zulässig, der Sitz des Darlehensgebers. Ort: {{place_loan}}, Datum: {{date_loan}}.",
+      "content_en": "Place of jurisdiction is {{court_loan}}. The law of the Federal Republic of Germany applies. Should any provision of this contract be or become invalid, the remainder of the contract shall not be affected. In place of the invalid provision, a provision shall apply that comes as close as possible to the economic intent. All amendments and supplements to this contract require written form; this also applies to the amendment of this written form clause. The exclusive place of jurisdiction for disputes arising from this contract is, to the extent legally permissible, the registered office of the Lender. Place: {{place_loan}}, Date: {{date_loan}}.",
       "fields": [
-        {"key": "court_loan", "label_de": "Gerichtsstand", "label_en": "Place of Jurisdiction", "type": "text", "required": true},
-        {"key": "place_loan", "label_de": "Ort", "label_en": "Place", "type": "text", "required": true},
-        {"key": "date_loan", "label_de": "Datum", "label_en": "Date", "type": "date", "required": true}
+        {"key": "court_loan", "label_de": "Gerichtsstand", "label_en": "Place of Jurisdiction", "type": "text", "required": false},
+        {"key": "place_loan", "label_de": "Ort der Vertragsunterzeichnung", "label_en": "Place of Signing", "type": "text", "required": false},
+        {"key": "date_loan", "label_de": "Datum der Vertragsunterzeichnung", "label_en": "Date of Signing", "type": "date", "required": false}
       ]
     }
   ]

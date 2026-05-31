@@ -8,64 +8,133 @@
       "content_de": "Zwischen {{employer_name}}, {{employer_address}} (im Folgenden \"Arbeitgeber\") und {{employee_name}}, {{employee_address}} (im Folgenden \"Arbeitnehmer\") wird folgender Arbeitsvertrag gemäß §§ 611a ff. BGB geschlossen:",
       "content_en": "Between {{employer_name}}, {{employer_address}} (hereinafter \"Employer\") and {{employee_name}}, {{employee_address}} (hereinafter \"Employee\") the following employment contract is concluded pursuant to §§ 611a ff. BGB:",
       "fields": [
-        {"key": "employer_name", "label_de": "Name des Arbeitgebers", "label_en": "Employer Name", "type": "text", "required": true},
-        {"key": "employer_address", "label_de": "Adresse des Arbeitgebers", "label_en": "Employer Address", "type": "text", "required": true},
-        {"key": "employee_name", "label_de": "Name des Arbeitnehmers", "label_en": "Employee Name", "type": "text", "required": true},
-        {"key": "employee_address", "label_de": "Adresse des Arbeitnehmers", "label_en": "Employee Address", "type": "text", "required": true}
+        {"key": "employer_name", "label_de": "Name des Arbeitgebers", "label_en": "Employer Name", "type": "text", "required": false},
+        {"key": "employer_address", "label_de": "Adresse des Arbeitgebers", "label_en": "Employer Address", "type": "text", "required": false},
+        {"key": "employee_name", "label_de": "Name des Arbeitnehmers", "label_en": "Employee Name", "type": "text", "required": false},
+        {"key": "employee_address", "label_de": "Adresse des Arbeitnehmers", "label_en": "Employee Address", "type": "text", "required": false}
       ]
     },
     {
-      "title_de": "Position und Arbeitsort",
-      "title_en": "Position and Place of Work",
-      "content_de": "Der Arbeitnehmer wird als {{position}} eingestellt. Die Tätigkeit umfasst im Wesentlichen: {{job_description}}. Der Arbeitsort ist {{work_location}}. Der Arbeitgeber behält sich das Recht vor, den Arbeitnehmer vorübergehend an einem anderen Ort einzusetzen.",
-      "content_en": "The Employee is employed as {{position}}. The duties essentially comprise: {{job_description}}. The place of work is {{work_location}}. The Employer reserves the right to temporarily assign the Employee to a different location.",
+      "title_de": "Tätigkeit und Position",
+      "title_en": "Position and Duties",
+      "content_de": "Der Arbeitnehmer wird als {{position}} eingestellt. Die Tätigkeit umfasst im Wesentlichen die folgenden Aufgaben: {{job_description}}. Der Arbeitnehmer ist dem {{reporting_line}} (Vorgesetzter/Abteilung) zugeordnet. Der Arbeitgeber ist berechtigt, dem Arbeitnehmer eine andere zumutbare Tätigkeit zuzuweisen, die seinen Fähigkeiten und seiner Qualifikation entspricht (Direktionsrecht gemäß § 106 GewO). Eine Änderungskündigung bleibt vorbehalten. Der Arbeitnehmer hat die ihm übertragenen Aufgaben gewissenhaft und ordnungsgemäß zu erfüllen und die berechtigten Weisungen des Arbeitgebers zu befolgen.",
+      "content_en": "The Employee is employed as {{position}}. The duties essentially comprise the following tasks: {{job_description}}. The Employee reports to {{reporting_line}} (supervisor/department). The Employer is entitled to assign the Employee other reasonable activities that correspond to the Employee's abilities and qualifications (right of direction pursuant to § 106 GewO). A change termination remains reserved. The Employee shall perform the assigned tasks conscientiously and properly and follow the legitimate instructions of the Employer.",
       "fields": [
-        {"key": "position", "label_de": "Position", "label_en": "Position", "type": "text", "required": true},
-        {"key": "job_description", "label_de": "Tätigkeitsbeschreibung", "label_en": "Job Description", "type": "textarea", "required": true},
-        {"key": "work_location", "label_de": "Arbeitsort", "label_en": "Work Location", "type": "text", "required": true}
+        {"key": "position", "label_de": "Position / Berufsbezeichnung", "label_en": "Position / Job Title", "type": "text", "required": false},
+        {"key": "job_description", "label_de": "Tätigkeitsbeschreibung", "label_en": "Job Description", "type": "textarea", "required": false},
+        {"key": "reporting_line", "label_de": "Vorgesetzter / Abteilung", "label_en": "Reporting Line / Department", "type": "text", "required": false}
       ]
     },
     {
-      "title_de": "Arbeitszeit und Vergütung",
-      "title_en": "Working Hours and Remuneration",
-      "content_de": "Die regelmäßige wöchentliche Arbeitszeit beträgt {{working_hours}} Stunden. Das Bruttogehalt beträgt {{salary}} EUR monatlich. Der Arbeitnehmer hat Anspruch auf {{vacation_days}} Werktage Erholungsurlaub pro Kalenderjahr gemäß § 3 BUrlG.",
-      "content_en": "The regular weekly working hours amount to {{working_hours}} hours. The gross salary amounts to {{salary}} EUR monthly. The Employee is entitled to {{vacation_days}} working days of vacation per calendar year pursuant to § 3 BUrlG.",
+      "title_de": "Arbeitsort",
+      "title_en": "Place of Work",
+      "content_de": "Der Arbeitsort ist {{work_location}}. Der Arbeitnehmer wird an diesem Ort hauptsächlich tätig. Homeoffice/Telesarbeit ist {{home_office_policy}}. Der Arbeitgeber behält sich das Recht vor, den Arbeitnehmer vorübergehend an einem anderen Ort im Inland oder Ausland einzusetzen, sofern dem Arbeitnehmer dies zumutbar ist. Dienstreisen sind entsprechend der Tätigkeit erforderlich: {{travel_requirements}}. Bei Auslandseinsätzen von mehr als {{abroad_days}} Tagen werden die Bedingungen in einer gesonderten Vereinbarung geregelt.",
+      "content_en": "The place of work is {{work_location}}. The Employee shall primarily work at this location. Home office/telework is {{home_office_policy}}. The Employer reserves the right to temporarily assign the Employee to a different location domestically or abroad, insofar as this is reasonable for the Employee. Business travel is required in accordance with the position: {{travel_requirements}}. For assignments abroad exceeding {{abroad_days}} days, the conditions shall be regulated in a separate agreement.",
       "fields": [
-        {"key": "working_hours", "label_de": "Wöchentliche Arbeitszeit (Stunden)", "label_en": "Weekly Working Hours", "type": "text", "required": true},
-        {"key": "salary", "label_de": "Bruttogehalt (EUR/Monat)", "label_en": "Gross Salary (EUR/Month)", "type": "text", "required": true},
-        {"key": "vacation_days", "label_de": "Urlaubstage pro Jahr", "label_en": "Vacation Days per Year", "type": "text", "required": true}
+        {"key": "work_location", "label_de": "Arbeitsort", "label_en": "Work Location", "type": "text", "required": false},
+        {"key": "home_office_policy", "label_de": "Homeoffice-Regelung", "label_en": "Home Office Policy", "type": "select", "required": false, "options": ["nicht vorgesehen", "nach Absprache möglich", "regelmäßig 1-2 Tage pro Woche", "vollständig remote"]},
+        {"key": "travel_requirements", "label_de": "Reisetätigkeit", "label_en": "Travel Requirements", "type": "select", "required": false, "options": ["keine Reisetätigkeit", "gelegentlich (bis 10%)", "häufig (10-30%)", "intensiv (über 30%)"]},
+        {"key": "abroad_days", "label_de": "Auslandseinsatz ab (Tagen)", "label_en": "Abroad Assignment From (Days)", "type": "text", "required": false}
+      ]
+    },
+    {
+      "title_de": "Arbeitszeit",
+      "title_en": "Working Hours",
+      "content_de": "Die regelmäßige wöchentliche Arbeitszeit beträgt {{weekly_hours}} Stunden. Die Verteilung der Arbeitszeit erfolgt gemäß {{working_time_model}}. Es gilt eine gleitende Arbeitszeit (Vertrauensarbeitszeit): {{flexitime}}. Die gesetzlichen Ruhepausen gemäß § 4 ArbZG betragen bei einer Arbeitszeit von mehr als sechs Stunden 30 Minuten und von mehr als neun Stunden 45 Minuten. Pausenzeiten werden nicht vergütet. Überstunden sind {{overtime_regulation}}. Die tägliche Höchstarbeitszeit beträgt gemäß § 3 ArbZG acht Stunden, kann aber auf zehn Stunden verlängert werden, sofern innerhalb von sechs Kalendermonaten im Durchschnitt acht Stunden werktäglich nicht überschritten werden. Sonn- und Feiertagsarbeit richtet sich nach den gesetzlichen Bestimmungen (§§ 9 ff. ArbZG).",
+      "content_en": "The regular weekly working hours amount to {{weekly_hours}} hours. The distribution of working hours follows {{working_time_model}}. Flexitime applies: {{flexitime}}. The statutory break times pursuant to § 4 ArbZG are 30 minutes for working hours exceeding six hours and 45 minutes for working hours exceeding nine hours. Break times are not remunerated. Overtime is {{overtime_regulation}}. The maximum daily working time pursuant to § 3 ArbZG is eight hours, but may be extended to ten hours provided that an average of eight hours per working day is not exceeded within six calendar months. Sunday and public holiday work is governed by statutory provisions (§§ 9 ff. ArbZG).",
+      "fields": [
+        {"key": "weekly_hours", "label_de": "Wöchentliche Arbeitszeit (Stunden)", "label_en": "Weekly Working Hours", "type": "text", "required": false},
+        {"key": "working_time_model", "label_de": "Arbeitszeitmodell", "label_en": "Working Time Model", "type": "select", "required": false, "options": ["Festarbeitszeit (8:00-17:00)", "Gleitzeit mit Kernzeit", "Schichtarbeit", "Teilzeit mit fester Verteilung", "Vertrauensarbeitszeit"]},
+        {"key": "flexitime", "label_de": "Gleitzeitvereinbarung", "label_en": "Flexitime Agreement", "type": "select", "required": false, "options": ["ja, Kernzeit 9:00-15:00", "ja, Kernzeit 10:00-14:00", "nein, feste Arbeitszeit", "Vertrauensarbeitszeit ohne Zeiterfassung"]},
+        {"key": "overtime_regulation", "label_de": "Überstundenregelung", "label_en": "Overtime Regulation", "type": "select", "required": false, "options": ["mit Gehalt abgegolten", "werden vergütet (25% Zuschlag)", "werden durch Freizeit ausgeglichen", "nur bei Anordnung"]}
+      ]
+    },
+    {
+      "title_de": "Vergütung",
+      "title_en": "Remuneration",
+      "content_de": "Der Arbeitnehmer erhält ein monatliches Bruttogehalt in Höhe von {{gross_salary}} EUR. Die Zahlung erfolgt monatlich am {{salary_payment_day}}. Werktag des Folgemonats auf das vom Arbeitnehmer benannte Konto. Zusätzlich kann der Arbeitgeber einen Bonus/13. Monatsgehalt gewähren: {{bonus_13th}}. Der Arbeitgeber prüft jährlich eine leistungsgerechte Vergütungsanpassung ({{salary_review}}). Sonstige Vergütungsbestandteile: {{additional_compensation}}.",
+      "content_en": "The Employee receives a monthly gross salary of {{gross_salary}} EUR. Payment is made monthly by the {{salary_payment_day}}th working day of the following month to the account designated by the Employee. Additionally, the Employer may grant a bonus/13th month salary: {{bonus_13th}}. The Employer reviews annually for a performance-based salary adjustment ({{salary_review}}). Other compensation components: {{additional_compensation}}.",
+      "fields": [
+        {"key": "gross_salary", "label_de": "Bruttomonatsgehalt (EUR)", "label_en": "Gross Monthly Salary (EUR)", "type": "text", "required": false},
+        {"key": "salary_payment_day", "label_de": "Zahlungstag (Werktag des Folgemonats)", "label_en": "Payment Day (Working Day of Following Month)", "type": "select", "required": false, "options": ["1.", "3.", "5.", "letzter"]},
+        {"key": "bonus_13th", "label_de": "Bonus / 13. Monatsgehalt", "label_en": "Bonus / 13th Month Salary", "type": "select", "required": false, "options": ["kein 13. Gehalt", "13. Monatsgehalt (November)", "Weihnachtsgeld (freiwillig)", "Leistungsbonus (variabel)"]},
+        {"key": "salary_review", "label_de": "Gehaltsanpassung", "label_en": "Salary Review", "type": "select", "required": false, "options": ["jährliche Überprüfung", "keine feste Regelung", "nach Betriebszugehörigkeit"]},
+        {"key": "additional_compensation", "label_de": "Sonstige Vergütungsbestandteile", "label_en": "Additional Compensation Components", "type": "textarea", "required": false}
+      ]
+    },
+    {
+      "title_de": "Sozialleistungen und Versicherungen",
+      "title_en": "Benefits and Insurance",
+      "content_de": "Der Arbeitnehmer unterliegt der gesetzlichen Sozialversicherungspflicht, soweit nicht die Voraussetzungen für eine private Krankenversicherung vorliegen ({{health_insurance_type}}). Die Beiträge zur gesetzlichen Rentenversicherung (GRV), Arbeitslosenversicherung, Krankenversicherung und Pflegeversicherung werden je zur Hälfte von Arbeitgeber und Arbeitnehmer getragen, soweit gesetzlich nicht anders bestimmt. Der Arbeitgeber bietet eine betriebliche Altersvorsorge (bAV) an: {{company_pension}}. Eine Unfallversicherung besteht über die Berufsgenossenschaft (gesetzliche Unfallversicherung). Vermögenswirksame Leistungen (VWL) werden gewährt: {{capital_forming_benefits}}. Sonstige Sozialleistungen: {{additional_benefits}}.",
+      "content_en": "The Employee is subject to statutory social insurance, unless the conditions for private health insurance are met ({{health_insurance_type}}). Contributions to the statutory pension insurance (GRV), unemployment insurance, health insurance and long-term care insurance are borne equally by the Employer and Employee, unless otherwise provided by law. The Employer offers a company pension (bAV): {{company_pension}}. Accident insurance is provided through the employers' liability insurance association (statutory accident insurance). Capital-forming benefits (VWL) are granted: {{capital_forming_benefits}}. Other social benefits: {{additional_benefits}}.",
+      "fields": [
+        {"key": "health_insurance_type", "label_de": "Krankenversicherungsart", "label_en": "Health Insurance Type", "type": "select", "required": false, "options": ["gesetzlich pflichtversichert", "freiwillig gesetzlich versichert", "privat krankenversichert"]},
+        {"key": "company_pension", "label_de": "Betriebliche Altersvorsorge (bAV)", "label_en": "Company Pension (bAV)", "type": "select", "required": false, "options": ["ja, mit Arbeitgeberzuschuss", "ja, über Entgeltumwandlung", "nein"]},
+        {"key": "capital_forming_benefits", "label_de": "Vermögenswirksame Leistungen (VWL)", "label_en": "Capital-Forming Benefits (VWL)", "type": "select", "required": false, "options": ["ja, 40 EUR/Monat", "ja, 26,59 EUR/Monat (Sparzulage)", "nein"]},
+        {"key": "additional_benefits", "label_de": "Sonstige Sozialleistungen", "label_en": "Additional Social Benefits", "type": "textarea", "required": false}
+      ]
+    },
+    {
+      "title_de": "Urlaub",
+      "title_en": "Vacation",
+      "content_de": "Der Arbeitnehmer hat Anspruch auf {{vacation_days}} Werktage Erholungsurlaub pro Kalenderjahr (§ 3 BUrlG). Der gesetzliche Mindesturlaub beträgt 24 Werktage bei einer 6-Tage-Woche bzw. 20 Arbeitstage bei einer 5-Tage-Woche. Der Urlaub ist im laufenden Kalenderjahr zu nehmen und kann gemäß § 7 Abs. 3 BUrlG auf das folgende Kalenderjahr übertragen werden, muss jedoch bis zum 31. März des Folgejahres angetreten werden. Bei Eintritt oder Austritt im laufenden Kalenderjahr erfolgt eine anteilige Berechnung (§ 5 BUrlG). Der Arbeitnehmer hat Anspruch auf bezahlte Freistellung für besondere Anlässe (Sonderurlaub): {{special_leave}}. Unbezahlter Urlaub (Sabbatical) ist {{unpaid_leave}}.",
+      "content_en": "The Employee is entitled to {{vacation_days}} working days of paid vacation per calendar year (§ 3 BUrlG). The statutory minimum vacation is 24 working days for a 6-day week or 20 working days for a 5-day week. Vacation must be taken in the current calendar year and may be carried over to the following calendar year pursuant to § 7 para. 3 BUrlG, but must be taken by March 31 of the following year. Upon commencement or termination during the calendar year, a pro-rata calculation is made (§ 5 BUrlG). The Employee is entitled to paid leave for special occasions (special leave): {{special_leave}}. Unpaid leave (sabbatical) is {{unpaid_leave}}.",
+      "fields": [
+        {"key": "vacation_days", "label_de": "Urlaubstage pro Kalenderjahr", "label_en": "Vacation Days per Calendar Year", "type": "text", "required": false},
+        {"key": "special_leave", "label_de": "Sonderurlaub (Anlässe und Tage)", "label_en": "Special Leave (Occasions and Days)", "type": "textarea", "required": false},
+        {"key": "unpaid_leave", "label_de": "Unbezahlter Urlaub / Sabbatical", "label_en": "Unpaid Leave / Sabbatical", "type": "select", "required": false, "options": ["nicht vorgesehen", "nach Absprache möglich", "im Rahmen eines Sabbatical-Modells"]}
+      ]
+    },
+    {
+      "title_de": "Arbeitsverhinderung und Krankheit",
+      "title_en": "Incapacity and Sickness",
+      "content_de": "Der Arbeitnehmer ist verpflichtet, jede Arbeitsunfähigkeit infolge Krankheit sowie deren voraussichtliche Dauer unverzüglich, spätestens bis {{notification_deadline}} Uhr am ersten Krankheitstag, dem Arbeitgeber anzuzeigen (§ 5 EFZG). Dauert die Arbeitsunfähigkeit länger als drei Kalendertage, hat der Arbeitnehmer eine ärztliche Bescheinigung über das Bestehen der Arbeitsunfähigkeit (AU) spätestens am darauffolgenden Arbeitstag vorzulegen (§ 5 Abs. 1 Satz 2 EFZG). Der Arbeitgeber ist berechtigt, die Vorlage der AU bereits ab dem ersten Krankheitstag zu verlangen. Der Arbeitnehmer behält für die Dauer von sechs Wochen den Anspruch auf Fortzahlung des Arbeitsentgelts gemäß § 3 EFZG. Nach Ablauf der sechs Wochen besteht Anspruch auf Krankengeld von der gesetzlichen Krankenkasse. Bei Wiederholungserkrankungen gelten die Regelungen des § 3 Abs. 1 Satz 2 EFZG.",
+      "content_en": "The Employee is obligated to report any incapacity for work due to illness and its expected duration to the Employer immediately, but no later than {{notification_deadline}} o'clock on the first day of illness (§ 5 EFZG). If the incapacity lasts longer than three calendar days, the Employee must submit a medical certificate of incapacity for work (AU) no later than the following working day (§ 5 para. 1 sentence 2 EFZG). The Employer is entitled to request submission of the AU from the first day of illness. The Employee retains the right to continued payment of remuneration for a period of six weeks pursuant to § 3 EFZG. After expiry of the six weeks, the Employee is entitled to sickness benefit from the statutory health insurance fund. In the case of recurring illnesses, the provisions of § 3 para. 1 sentence 2 EFZG apply.",
+      "fields": [
+        {"key": "notification_deadline", "label_de": "Meldefrist bei Krankheit (Uhrzeit)", "label_en": "Notification Deadline for Illness (Time)", "type": "select", "required": false, "options": ["9:00 Uhr", "10:00 Uhr", "12:00 Uhr", "unverzüglich"]},
+        {"key": "au_from_first_day", "label_de": "AU ab erstem Tag erforderlich", "label_en": "Medical Certificate from First Day Required", "type": "select", "required": false, "options": ["ja", "nein (erst ab 3. Tag)"]}
       ]
     },
     {
       "title_de": "Vertragsdauer und Kündigung",
       "title_en": "Contract Duration and Termination",
-      "content_de": "Das Arbeitsverhältnis beginnt am {{employment_start}}. Es handelt sich um ein {{contract_type_emp}} Arbeitsverhältnis. Die Probezeit beträgt {{probation_months}} Monate. Die Kündigungsfrist beträgt {{notice_period_emp}} Monate und richtet sich nach § 622 BGB.",
-      "content_en": "The employment relationship commences on {{employment_start}}. This is a {{contract_type_emp}} employment relationship. The probationary period is {{probation_months}} months. The notice period is {{notice_period_emp}} months pursuant to § 622 BGB.",
+      "content_de": "Das Arbeitsverhältnis beginnt am {{employment_start_date}}. Es handelt sich um ein {{contract_duration_type}} Arbeitsverhältnis. Die Probezeit beträgt {{probation_period}} Monate (§ 622 Abs. 3 BGB). Während der Probezeit beträgt die Kündigungsfrist zwei Wochen (§ 622 Abs. 3 BGB). Nach Ablauf der Probezeit beträgt die Kündigungsfrist {{notice_period_emp}} Monate zum Monatsende (§ 622 BGB). Für den Arbeitgeber verlängern sich die Kündigungsfristen gemäß § 622 Abs. 2 BGB nach einer Betriebszugehörigkeit von zwei Jahren auf einen Monat, von fünf Jahren auf zwei Monate, von acht Jahren auf drei Monate, von zehn Jahren auf vier Monate, von zwölf Jahren auf fünf Monate, von fünfzehn Jahren auf sechs Monate, von zwanzig Jahren auf sieben Monate. Das Recht zur außerordentlichen Kündigung aus wichtigem Grund gemäß § 626 BGB bleibt unberührt. Die Kündigung bedarf der Schriftform (§ 623 BGB). Bei einer Befristung beträgt die Vertragsdauer {{fixed_term_period}} (§ 14 TzBfG).",
+      "content_en": "The employment relationship commences on {{employment_start_date}}. This is a {{contract_duration_type}} employment relationship. The probationary period is {{probation_period}} months (§ 622 para. 3 BGB). During the probationary period, the notice period is two weeks (§ 622 para. 3 BGB). After expiry of the probationary period, the notice period is {{notice_period_emp}} months to the end of the month (§ 622 BGB). For the Employer, the notice periods are extended pursuant to § 622 para. 2 BGB after two years of service to one month, after five years to two months, after eight years to three months, after ten years to four months, after twelve years to five months, after fifteen years to six months, after twenty years to seven months. The right to extraordinary termination for good cause pursuant to § 626 BGB remains unaffected. Termination requires written form (§ 623 BGB). In the case of a fixed-term contract, the contract duration is {{fixed_term_period}} (§ 14 TzBfG).",
       "fields": [
-        {"key": "employment_start", "label_de": "Arbeitsbeginn", "label_en": "Employment Start Date", "type": "date", "required": true},
-        {"key": "probation_months", "label_de": "Probezeit (Monate)", "label_en": "Probation Period (Months)", "type": "text", "required": true},
-        {"key": "notice_period_emp", "label_de": "Kündigungsfrist (Monate)", "label_en": "Notice Period (Months)", "type": "text", "required": true},
-        {"key": "contract_type_emp", "label_de": "Vertragsart", "label_en": "Contract Type", "type": "select", "required": true, "options": ["unbefristet", "befristet", "Teilzeit"]}
+        {"key": "employment_start_date", "label_de": "Arbeitsbeginn", "label_en": "Employment Start Date", "type": "date", "required": false},
+        {"key": "contract_duration_type", "label_de": "Vertragsart", "label_en": "Contract Type", "type": "select", "required": false, "options": ["unbefristet", "befristet (sachgrundlos bis 2 Jahre)", "befristet (mit Sachgrund)", "Teilzeit"]},
+        {"key": "probation_period", "label_de": "Probezeit (Monate)", "label_en": "Probation Period (Months)", "type": "select", "required": false, "options": ["1", "3", "6"]},
+        {"key": "notice_period_emp", "label_de": "Kündigungsfrist nach Probezeit (Monate)", "label_en": "Notice Period After Probation (Months)", "type": "select", "required": false, "options": ["1", "2", "3", "4", "6"]},
+        {"key": "fixed_term_period", "label_de": "Befristungsdauer", "label_en": "Fixed Term Duration", "type": "text", "required": false}
       ]
     },
     {
-      "title_de": "Vertraulichkeit und Wettbewerb",
-      "title_en": "Confidentiality and Competition",
-      "content_de": "Der Arbeitnehmer ist verpflichtet, über Geschäftsgeheimnisse des Arbeitgebers Stillschweigen zu bewahren. Die Ausübung einer {{external_activity}} Tätigkeit außerhalb des Arbeitsverhältnisses bedarf der vorherigen Zustimmung des Arbeitgebers.",
-      "content_en": "The Employee is obligated to maintain confidentiality regarding the Employer's trade secrets. The pursuit of {{external_activity}} activity outside the employment relationship requires the prior consent of the Employer.",
+      "title_de": "Verschwiegenheit und Wettbewerb",
+      "title_en": "Confidentiality and Non-Competition",
+      "content_de": "Der Arbeitnehmer ist verpflichtet, über alle Geschäfts- und Betriebsgeheimnisse des Arbeitgebers sowie über alle ihm im Rahmen seiner Tätigkeit bekannt gewordenen vertraulichen Angelegenheiten und Abläufe des Arbeitgebers auch nach Beendigung des Arbeitsverhältnisses Stillschweigen zu bewahren (Geheimhaltungspflicht). Die Geheimhaltungspflicht erstreckt sich auch auf Kenntnisse über Kunden, Lieferanten, Umsätze, Gewinne, Kalkulationen, Entwicklungen, Forschungsarbeiten, Produktionsverfahren, EDV-Programme und Organisationsabläufe. Eine Nebentätigkeit außerhalb des Arbeitsverhältnisses bedarf der vorherigen schriftlichen Zustimmung des Arbeitgebers (§ 60 HGB). Der Arbeitgeber kann die Zustimmung versagen, wenn die Nebentätigkeit die Arbeitsleistung beeinträchtigt oder mit den Interessen des Arbeitgebers kollidiert. Ein nachvertragliches Wettbewerbsverbot ist {{non_compete}}. Für die Dauer des Wettbewerbsverbots erhält der Arbeitnehmer eine Karenzentschädigung in Höhe von {{non_compete_compensation}}% des zuletzt bezogenen Bruttogehalts (§ 74 HGB).",
+      "content_en": "The Employee is obligated to maintain secrecy regarding all business and trade secrets of the Employer as well as all confidential matters and processes of the Employer that become known in the course of the Employee's activities, even after termination of the employment relationship (duty of secrecy). The duty of confidentiality extends to information about customers, suppliers, sales, profits, calculations, developments, research, production methods, IT programs and organizational processes. Secondary employment outside the employment relationship requires prior written consent of the Employer (§ 60 HGB). The Employer may refuse consent if the secondary employment impairs work performance or conflicts with the interests of the Employer. A post-contractual non-compete clause is {{non_compete}}. For the duration of the non-compete obligation, the Employee receives a compensation of {{non_compete_compensation}}% of the last gross salary (§ 74 HGB).",
       "fields": [
-        {"key": "external_activity", "label_de": "Externe Tätigkeit", "label_en": "External Activity", "type": "select", "required": true, "options": ["wettbewerbsrelevante", "sonstige", "jede"]}
+        {"key": "non_compete", "label_de": "Nachvertragliches Wettbewerbsverbot", "label_en": "Post-Contractual Non-Compete", "type": "select", "required": false, "options": ["nein", "ja, 6 Monate", "ja, 12 Monate", "ja, 24 Monate"]},
+        {"key": "non_compete_compensation", "label_de": "Karenzentschädigung (% des letzten Bruttogehalts)", "label_en": "Non-Compete Compensation (% of Last Gross Salary)", "type": "text", "required": false}
       ]
+    },
+    {
+      "title_de": "Datenschutz",
+      "title_en": "Data Protection",
+      "content_de": "Der Arbeitnehmer ist verpflichtet, die Bestimmungen der Datenschutz-Grundverordnung (DSGVO), des Bundesdatenschutzgesetzes (BDSG) sowie der sonstigen anwendbaren datenschutzrechtlichen Vorschriften einzuhalten. Der Arbeitnehmer darf personenbezogene Daten, die ihm im Rahmen seiner Tätigkeit bekannt werden, nur im Rahmen seiner Aufgaben und gemäß den Weisungen des Arbeitgebers verarbeiten. Der Arbeitnehmer hat die Grundsätze der Datenverarbeitung (Art. 5 DSGVO) zu beachten, insbesondere Datenminimierung, Richtigkeit, Speicherbegrenzung und Integrität. Der Arbeitnehmer ist verpflichtet, die vom Arbeitgeber bereitgestellten technischen und organisatorischen Maßnahmen (TOM) zum Schutz personenbezogener Daten zu beachten. Verstöße gegen den Datenschutz sind dem Arbeitgeber unverzüglich zu melden. Die Verarbeitung personenbezogener Daten des Arbeitnehmers (Personalakte, Entgeltabrechnung) erfolgt auf der Grundlage von Art. 6 Abs. 1 lit. b DSGVO i.V.m. §§ 26 BDSG. Der Arbeitnehmer hat das Recht auf Auskunft gemäß Art. 15 DSGVO über die zu seiner Person gespeicherten Daten.",
+      "content_en": "The Employee is obligated to comply with the provisions of the General Data Protection Regulation (GDPR), the Federal Data Protection Act (BDSG) and other applicable data protection regulations. The Employee may process personal data that becomes known in the course of the Employee's activities only within the scope of the Employee's duties and in accordance with the Employer's instructions. The Employee shall observe the principles of data processing (Art. 5 GDPR), in particular data minimization, accuracy, storage limitation and integrity. The Employee is obligated to observe the technical and organizational measures (TOM) provided by the Employer for the protection of personal data. Violations of data protection must be reported to the Employer immediately. The processing of the Employee's personal data (personnel file, payroll) is carried out on the basis of Art. 6 para. 1 lit. b GDPR in conjunction with §§ 26 BDSG. The Employee has the right of access pursuant to Art. 15 GDPR to data stored about the Employee's person.",
+      "fields": []
     },
     {
       "title_de": "Schlussbestimmungen",
       "title_en": "Final Provisions",
-      "content_de": "Gerichtsstand ist {{court_emp}}. Es gilt deutsches Recht. Änderungen und Ergänzungen bedürfen der Schriftform. Ort: {{place_emp}}, Datum: {{date_emp}}",
-      "content_en": "Place of jurisdiction is {{court_emp}}. German law applies. Amendments and supplements require written form. Place: {{place_emp}}, Date: {{date_emp}}",
+      "content_de": "Gerichtsstand ist {{court_emp}}. Es gilt das Recht der Bundesrepublik Deutschland. Sollte eine Bestimmung dieses Vertrags unwirksam sein oder werden, bleibt der Vertrag im Übrigen wirksam. Anstelle der unwirksamen Bestimmung gilt eine wirksame Regelung, die dem wirtschaftlichen Zweck der unwirksamen Bestimmung möglichst nahekommt. Änderungen und Ergänzungen dieses Vertrags bedürfen der Schriftform; dies gilt auch für die Aufhebung dieser Schriftformklausel. Nebenabreden bestehen nicht. Etwaige Ansprüche aus dem Arbeitsverhältnis verfallen, wenn sie nicht innerhalb eines Ausschlussfrist von {{exclusion_period}} Monaten nach Fälligkeit schriftlich geltend gemacht werden. Dieser Vertrag wurde in zwei Ausfertigungen erstellt. Ort: {{place_emp}}, Datum: {{date_emp}}.",
+      "content_en": "Place of jurisdiction is {{court_emp}}. The law of the Federal Republic of Germany applies. Should any provision of this contract be or become invalid, the remainder of the contract shall remain effective. In place of the invalid provision, a valid provision shall apply that comes as close as possible to the economic purpose of the invalid provision. Amendments and supplements to this contract require written form; this also applies to the waiver of this written form clause. There are no ancillary agreements. Any claims arising from the employment relationship shall lapse if not asserted in writing within {{exclusion_period}} months after due date. This contract has been executed in two copies. Place: {{place_emp}}, Date: {{date_emp}}.",
       "fields": [
-        {"key": "court_emp", "label_de": "Gerichtsstand", "label_en": "Place of Jurisdiction", "type": "text", "required": true},
-        {"key": "place_emp", "label_de": "Ort", "label_en": "Place", "type": "text", "required": true},
-        {"key": "date_emp", "label_de": "Datum", "label_en": "Date", "type": "date", "required": true}
+        {"key": "court_emp", "label_de": "Gerichtsstand", "label_en": "Place of Jurisdiction", "type": "text", "required": false},
+        {"key": "exclusion_period", "label_de": "Ausschlussfrist (Monate)", "label_en": "Exclusion Period (Months)", "type": "text", "required": false},
+        {"key": "place_emp", "label_de": "Ort der Vertragsunterzeichnung", "label_en": "Place of Signing", "type": "text", "required": false},
+        {"key": "date_emp", "label_de": "Datum der Vertragsunterzeichnung", "label_en": "Date of Signing", "type": "date", "required": false}
       ]
     }
   ]

@@ -5,76 +5,128 @@
     {
       "title_de": "Parteien",
       "title_en": "Parties",
-      "content_de": "Zwischen {{seller_name}}, {{seller_address}} (im Folgenden \"Verkäufer\") und {{buyer_name}}, {{buyer_address}} (im Folgenden \"Käufer\") wird folgender Kaufvertrag geschlossen:",
-      "content_en": "Between {{seller_name}}, {{seller_address}} (hereinafter \"Seller\") and {{buyer_name}}, {{buyer_address}} (hereinafter \"Buyer\") the following purchase agreement is concluded:",
+      "content_de": "Zwischen {{seller_name}}, {{seller_address}} (im Folgenden \"Verkäufer\") und {{buyer_name}}, {{buyer_address}} (im Folgenden \"Käufer\") wird folgender Kaufvertrag gemäß §§ 433 ff. BGB geschlossen:",
+      "content_en": "Between {{seller_name}}, {{seller_address}} (hereinafter \"Seller\") and {{buyer_name}}, {{buyer_address}} (hereinafter \"Buyer\") the following purchase agreement is concluded pursuant to §§ 433 ff. BGB:",
       "fields": [
-        {"key": "seller_name", "label_de": "Name des Verkäufers", "label_en": "Seller Name", "type": "text", "required": true},
-        {"key": "seller_address", "label_de": "Adresse des Verkäufers", "label_en": "Seller Address", "type": "text", "required": true},
-        {"key": "buyer_name", "label_de": "Name des Käufers", "label_en": "Buyer Name", "type": "text", "required": true},
-        {"key": "buyer_address", "label_de": "Adresse des Käufers", "label_en": "Buyer Address", "type": "text", "required": true}
+        {"key": "seller_name", "label_de": "Name des Verkäufers", "label_en": "Seller Name", "type": "text", "required": false},
+        {"key": "seller_address", "label_de": "Adresse des Verkäufers", "label_en": "Seller Address", "type": "text", "required": false},
+        {"key": "seller_legal_rep", "label_de": "Gesetzlicher Vertreter des Verkäufers", "label_en": "Seller Legal Representative", "type": "text", "required": false},
+        {"key": "buyer_name", "label_de": "Name des Käufers", "label_en": "Buyer Name", "type": "text", "required": false},
+        {"key": "buyer_address", "label_de": "Adresse des Käufers", "label_en": "Buyer Address", "type": "text", "required": false},
+        {"key": "buyer_legal_rep", "label_de": "Gesetzlicher Vertreter des Käufers", "label_en": "Buyer Legal Representative", "type": "text", "required": false}
       ]
     },
     {
       "title_de": "Kaufgegenstand",
       "title_en": "Subject Matter",
-      "content_de": "Der Verkäufer verkauft und der Käufer kauft: {{goods_description}}, Menge: {{quantity}} Stück.",
-      "content_en": "The Seller sells and the Buyer purchases: {{goods_description}}, quantity: {{quantity}} units.",
+      "content_de": "Der Verkäufer verkauft und der Käufer kauft die nachstehend bezeichnete Ware: {{goods_description}}. Die Ware wird in folgender Qualität und Beschaffenheit geliefert: {{quality_specs}}. Die vereinbarte Menge beträgt {{quantity}} Stück/ Einheiten gemäß {{quantity_unit}}. Die Bestellung erfolgt auf Basis der Artikelnummer(n) {{article_numbers}}. Sollte der Verkäufer die Ware nicht selbst herstellen, bleibt ein Selbstbelieferungsvorbehalt vorbehalten.",
+      "content_en": "The Seller sells and the Buyer purchases the goods described below: {{goods_description}}. The goods shall be supplied in the following quality and condition: {{quality_specs}}. The agreed quantity is {{quantity}} units. The order is based on the item number(s) {{article_numbers}}. Should the Seller not manufacture the goods themselves, a self-supply reservation remains reserved.",
       "fields": [
-        {"key": "goods_description", "label_de": "Beschreibung der Kaufsache", "label_en": "Description of Goods", "type": "textarea", "required": true},
-        {"key": "quantity", "label_de": "Menge", "label_en": "Quantity", "type": "text", "required": true}
+        {"key": "goods_description", "label_de": "Beschreibung der Kaufsache", "label_en": "Description of Goods", "type": "textarea", "required": false},
+        {"key": "quality_specs", "label_de": "Qualitäts- und Beschaffenheitsmerkmale", "label_en": "Quality and Condition Specifications", "type": "textarea", "required": false},
+        {"key": "quantity", "label_de": "Menge", "label_en": "Quantity", "type": "text", "required": false},
+        {"key": "quantity_unit", "label_de": "Mengeneinheit", "label_en": "Unit of Quantity", "type": "select", "required": false, "options": ["Stück", "kg", "Liter", "Meter", "Palette", "Set"]},
+        {"key": "article_numbers", "label_de": "Artikelnummer(n)", "label_en": "Item Number(s)", "type": "text", "required": false}
       ]
     },
     {
       "title_de": "Kaufpreis und Zahlungsbedingungen",
       "title_en": "Price and Payment Terms",
-      "content_de": "Der Kaufpreis beträgt {{price}} EUR. Zahlungsziel: {{payment_days}} Tage nach Rechnungsstellung. Zahlungsart: {{payment_method}}.",
-      "content_en": "The purchase price is {{price}} EUR. Payment term: {{payment_days}} days after invoice. Payment method: {{payment_method}}.",
+      "content_de": "Der Kaufpreis beträgt {{price}} EUR (netto). Hinzu kommt die gesetzliche Umsatzsteuer in Höhe des jeweils gültigen Steuersatzes ({{vat_rate}}%). Zahlungsmethode: {{payment_method}}. Die Zahlung erfolgt innerhalb von {{payment_days}} Tagen nach Rechnungsstellung und Lieferung. Bei Zahlung innerhalb von {{discount_days}} Tagen gewährt der Verkäufer einen Skontoabzug in Höhe von {{discount_percent}}%. Bei Zahlungsverzug schuldet der Käufer Verzugszinsen in Höhe von {{late_interest}} Prozentpunkten über dem jeweiligen Basiszinssatz gemäß § 288 BGB. Die Geltendmachung eines weiteren Verzugsschadens bleibt vorbehalten.",
+      "content_en": "The purchase price amounts to {{price}} EUR (net). Statutory value-added tax at the applicable rate ({{vat_rate}}%) shall be added. Payment method: {{payment_method}}. Payment shall be made within {{payment_days}} days of invoicing and delivery. If payment is made within {{discount_days}} days, the Seller grants a discount of {{discount_percent}}%. In case of late payment, the Buyer owes default interest at {{late_interest}} percentage points above the respective base rate pursuant to § 288 BGB. The assertion of further default damages remains reserved.",
       "fields": [
-        {"key": "price", "label_de": "Kaufpreis (EUR)", "label_en": "Price (EUR)", "type": "text", "required": true},
-        {"key": "payment_days", "label_de": "Zahlungsziel (Tage)", "label_en": "Payment Term (Days)", "type": "text", "required": true},
-        {"key": "payment_method", "label_de": "Zahlungsart", "label_en": "Payment Method", "type": "select", "required": true, "options": ["Überweisung", "Lastschrift", "Barzahlung"]}
+        {"key": "price", "label_de": "Kaufpreis netto (EUR)", "label_en": "Net Purchase Price (EUR)", "type": "text", "required": false},
+        {"key": "vat_rate", "label_de": "Umsatzsteuersatz (%)", "label_en": "VAT Rate (%)", "type": "select", "required": false, "options": ["19", "7", "0 (steuerfrei)"]},
+        {"key": "payment_days", "label_de": "Zahlungsziel (Tage)", "label_en": "Payment Term (Days)", "type": "text", "required": false},
+        {"key": "payment_method", "label_de": "Zahlungsmethode", "label_en": "Payment Method", "type": "select", "required": false, "options": ["Überweisung", "SEPA-Lastschrift", "Barzahlung", "Kreditkarte", "PayPal"]},
+        {"key": "discount_days", "label_de": "Skontofrist (Tage)", "label_en": "Discount Period (Days)", "type": "text", "required": false},
+        {"key": "discount_percent", "label_de": "Skontosatz (%)", "label_en": "Discount Rate (%)", "type": "text", "required": false},
+        {"key": "late_interest", "label_de": "Verzugszins (Prozentpunkte über Basiszinssatz)", "label_en": "Default Interest (Percentage Points Above Base Rate)", "type": "text", "required": false}
       ]
     },
     {
-      "title_de": "Lieferung und Gefahrübergang",
-      "title_en": "Delivery and Transfer of Risk",
-      "content_de": "Die Lieferung erfolgt bis zum {{delivery_date}}. Lieferort: {{delivery_place}}. Der Gefahrübergang erfolgt mit Übergabe an den Käufer. Versandkosten trägt {{shipping_cost_bearer}}.",
-      "content_en": "Delivery shall be made by {{delivery_date}}. Place of delivery: {{delivery_place}}. Risk passes upon handover to the Buyer. Shipping costs are borne by {{shipping_cost_bearer}}.",
+      "title_de": "Lieferung und Versand",
+      "title_en": "Delivery and Shipping",
+      "content_de": "Die Lieferung erfolgt bis spätestens {{delivery_date}} an den Lieferort {{delivery_address}}. Es gilt die Lieferklausel {{incoterm}} (INCOTERMS 2020). Die Versandkosten in Höhe von {{shipping_cost}} EUR trägt {{shipping_cost_bearer}}. Teillieferungen sind {{partial_delivery}}. Der Verkäufer ist berechtigt, die Lieferung durch Dritte (Spediteure, Frachtführer) ausführen zu lassen.",
+      "content_en": "Delivery shall be made no later than {{delivery_date}} to the delivery address {{delivery_address}}. The delivery clause {{incoterm}} (INCOTERMS 2020) applies. Shipping costs amounting to {{shipping_cost}} EUR shall be borne by {{shipping_cost_bearer}}. Partial deliveries are {{partial_delivery}}. The Seller is entitled to have the delivery carried out by third parties (forwarding agents, carriers).",
       "fields": [
-        {"key": "delivery_date", "label_de": "Lieferdatum", "label_en": "Delivery Date", "type": "date", "required": true},
-        {"key": "delivery_place", "label_de": "Lieferort", "label_en": "Place of Delivery", "type": "text", "required": true},
-        {"key": "shipping_cost_bearer", "label_de": "Versandkosten trägt", "label_en": "Shipping Costs Borne By", "type": "select", "required": true, "options": ["Verkäufer", "Käufer"]}
+        {"key": "delivery_date", "label_de": "Liefertermin", "label_en": "Delivery Date", "type": "date", "required": false},
+        {"key": "delivery_address", "label_de": "Lieferadresse", "label_en": "Delivery Address", "type": "text", "required": false},
+        {"key": "incoterm", "label_de": "Lieferklausel (INCOTERMS)", "label_en": "Delivery Clause (INCOTERMS)", "type": "select", "required": false, "options": ["EXW (ab Werk)", "FCA (frei Frachtführer)", "CPT (frachtfrei)", "CIP (frachtfrei versichert)", "DAP (geliefert benannter Ort)", "DDP (geliefert verzollt)"]},
+        {"key": "shipping_cost", "label_de": "Versandkosten (EUR)", "label_en": "Shipping Cost (EUR)", "type": "text", "required": false},
+        {"key": "shipping_cost_bearer", "label_de": "Versandkosten trägt", "label_en": "Shipping Costs Borne By", "type": "select", "required": false, "options": ["Verkäufer", "Käufer"]},
+        {"key": "partial_delivery", "label_de": "Teillieferungen", "label_en": "Partial Deliveries", "type": "select", "required": false, "options": ["nicht zulässig", "zulässig", "nach Absprache"]}
       ]
     },
     {
-      "title_de": "Gewährleistung",
-      "title_en": "Warranty",
-      "content_de": "Die Gewährleistungsfrist beträgt {{warranty_period}} Monate ab Lieferung. Der Verkäufer haftet für Sachmängel nach §§ 434 ff. BGB. Bei Mängeln hat der Käufer Anspruch auf Nacherfüllung (§ 439 BGB).",
-      "content_en": "The warranty period is {{warranty_period}} months from delivery. The Seller is liable for material defects in accordance with §§ 434 ff. BGB. In case of defects, the Buyer is entitled to subsequent performance (§ 439 BGB).",
+      "title_de": "Gefahrübergang und Eigentumsvorbehalt",
+      "title_en": "Transfer of Risk and Retention of Title",
+      "content_de": "Die Gefahr geht mit Übergabe der Ware an den Käufer oder den von ihm beauftragten Dritten über. Bei Versendungskauf geht die Gefahr gemäß § 447 BGB bereits mit Übergabe an die Transportperson auf den Käufer über. Der Verkäufer behält sich das Eigentum an der Ware bis zur vollständigen Bezahlung des Kaufpreises vor (einfacher Eigentumsvorbehalt gemäß § 449 BGB). Der Käufer ist nicht berechtigt, die Vorbehaltsware vor vollständiger Zahlung an Dritte zu veräußern oder zu verpfänden. Für den Fall des Weiterverkaufs wird der verlängerte Eigentumsvorbehalt vereinbart: Der Käufer tritt bereits jetzt seine Forderungen aus dem Weiterverkauf an den Verkäufer ab.",
+      "content_en": "Risk passes upon handover of the goods to the Buyer or a third party commissioned by the Buyer. In the case of mail-order purchase, risk passes to the Buyer upon handover to the transport person pursuant to § 447 BGB. The Seller retains title to the goods until full payment of the purchase price (simple retention of title pursuant to § 449 BGB). The Buyer is not entitled to sell or pledge the goods subject to retention of title to third parties before full payment. In the event of resale, extended retention of title is agreed: the Buyer hereby assigns its claims from resale to the Seller.",
       "fields": [
-        {"key": "warranty_period", "label_de": "Gewährleistungsfrist (Monate)", "label_en": "Warranty Period (Months)", "type": "text", "required": true}
+        {"key": "risk_transfer_point", "label_de": "Gefahrübergang", "label_en": "Risk Transfer Point", "type": "select", "required": false, "options": ["Übergabe an Käufer", "Übergabe an Transportperson (§ 447 BGB)", "gemäß INCOTERMS"]},
+        {"key": "retention_of_title", "label_de": "Eigentumsvorbehalt", "label_en": "Retention of Title", "type": "select", "required": false, "options": ["einfacher Eigentumsvorbehalt (§ 449 BGB)", "verlängerter Eigentumsvorbehalt", "weitergeleiteter Eigentumsvorbehalt", "kein Eigentumsvorbehalt"]}
+      ]
+    },
+    {
+      "title_de": "Abnahme und Untersuchungspflicht",
+      "title_en": "Acceptance and Inspection Duty",
+      "content_de": "Der Käufer ist verpflichtet, die Ware unverzüglich nach Lieferung zu untersuchen (§ 377 HGB). Offensichtliche Mängel sind dem Verkäufer innerhalb von {{inspection_period}} Tagen nach Lieferung schriftlich anzuzeigen. Verdeckte Mängel sind unverzüglich nach Entdeckung anzuzeigen. Unterlässt der Käufer die Anzeige, gilt die Ware als genehmigt, sofern es sich nicht um einen Mangel handelt, der bei der Untersuchung nicht erkennbar war. Die Abnahme gilt als erfolgt, wenn der Käufer die Ware nicht innerhalb von {{acceptance_deemed_days}} Tagen nach Lieferung schriftlich beanstandet. Eine Abnahme durch schlüssiges Verhalten (z.B. Inbetriebnahme, Verarbeitung) bleibt vorbehalten.",
+      "content_en": "The Buyer is obligated to inspect the goods immediately after delivery (§ 377 HGB). Obvious defects must be reported to the Seller in writing within {{inspection_period}} days of delivery. Hidden defects must be reported immediately upon discovery. If the Buyer fails to give notice, the goods are deemed approved, unless the defect was not recognizable upon inspection. Acceptance is deemed to have occurred if the Buyer does not object in writing within {{acceptance_deemed_days}} days of delivery. Acceptance by conclusive conduct (e.g., commissioning, processing) remains reserved.",
+      "fields": [
+        {"key": "inspection_period", "label_de": "Untersuchungsfrist für offensichtliche Mängel (Tage)", "label_en": "Inspection Period for Obvious Defects (Days)", "type": "text", "required": false},
+        {"key": "acceptance_deemed_days", "label_de": "Fiktion der Abnahme nach (Tage)", "label_en": "Deemed Acceptance After (Days)", "type": "text", "required": false}
+      ]
+    },
+    {
+      "title_de": "Gewährleistung und Mängelhaftung",
+      "title_en": "Warranty and Defect Liability",
+      "content_de": "Die Gewährleistungsfrist beträgt {{warranty_period}} Monate ab Gefahrübergang. Der Verkäufer haftet für Sachmängel nach §§ 434, 437 BGB. Der Käufer hat bei Vorliegen eines Mangels nach seiner Wahl Anspruch auf Nacherfüllung durch Beseitigung des Mangels (Nachbesserung) oder Lieferung einer mangelfreien Sache (Nachlieferung) gemäß § 439 BGB. Schlägt die Nacherfüllung fehl, ist der Käufer berechtigt, vom Vertrag zurückzutreten (§ 440 BGB, § 323 BGB) oder den Kaufpreis zu mindern (§ 441 BGB). Schadensersatzansprüche bestehen nur nach Maßgabe von § 440 BGB und § 280 BGB. Die Verjährungsfrist für Mängelansprüche beginnt mit der Ablieferung der Sache (§ 438 BGB). Für gebrauchte Sachen kann die Gewährleistungsfrist auf {{used_goods_warranty_months}} Monate verkürzt werden.",
+      "content_en": "The warranty period is {{warranty_period}} months from the transfer of risk. The Seller is liable for material defects pursuant to §§ 434, 437 BGB. In the event of a defect, the Buyer is entitled at its option to subsequent performance by repair or replacement delivery pursuant to § 439 BGB. If subsequent performance fails, the Buyer is entitled to withdraw from the contract (§ 440 BGB, § 323 BGB) or reduce the purchase price (§ 441 BGB). Claims for damages exist only in accordance with § 440 BGB and § 280 BGB. The limitation period for defect claims begins upon delivery of the item (§ 438 BGB). For used goods, the warranty period may be reduced to {{used_goods_warranty_months}} months.",
+      "fields": [
+        {"key": "warranty_period", "label_de": "Gewährleistungsfrist (Monate)", "label_en": "Warranty Period (Months)", "type": "text", "required": false},
+        {"key": "used_goods_warranty_months", "label_de": "Gewährleistungsfrist für gebrauchte Ware (Monate)", "label_en": "Warranty Period for Used Goods (Months)", "type": "text", "required": false}
+      ]
+    },
+    {
+      "title_de": "Produkthaftung und Versicherung",
+      "title_en": "Product Liability and Insurance",
+      "content_de": "Der Verkäufer verfügt über eine Produkthaftpflichtversicherung mit einer Deckungssumme von {{product_liability_coverage}} EUR. Eine Kopie der Versicherungspolice wird dem Käufer auf Verlangen vorgelegt. Der Verkäufer stellt den Käufer von allen Ansprüchen Dritter aus der Produkthaftung nach dem Produkthaftungsgesetz (ProdHaftG) frei, soweit der Mangel auf einem vom Verkäufer zu vertretenden Umstand beruht. Der Käufer ist verpflichtet, den Verkäufer unverzüglich über etwaige Produkthaftungsfälle zu informieren.",
+      "content_en": "The Seller maintains product liability insurance with coverage of {{product_liability_coverage}} EUR. A copy of the insurance policy shall be provided to the Buyer upon request. The Seller indemnifies the Buyer from all third-party claims arising from product liability under the Product Liability Act (ProdHaftG), insofar as the defect is based on a circumstance attributable to the Seller. The Buyer is obligated to inform the Seller immediately of any product liability incidents.",
+      "fields": [
+        {"key": "product_liability_coverage", "label_de": "Deckungssumme Produkthaftpflicht (EUR)", "label_en": "Product Liability Coverage (EUR)", "type": "text", "required": false},
+        {"key": "product_liability_insurer", "label_de": "Versicherer (Produkthaftpflicht)", "label_en": "Insurer (Product Liability)", "type": "text", "required": false}
       ]
     },
     {
       "title_de": "Haftung und Vertragsstrafe",
-      "title_en": "Liability and Penalties",
-      "content_de": "Bei Lieferverzug schuldet der Verkäufer eine Vertragsstrafe in Höhe von {{penalty_percent}}% des Kaufpreises pro angefangener Woche, maximal {{penalty_max}}% des Kaufpreises. Die Haftung auf Schadensersatz richtet sich nach den gesetzlichen Bestimmungen. Die Haftung für leichte Fahrlässigkeit ist auf {{liability_cap}} EUR beschränkt. Von der Haftung ausgenommen sind Schäden aus der Verletzung des Lebens, des Körpers oder der Gesundheit.",
-      "content_en": "In case of delivery delay, the Seller shall pay a contractual penalty of {{penalty_percent}}% of the purchase price per commenced week, up to a maximum of {{penalty_max}}% of the purchase price. Liability for damages is governed by statutory provisions. Liability for slight negligence is limited to {{liability_cap}} EUR. Excluded from this limitation are damages arising from injury to life, body or health.",
+      "title_en": "Liability and Contractual Penalties",
+      "content_de": "Kommt der Verkäufer mit der Lieferung in Verzug, schuldet er eine Vertragsstrafe in Höhe von {{penalty_percent}}% des Kaufpreises je angefangener Woche des Verzugs, maximal jedoch {{penalty_max}}% des Kaufpreises. Die Haftung des Verkäufers für Schäden, die nicht auf Vorsatz oder grober Fahrlässigkeit beruhen, ist auf den Auftragswert begrenzt ({{liability_cap}} EUR). Diese Haftungsbegrenzung gilt nicht bei Verletzung von Leben, Körper oder Gesundheit und bei Verletzung wesentlicher Vertragspflichten (Kardinalpflichten). Im Falle der Verletzung von Kardinalpflichten ist die Haftung auf den vertragstypischen, vorhersehbaren Schaden begrenzt. Die Haftung nach dem Produkthaftungsgesetz bleibt unberührt.",
+      "content_en": "If the Seller is in default of delivery, the Seller shall pay a contractual penalty of {{penalty_percent}}% of the purchase price per commenced week of delay, but no more than {{penalty_max}}% of the purchase price. The Seller's liability for damages not caused by intent or gross negligence is limited to the order value ({{liability_cap}} EUR). This limitation of liability does not apply to injury to life, body or health or to breach of essential contractual obligations (cardinal obligations). In the event of breach of cardinal obligations, liability is limited to the contract-typical, foreseeable damage. Liability under the Product Liability Act remains unaffected.",
       "fields": [
-        {"key": "penalty_percent", "label_de": "Vertragsstrafe (% pro Woche)", "label_en": "Penalty (% per Week)", "type": "text", "required": true},
-        {"key": "penalty_max", "label_de": "Maximale Vertragsstrafe (%)", "label_en": "Maximum Penalty (%)", "type": "text", "required": true},
-        {"key": "liability_cap", "label_de": "Haftungsobergrenze (EUR)", "label_en": "Liability Cap (EUR)", "type": "text", "required": true}
+        {"key": "penalty_percent", "label_de": "Vertragsstrafe (% pro Woche Verzug)", "label_en": "Contractual Penalty (% per Week of Delay)", "type": "text", "required": false},
+        {"key": "penalty_max", "label_de": "Maximale Vertragsstrafe (% des Kaufpreises)", "label_en": "Maximum Penalty (% of Purchase Price)", "type": "text", "required": false},
+        {"key": "liability_cap", "label_de": "Haftungsobergrenze (EUR)", "label_en": "Liability Cap (EUR)", "type": "text", "required": false}
+      ]
+    },
+    {
+      "title_de": "Höhere Gewalt",
+      "title_en": "Force Majeure",
+      "content_de": "Keine Partei ist verpflichtet, ihre vertraglichen Verpflichtungen zu erfüllen, soweit die Erfüllung durch höhere Gewalt unmöglich oder unzumutbar wird. Höhere Gewalt umfasst insbesondere Naturkatastrophen, Epidemien/Pandemien, Krieg, Terroranschläge, Embargos, behördliche Anordnungen, allgemeine Rohstoffknappheit, Streiks und Aussperrungen, schwere Betriebsstörungen (z.B. Brand, Explosion). Die betroffene Partei hat die andere Partei unverzüglich über das Vorliegen höherer Gewalt zu informieren. Bei Fortdauer von mehr als {{force_majeure_days}} Tagen ist jede Partei berechtigt, den Vertrag außerordentlich zu kündigen.",
+      "content_en": "Neither party is obligated to perform its contractual obligations to the extent that performance is rendered impossible or unreasonable by force majeure. Force majeure includes in particular natural disasters, epidemics/pandemics, war, terrorist attacks, embargoes, governmental orders, general raw material shortages, strikes and lockouts, serious operational disruptions (e.g., fire, explosion). The affected party shall immediately inform the other party of the occurrence of force majeure. If force majeure persists for more than {{force_majeure_days}} days, each party is entitled to terminate the contract extraordinarily.",
+      "fields": [
+        {"key": "force_majeure_days", "label_de": "Höhere-Gewalt-Frist vor Kündigung (Tage)", "label_en": "Force Majeure Period Before Termination (Days)", "type": "text", "required": false}
       ]
     },
     {
       "title_de": "Schlussbestimmungen",
       "title_en": "Final Provisions",
-      "content_de": "Gerichtsstand ist {{court}}. Es gilt deutsches Recht. Sollte eine Bestimmung unwirksam sein, bleibt der Vertrag im Übrigen wirksam. Änderungen bedürfen der Schriftform. Ort: {{place}}, Datum: {{date}}",
-      "content_en": "Place of jurisdiction is {{court}}. German law applies. Should any provision be invalid, the remainder of the contract shall remain effective. Amendments require written form. Place: {{place}}, Date: {{date}}",
+      "content_de": "Gerichtsstand ist {{court}}. Es gilt das Recht der Bundesrepublik Deutschland unter Ausschluss des UN-Kaufrechts (CISG). Sollte eine Bestimmung dieses Vertrags unwirksam sein oder werden, bleibt der Vertrag im Übrigen wirksam. Anstelle der unwirksamen Bestimmung gilt eine wirksame Regelung, die dem wirtschaftlichen Zweck der unwirksamen Bestimmung möglichst nahekommt. Änderungen und Ergänzungen dieses Vertrags bedürfen der Schriftform; dies gilt auch für die Aufhebung dieser Schriftformklausel. Ort: {{place}}, Datum: {{date}}. Es werden zwei gleichlautende Ausfertigungen erstellt.",
+      "content_en": "Place of jurisdiction is {{court}}. The law of the Federal Republic of Germany applies, excluding the UN Convention on Contracts for the International Sale of Goods (CISG). Should any provision of this contract be or become invalid, the remainder of the contract shall remain effective. In place of the invalid provision, a valid provision shall apply that comes as close as possible to the economic purpose of the invalid provision. Amendments and supplements to this contract require written form; this also applies to the waiver of this written form clause. Place: {{place}}, Date: {{date}}. Two identical counterparts shall be executed.",
       "fields": [
-        {"key": "court", "label_de": "Gerichtsstand", "label_en": "Place of Jurisdiction", "type": "text", "required": true},
-        {"key": "place", "label_de": "Ort", "label_en": "Place", "type": "text", "required": true},
-        {"key": "date", "label_de": "Datum", "label_en": "Date", "type": "date", "required": true}
+        {"key": "court", "label_de": "Gerichtsstand", "label_en": "Place of Jurisdiction", "type": "text", "required": false},
+        {"key": "place", "label_de": "Ort der Vertragsunterzeichnung", "label_en": "Place of Signing", "type": "text", "required": false},
+        {"key": "date", "label_de": "Datum der Vertragsunterzeichnung", "label_en": "Date of Signing", "type": "date", "required": false}
       ]
     }
   ]
