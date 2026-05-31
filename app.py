@@ -137,6 +137,47 @@ def delete_template(id):
     return redirect(url_for('manage_templates'))
 
 
+@app.route('/templates/<int:id>/update', methods=['POST'])
+def update_template(id):
+    """Update an existing template with new metadata and sections."""
+    template = Template.query.get_or_404(id)
+
+    title_de = request.form.get('title_de', '').strip()
+    title_en = request.form.get('title_en', '').strip()
+    category_id = request.form.get('category_id', type=int)
+    sections_json = request.form.get('sections', '')
+    file = request.files.get('file')
+
+    if title_de:
+        template.title_de = title_de
+    if title_en:
+        template.title_en = title_en
+    if category_id:
+        template.category_id = category_id
+
+    if sections_json:
+        try:
+            sections = json.loads(sections_json)
+            if isinstance(sections, list) and len(sections) > 0:
+                template.sections = sections
+        except json.JSONDecodeError:
+            pass  # keep old sections if JSON is invalid
+
+    if file and file.filename and allowed_file(file.filename):
+        # Remove old file if exists
+        if template.file_path:
+            old_path = os.path.join(app.config['UPLOAD_FOLDER'], template.file_path)
+            if os.path.exists(old_path):
+                os.remove(old_path)
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        template.file_path = filename
+
+    db.session.commit()
+    flash(t('template_updated'))
+    return redirect(url_for('manage_templates'))
+
+
 # ═══════════════════════════════════════════════
 # REVIEW (Legal/Management)
 # ═══════════════════════════════════════════════

@@ -32,6 +32,16 @@ class Template(db.Model):
     submissions = db.relationship('Submission', backref='template', lazy=True,
                                   cascade='all, delete-orphan')
 
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'category_id': self.category_id,
+            'title_de': self.title_de,
+            'title_en': self.title_en,
+            'sections': self.sections,
+            'file_path': self.file_path,
+        }
+
 
 class Submission(db.Model):
     __tablename__ = 'submissions'

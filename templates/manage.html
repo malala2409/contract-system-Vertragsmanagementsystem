@@ -2,7 +2,7 @@
 {% block content %}
 <div class="flex items-center justify-between mb-6">
     <h1 class="text-2xl font-bold text-brand-700">{{ t('nav_templates') }}</h1>
-    <button onclick="document.getElementById('upload-modal').classList.remove('hidden')"
+    <button onclick="showUploadModal()"
             class="bg-brand-500 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-brand-700 transition">
         + {{ t('btn_upload') }}
     </button>
@@ -31,32 +31,37 @@
             </h2>
             <span class="inline-block bg-brand-100 text-brand-700 text-xs px-2 py-0.5 rounded mt-1">
                 {{ tmpl.category.name_de }} / {{ tmpl.category.name_en }}
+                {% if tmpl.file_path %}&middot; 📎 {{ tmpl.file_path }}{% endif %}
             </span>
             {% if tmpl.sections %}
             <div class="flex flex-wrap gap-1 mt-2">
-                {% for sec in tmpl.sections[:6] %}
+                {% for sec in tmpl.sections[:8] %}
                 <span class="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded">
                     {{ sec.title_de }}
                 </span>
                 {% endfor %}
-                {% if tmpl.sections|length > 6 %}
-                <span class="text-xs text-gray-400">+{{ tmpl.sections|length - 6 }} more</span>
+                {% if tmpl.sections|length > 8 %}
+                <span class="text-xs text-gray-400">+{{ tmpl.sections|length - 8 }}</span>
                 {% endif %}
             </div>
             {% endif %}
         </div>
         <div class="flex items-center gap-2 flex-shrink-0">
+            <button onclick="showEditModal({{ tmpl.id }}, {{ tmpl.to_dict() | tojson | forceescape }})"
+                    class="bg-amber-100 text-amber-700 px-3 py-2 rounded-lg text-sm font-medium hover:bg-amber-200 transition">
+                ✏️ {{ t('btn_edit_template') }}
+            </button>
             <a href="{{ url_for('fill_contract', id=tmpl.id) }}"
-               class="bg-green-500 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-green-600 transition">
+               class="bg-green-500 text-white px-3 py-2 rounded-lg text-sm font-medium hover:bg-green-600 transition">
                 📝 {{ t('btn_fill') }}
             </a>
             {% if tmpl.file_path %}
             <a href="{{ url_for('download_template', id=tmpl.id) }}"
-               class="bg-brand-500 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-brand-700 transition">
-                📥 {{ t('btn_download') }}
+               class="bg-brand-500 text-white px-3 py-2 rounded-lg text-sm font-medium hover:bg-brand-700 transition">
+                📥
             </a>
             {% endif %}
-            <button onclick="showDeleteModal({{ tmpl.id }}, '{{ tmpl.title_de }}')"
+            <button onclick="showDeleteModal({{ tmpl.id }}, '{{ tmpl.title_de | e }}')"
                     class="bg-red-100 text-red-600 px-3 py-2 rounded-lg text-sm font-medium hover:bg-red-200 transition">
                 🗑
             </button>
@@ -71,43 +76,46 @@
 </div>
 {% endif %}
 
-<div id="upload-modal" class="hidden fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-    <div class="bg-white rounded-xl shadow-2xl p-6 w-full max-w-lg mx-4">
+<!-- ═══════════════ UPLOAD MODAL ═══════════════ -->
+<div id="upload-modal" class="hidden fixed inset-0 bg-black/40 flex items-center justify-center z-50 overflow-y-auto py-8">
+    <div class="bg-white rounded-xl shadow-2xl p-6 w-full max-w-lg mx-4 my-auto">
         <div class="flex items-center justify-between mb-4">
             <h2 class="text-lg font-bold text-brand-700">{{ t('btn_upload') }}</h2>
             <button onclick="document.getElementById('upload-modal').classList.add('hidden')"
                     class="text-gray-400 hover:text-gray-600 text-xl">&times;</button>
         </div>
         <form method="POST" enctype="multipart/form-data" class="space-y-4">
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Titel (DE)</label>
-                <input type="text" name="title_de" required
-                       class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-brand-300 focus:border-brand-500 outline-none">
+            <div class="grid grid-cols-2 gap-3">
+                <div>
+                    <label class="block text-xs font-medium text-gray-500 mb-1">Titel (DE)</label>
+                    <input type="text" name="title_de" required
+                           class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-brand-300 focus:border-brand-500 outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-gray-500 mb-1">Title (EN)</label>
+                    <input type="text" name="title_en"
+                           class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-brand-300 focus:border-brand-500 outline-none">
+                </div>
             </div>
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Title (EN)</label>
-                <input type="text" name="title_en"
-                       class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-brand-300 focus:border-brand-500 outline-none">
-            </div>
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">{{ t('label_category') }}</label>
+                <label class="block text-xs font-medium text-gray-500 mb-1">{{ t('label_category') }}</label>
                 <select name="category_id" required
                         class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-brand-300 focus:border-brand-500 outline-none">
-                    <option value="">{{ t('label_all') }}</option>
+                    <option value="">—</option>
                     {% for cat in categories %}
                     <option value="{{ cat.id }}">{{ cat.name_de }} ({{ cat.name_en }})</option>
                     {% endfor %}
                 </select>
             </div>
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Sections (JSON)</label>
-                <textarea name="sections" rows="4"
-                          class="w-full border rounded-lg px-3 py-2 text-sm font-mono focus:ring-2 focus:ring-brand-300 focus:border-brand-500 outline-none"
-                          placeholder='[{"title_de":"Parteien","title_en":"Parties","content_de":"...","content_en":"...","fields":[...]}]'></textarea>
-                <p class="text-xs text-gray-400 mt-1">Optional: JSON array of section objects.</p>
+                <label class="block text-xs font-medium text-gray-500 mb-1">{{ t('label_sections_json') }}</label>
+                <textarea name="sections" rows="6"
+                          class="w-full border rounded-lg px-3 py-2 text-xs font-mono focus:ring-2 focus:ring-brand-300 focus:border-brand-500 outline-none"
+                          placeholder='[{"title_de":"Parteien","title_en":"Parties","content_de":"...","content_en":"...","fields":[{"key":"name","label_de":"Name","label_en":"Name","type":"text","required":false}]}]'></textarea>
+                <p class="text-xs text-gray-400 mt-1">{{ t('label_sections_json_hint') | default('JSON: title_de, title_en, content_de, content_en, fields (key, label_de, label_en, type, required, options)') }}</p>
             </div>
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">File (DOCX/PDF)</label>
+                <label class="block text-xs font-medium text-gray-500 mb-1">Datei (DOCX/PDF/JSON)</label>
                 <input type="file" name="file" accept=".docx,.doc,.pdf,.json"
                        class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-brand-50 file:text-brand-700 hover:file:bg-brand-100">
             </div>
@@ -121,7 +129,58 @@
     </div>
 </div>
 
-<!-- Delete Password Modal -->
+<!-- ═══════════════ EDIT MODAL ═══════════════ -->
+<div id="edit-modal" class="hidden fixed inset-0 bg-black/40 flex items-center justify-center z-50 overflow-y-auto py-8">
+    <div class="bg-white rounded-xl shadow-2xl p-6 w-full max-w-lg mx-4 my-auto">
+        <div class="flex items-center justify-between mb-4">
+            <h2 class="text-lg font-bold text-brand-700">{{ t('btn_edit_template') }}</h2>
+            <button onclick="document.getElementById('edit-modal').classList.add('hidden')"
+                    class="text-gray-400 hover:text-gray-600 text-xl">&times;</button>
+        </div>
+        <form id="edit-form" method="POST" enctype="multipart/form-data" class="space-y-4">
+            <div class="grid grid-cols-2 gap-3">
+                <div>
+                    <label class="block text-xs font-medium text-gray-500 mb-1">Titel (DE)</label>
+                    <input type="text" name="title_de" id="edit-title-de" required
+                           class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-brand-300 focus:border-brand-500 outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-gray-500 mb-1">Title (EN)</label>
+                    <input type="text" name="title_en" id="edit-title-en"
+                           class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-brand-300 focus:border-brand-500 outline-none">
+                </div>
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-gray-500 mb-1">{{ t('label_category') }}</label>
+                <select name="category_id" id="edit-category" required
+                        class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-brand-300 focus:border-brand-500 outline-none">
+                    {% for cat in categories %}
+                    <option value="{{ cat.id }}">{{ cat.name_de }} ({{ cat.name_en }})</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-gray-500 mb-1">{{ t('label_sections_json') }}</label>
+                <textarea name="sections" id="edit-sections" rows="8"
+                          class="w-full border rounded-lg px-3 py-2 text-xs font-mono focus:ring-2 focus:ring-brand-300 focus:border-brand-500 outline-none"></textarea>
+                <p class="text-xs text-gray-400 mt-1">JSON-Format. Leer lassen, um Abschnitte nicht zu ändern.</p>
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-gray-500 mb-1">Neue Datei (ersetzt alte)</label>
+                <input type="file" name="file" accept=".docx,.doc,.pdf,.json"
+                       class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-amber-50 file:text-amber-700 hover:file:bg-amber-100">
+            </div>
+            <div class="flex gap-3 justify-end pt-2">
+                <button type="button" onclick="document.getElementById('edit-modal').classList.add('hidden')"
+                        class="px-4 py-2 border rounded-lg text-sm text-gray-600 hover:bg-gray-50">{{ t('btn_back') }}</button>
+                <button type="submit"
+                        class="px-4 py-2 bg-amber-500 text-white rounded-lg text-sm font-medium hover:bg-amber-700">{{ t('btn_save_changes') }}</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- ═══════════════ DELETE MODAL ═══════════════ -->
 <div id="delete-modal" class="hidden fixed inset-0 bg-black/40 flex items-center justify-center z-50">
     <div class="bg-white rounded-xl shadow-2xl p-6 w-full max-w-sm mx-4">
         <h2 class="text-lg font-bold text-brand-700 mb-2">🗑 {{ t('btn_delete') }}</h2>
@@ -144,6 +203,21 @@
 </div>
 
 <script>
+function showUploadModal() {
+    // Reset form
+    document.querySelector('#upload-modal form').reset();
+    document.getElementById('upload-modal').classList.remove('hidden');
+}
+
+function showEditModal(id, tmpl) {
+    document.getElementById('edit-title-de').value = tmpl.title_de || '';
+    document.getElementById('edit-title-en').value = tmpl.title_en || '';
+    document.getElementById('edit-category').value = tmpl.category_id || '';
+    document.getElementById('edit-sections').value = JSON.stringify(tmpl.sections || [], null, 2);
+    document.getElementById('edit-form').action = '/templates/' + id + '/update';
+    document.getElementById('edit-modal').classList.remove('hidden');
+}
+
 function showDeleteModal(id, title) {
     document.getElementById('delete-modal-title').textContent = title;
     document.getElementById('delete-form').action = '/templates/' + id + '/delete';
@@ -151,5 +225,21 @@ function showDeleteModal(id, title) {
     document.getElementById('delete-password').value = '';
     document.getElementById('delete-password').focus();
 }
+
+// Close modals on Escape key
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        document.getElementById('upload-modal').classList.add('hidden');
+        document.getElementById('edit-modal').classList.add('hidden');
+        document.getElementById('delete-modal').classList.add('hidden');
+    }
+});
+
+// Close modals on backdrop click
+['upload-modal', 'edit-modal', 'delete-modal'].forEach(function(id) {
+    document.getElementById(id).addEventListener('click', function(e) {
+        if (e.target === this) this.classList.add('hidden');
+    });
+});
 </script>
 {% endblock %}
