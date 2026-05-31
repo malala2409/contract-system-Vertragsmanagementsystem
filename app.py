@@ -159,15 +159,31 @@ def review_detail(id):
 
     if request.method == 'POST':
         action = request.form.get('action')
-        if action == 'approve':
-            submission.status = 'approved'
-        elif action == 'reject':
-            submission.status = 'rejected'
-        submission.review_comment = request.form.get('comment', '')
-        submission.reviewed_at = datetime.now(timezone.utc)
+        comment = request.form.get('comment', '')
+        now = datetime.now(timezone.utc)
+
+        # Initialize review_notes if None
+        if submission.review_notes is None:
+            submission.review_notes = []
+
+        if action in ('approve', 'reject', 'pending'):
+            submission.status = action
+            submission.reviewed_at = now
+
+        if action == 'add_note' or comment:
+            # Record timestamped note in history
+            note = {
+                'action': action if action in ('approve', 'reject', 'pending') else 'note',
+                'comment': comment,
+                'timestamp': now.strftime('%Y-%m-%d %H:%M'),
+            }
+            submission.review_notes.append(note)
+            if comment:
+                submission.review_comment = comment
+
         db.session.commit()
         flash(t('review_success'))
-        return redirect(url_for('review_list'))
+        return redirect(url_for('review_detail', id=id))
 
     lang = session.get('lang', 'de')
     rendered_sections = render_submission_sections(submission, lang)

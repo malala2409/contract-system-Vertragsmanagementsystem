@@ -42,5 +42,6 @@ class Submission(db.Model):
     status = db.Column(db.String(20), nullable=False, default='pending')
     submitter_name = db.Column(db.String(100), nullable=True)
     review_comment = db.Column(db.Text, nullable=True)
+    review_notes = db.Column(db.JSON, default=list)  # [{action, comment, timestamp}]
     submitted_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
     reviewed_at = db.Column(db.DateTime, nullable=True)

@@ -44,6 +44,7 @@ TRANSLATIONS = {
         'upload_success': 'Vorlage erfolgreich hochgeladen.',
         'submit_success': 'Vertrag erfolgreich eingereicht.',
         'review_success': 'Prüfung abgeschlossen.',
+        'review_history': 'Prüfverlauf',
         'modified_warning': '⚠ Vom Benutzer geändert',
         'wrong_password': 'Falsches Passwort! Vorlage wurde nicht gelöscht.',
         'delete_success': 'Vorlage erfolgreich gelöscht.',
@@ -69,6 +70,10 @@ TRANSLATIONS = {
         'optional_hint': '(optional)',
         'home_sales_title': 'Vertriebsportal',
         'home_sales_desc': 'Verträge ausfüllen, einreichen und Status Ihrer Verträge verfolgen.',
+        'btn_add_note': 'Anmerkung hinzufügen',
+        'btn_revoke': 'Zurückziehen',
+        'btn_set_pending': 'Auf ausstehend setzen',
+        'review_history': 'Prüfverlauf',
     },
     'en': {
         'app_name': 'Contract Manager',
@@ -114,6 +119,7 @@ TRANSLATIONS = {
         'upload_success': 'Template uploaded successfully.',
         'submit_success': 'Contract submitted successfully.',
         'review_success': 'Review completed.',
+        'review_history': 'Review History',
         'modified_warning': '⚠ User-modified',
         'wrong_password': 'Wrong password! Template was not deleted.',
         'delete_success': 'Template deleted successfully.',
@@ -139,5 +145,9 @@ TRANSLATIONS = {
         'optional_hint': '(optional)',
         'home_sales_title': 'Sales Portal',
         'home_sales_desc': 'Fill in contracts, submit them, and track your contract status.',
+        'btn_add_note': 'Add Note',
+        'btn_revoke': 'Revoke',
+        'btn_set_pending': 'Set to Pending',
+        'review_history': 'Review History',
     }
 }

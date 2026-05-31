@@ -4,85 +4,142 @@
     <a href="{{ url_for('review_list') }}" class="text-brand-500 hover:text-brand-700 text-sm">&larr; {{ t('btn_back') }}</a>
 </div>
 
-<div class="bg-white rounded-xl shadow-sm border p-6 mb-6">
-    <div class="flex items-center justify-between mb-4">
-        <div>
-            <h1 class="text-xl font-bold text-brand-700">
-                {% if current_lang() == 'en' %}{{ submission.template.title_en }}{% else %}{{ submission.template.title_de }}{% endif %}
-            </h1>
-            <p class="text-xs text-gray-400 mt-1">
-                {{ t('label_submitted') }}: {{ submission.submitted_at.strftime('%Y-%m-%d %H:%M') if submission.submitted_at else '—' }}
-                {% if submission.reviewed_at %}
-                &middot; {{ t('label_reviewed') }}: {{ submission.reviewed_at.strftime('%Y-%m-%d %H:%M') }}
-                {% endif %}
-            </p>
-        </div>
-        <div>
-            {% if submission.status == 'pending' %}
-            <span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-sm font-medium">🟡 {{ t('status_pending') }}</span>
-            {% elif submission.status == 'approved' %}
-            <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-medium">🟢 {{ t('status_approved') }}</span>
-            {% elif submission.status == 'rejected' %}
-            <span class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-sm font-medium">🔴 {{ t('status_rejected') }}</span>
-            {% endif %}
+<div class="grid lg:grid-cols-3 gap-6">
+    <!-- LEFT: Contract Content (2/3 width) -->
+    <div class="lg:col-span-2">
+        <div class="bg-white rounded-xl shadow-sm border p-6">
+            <div class="flex items-center justify-between mb-4">
+                <div>
+                    <h1 class="text-xl font-bold text-brand-700">
+                        {% if current_lang() == 'en' %}{{ submission.template.title_en }}{% else %}{{ submission.template.title_de }}{% endif %}
+                    </h1>
+                    <p class="text-xs text-gray-400 mt-1">
+                        {{ t('label_submitted') }}: {{ submission.submitted_at.strftime('%Y-%m-%d %H:%M') if submission.submitted_at else '—' }}
+                        {% if submission.submitter_name %}
+                        &middot; {{ t('sales_logged_in') }}: {{ submission.submitter_name }}
+                        {% endif %}
+                        {% if submission.reviewed_at %}
+                        &middot; {{ t('label_reviewed') }}: {{ submission.reviewed_at.strftime('%Y-%m-%d %H:%M') }}
+                        {% endif %}
+                    </p>
+                </div>
+                <div>
+                    {% if submission.status == 'pending' %}
+                    <span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-sm font-medium">🟡 {{ t('status_pending') }}</span>
+                    {% elif submission.status == 'approved' %}
+                    <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-medium">🟢 {{ t('status_approved') }}</span>
+                    {% elif submission.status == 'rejected' %}
+                    <span class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-sm font-medium">🔴 {{ t('status_rejected') }}</span>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Contract Sections -->
+            <div class="space-y-4 mt-6">
+                {% for rs in rendered_sections %}
+                <div class="border rounded-lg p-4 {% if rs.is_modified %}border-red-300 bg-red-50{% endif %}">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="text-brand-300 text-sm">{{ loop.index }}.</span>
+                        <h3 class="font-semibold text-brand-700 text-sm">
+                            {% if current_lang() == 'en' %}{{ rs.title_en }}{% else %}{{ rs.title_de }}{% endif %}
+                        </h3>
+                        {% if rs.is_modified %}
+                        <span class="bg-red-500 text-white text-xs px-2 py-0.5 rounded-full font-bold">{{ t('modified_warning') }}</span>
+                        {% endif %}
+                    </div>
+                    {% if rs.is_modified %}
+                    <div class="border-2 border-red-400 bg-white rounded-lg p-3">
+                        <p class="text-sm text-gray-800 whitespace-pre-wrap">{{ rs.rendered_html }}</p>
+                    </div>
+                    <p class="text-xs text-red-500 mt-1">Original: {{ rs.original }}</p>
+                    {% else %}
+                    <p class="text-sm text-gray-700 whitespace-pre-wrap leading-relaxed">{{ rs.rendered_html | safe }}</p>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
 
-    <!-- Contract Content -->
-    <div class="space-y-4 mt-6">
-        {% for rs in rendered_sections %}
-        <div class="border rounded-lg p-4 {% if rs.is_modified %}border-red-300 bg-red-50{% endif %}">
-            <div class="flex items-center gap-2 mb-2">
-                <span class="text-brand-300 text-sm">{{ loop.index }}.</span>
-                <h3 class="font-semibold text-brand-700 text-sm">
-                    {% if current_lang() == 'en' %}{{ rs.title_en }}{% else %}{{ rs.title_de }}{% endif %}
-                </h3>
-                {% if rs.is_modified %}
-                <span class="bg-red-500 text-white text-xs px-2 py-0.5 rounded-full font-bold">{{ t('modified_warning') }}</span>
-                {% endif %}
-            </div>
-
-            {% if rs.is_modified %}
-            <div class="border-2 border-red-400 bg-white rounded-lg p-3">
-                <p class="text-sm text-gray-800 whitespace-pre-wrap">{{ rs.rendered_html }}</p>
-            </div>
-            <p class="text-xs text-red-500 mt-1">
-                Original: {{ rs.original }}
-            </p>
-            {% else %}
-            <p class="text-sm text-gray-700 whitespace-pre-wrap">{{ rs.rendered_html | safe }}</p>
-            {% endif %}
-        </div>
-        {% endfor %}
-    </div>
-
-    <!-- Review Actions -->
-    {% if submission.status == 'pending' %}
-    <div class="mt-8 border-t pt-6">
-        <form method="POST" class="space-y-4">
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">{{ t('label_comment') }}</label>
-                <textarea name="comment" rows="3"
-                          class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-brand-300 focus:border-brand-500 outline-none"
-                          placeholder="{{ t('label_reviewer_note') }}...">{{ submission.review_comment or '' }}</textarea>
-            </div>
-            <div class="flex gap-3">
+    <!-- RIGHT: Review Panel (1/3 width) -->
+    <div class="space-y-4">
+        <!-- Status Change -->
+        <div class="bg-white rounded-xl shadow-sm border p-5">
+            <h3 class="font-bold text-brand-700 text-sm mb-3">Status</h3>
+            <form method="POST" class="space-y-2">
+                {% if submission.status != 'approved' %}
                 <button type="submit" name="action" value="approve"
-                        class="bg-green-500 text-white px-6 py-3 rounded-lg font-medium hover:bg-green-600 transition">
+                        class="w-full text-left bg-green-50 hover:bg-green-100 text-green-700 px-3 py-2 rounded-lg text-sm font-medium transition">
                     ✅ {{ t('btn_approve') }}
                 </button>
+                {% endif %}
+                {% if submission.status != 'rejected' %}
                 <button type="submit" name="action" value="reject"
-                        class="bg-red-500 text-white px-6 py-3 rounded-lg font-medium hover:bg-red-600 transition">
+                        class="w-full text-left bg-red-50 hover:bg-red-100 text-red-700 px-3 py-2 rounded-lg text-sm font-medium transition">
                     ✗ {{ t('btn_reject') }}
                 </button>
+                {% endif %}
+                {% if submission.status != 'pending' %}
+                <button type="submit" name="action" value="pending"
+                        class="w-full text-left bg-yellow-50 hover:bg-yellow-100 text-yellow-700 px-3 py-2 rounded-lg text-sm font-medium transition">
+                    ↩ {{ t('btn_set_pending') }}
+                </button>
+                {% endif %}
+            </form>
+        </div>
+
+        <!-- Add Note -->
+        <div class="bg-white rounded-xl shadow-sm border p-5">
+            <h3 class="font-bold text-brand-700 text-sm mb-3">{{ t('btn_add_note') }}</h3>
+            <form method="POST" class="space-y-3">
+                <textarea name="comment" rows="2"
+                          class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-brand-300 outline-none"
+                          placeholder="{{ t('label_reviewer_note') }}..."></textarea>
+                <button type="submit" name="action" value="add_note"
+                        class="w-full bg-brand-500 text-white px-3 py-2 rounded-lg text-sm font-medium hover:bg-brand-700 transition">
+                    💬 {{ t('btn_add_note') }}
+                </button>
+            </form>
+        </div>
+
+        <!-- Review History -->
+        <div class="bg-white rounded-xl shadow-sm border p-5">
+            <h3 class="font-bold text-brand-700 text-sm mb-3">{{ t('review_history') }}</h3>
+            {% set notes = submission.review_notes or [] %}
+            {% if notes %}
+            <div class="space-y-2 max-h-64 overflow-y-auto">
+                {% for note in notes | reverse %}
+                <div class="border-l-2 {% if note.action == 'approve' %}border-green-400{% elif note.action == 'reject' %}border-red-400{% elif note.action == 'pending' %}border-yellow-400{% else %}border-gray-300{% endif %} pl-3 py-1">
+                    <div class="flex items-center gap-1 mb-0.5">
+                        {% if note.action == 'approve' %}
+                        <span class="text-xs text-green-600 font-medium">✅ {{ t('status_approved') }}</span>
+                        {% elif note.action == 'reject' %}
+                        <span class="text-xs text-red-600 font-medium">✗ {{ t('status_rejected') }}</span>
+                        {% elif note.action == 'pending' %}
+                        <span class="text-xs text-yellow-600 font-medium">↩ {{ t('status_pending') }}</span>
+                        {% else %}
+                        <span class="text-xs text-gray-500 font-medium">💬 Notiz</span>
+                        {% endif %}
+                        <span class="text-xs text-gray-400">{{ note.timestamp }}</span>
+                    </div>
+                    {% if note.comment %}
+                    <p class="text-xs text-gray-600">{{ note.comment }}</p>
+                    {% endif %}
+                </div>
+                {% endfor %}
             </div>
-        </form>
+            {% else %}
+            <p class="text-xs text-gray-400">Noch keine Einträge.</p>
+            {% endif %}
+        </div>
+
+        <!-- Latest Comment (if any, shown at bottom) -->
+        {% if submission.review_comment and not (submission.review_notes or []) %}
+        <div class="bg-gray-50 rounded-lg p-3 border">
+            <p class="text-xs text-gray-500">{{ t('label_reviewer_note') }}:</p>
+            <p class="text-sm text-gray-700">{{ submission.review_comment }}</p>
+        </div>
+        {% endif %}
     </div>
-    {% elif submission.review_comment %}
-    <div class="mt-8 border-t pt-6">
-        <h3 class="text-sm font-semibold text-gray-500 mb-2">{{ t('label_reviewer_note') }}:</h3>
-        <p class="bg-gray-50 rounded-lg p-4 text-sm text-gray-700">{{ submission.review_comment }}</p>
-    </div>
-    {% endif %}
 </div>
 {% endblock %}
