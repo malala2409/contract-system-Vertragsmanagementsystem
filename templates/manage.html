@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="flex items-center justify-between mb-6">
+    <h1 class="text-2xl font-bold text-brand-700">{{ t('nav_templates') }}</h1>
+    <button onclick="document.getElementById('upload-modal').classList.remove('hidden')"
+            class="bg-brand-500 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-brand-700 transition">
+        + {{ t('btn_upload') }}
+    </button>
+</div>
+
+<div class="flex flex-wrap gap-2 mb-6">
+    <a href="{{ url_for('manage_templates') }}"
+       class="px-3 py-1 rounded-full text-sm {% if not category_filter %}bg-brand-500 text-white{% else %}bg-gray-200 text-gray-600 hover:bg-gray-300{% endif %} transition">
+        {{ t('label_all') }}
+    </a>
+    {% for cat in categories %}
+    <a href="{{ url_for('manage_templates', category=cat.id) }}"
+       class="px-3 py-1 rounded-full text-sm {% if category_filter == cat.id %}bg-brand-500 text-white{% else %}bg-gray-200 text-gray-600 hover:bg-gray-300{% endif %} transition">
+        {{ cat.name_de }}
+    </a>
+    {% endfor %}
+</div>
+
+{% if templates %}
+<div class="grid gap-4">
+    {% for tmpl in templates %}
+    <div class="bg-white rounded-xl shadow-sm border p-5 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div class="flex-1">
+            <h2 class="font-bold text-brand-700 text-lg">
+                {% if current_lang() == 'en' %}{{ tmpl.title_en }}{% else %}{{ tmpl.title_de }}{% endif %}
+            </h2>
+            <span class="inline-block bg-brand-100 text-brand-700 text-xs px-2 py-0.5 rounded mt-1">
+                {{ tmpl.category.name_de }} / {{ tmpl.category.name_en }}
+            </span>
+            {% if tmpl.sections %}
+            <div class="flex flex-wrap gap-1 mt-2">
+                {% for sec in tmpl.sections[:6] %}
+                <span class="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded">
+                    {{ sec.title_de }}
+                </span>
+                {% endfor %}
+                {% if tmpl.sections|length > 6 %}
+                <span class="text-xs text-gray-400">+{{ tmpl.sections|length - 6 }} more</span>
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+        <div class="flex items-center gap-2 flex-shrink-0">
+            <a href="{{ url_for('fill_contract', id=tmpl.id) }}"
+               class="bg-green-500 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-green-600 transition">
+                📝 {{ t('btn_fill') }}
+            </a>
+            {% if tmpl.file_path %}
+            <a href="{{ url_for('download_template', id=tmpl.id) }}"
+               class="bg-brand-500 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-brand-700 transition">
+                📥 {{ t('btn_download') }}
+            </a>
+            {% endif %}
+            <form method="POST" action="{{ url_for('delete_template', id=tmpl.id) }}"
+                  onsubmit="return confirm('{{ t('confirm_delete') }}')" class="inline">
+                <button class="bg-red-100 text-red-600 px-3 py-2 rounded-lg text-sm font-medium hover:bg-red-200 transition">
+                    🗑
+                </button>
+            </form>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="text-center py-16 text-gray-400">
+    <p class="text-5xl mb-4">📭</p>
+    <p>{{ t('no_templates') }}</p>
+</div>
+{% endif %}
+
+<div id="upload-modal" class="hidden fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+    <div class="bg-white rounded-xl shadow-2xl p-6 w-full max-w-lg mx-4">
+        <div class="flex items-center justify-between mb-4">
+            <h2 class="text-lg font-bold text-brand-700">{{ t('btn_upload') }}</h2>
+            <button onclick="document.getElementById('upload-modal').classList.add('hidden')"
+                    class="text-gray-400 hover:text-gray-600 text-xl">&times;</button>
+        </div>
+        <form method="POST" enctype="multipart/form-data" class="space-y-4">
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Titel (DE)</label>
+                <input type="text" name="title_de" required
+                       class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-brand-300 focus:border-brand-500 outline-none">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Title (EN)</label>
+                <input type="text" name="title_en"
+                       class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-brand-300 focus:border-brand-500 outline-none">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">{{ t('label_category') }}</label>
+                <select name="category_id" required
+                        class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-brand-300 focus:border-brand-500 outline-none">
+                    <option value="">{{ t('label_all') }}</option>
+                    {% for cat in categories %}
+                    <option value="{{ cat.id }}">{{ cat.name_de }} ({{ cat.name_en }})</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Sections (JSON)</label>
+                <textarea name="sections" rows="4"
+                          class="w-full border rounded-lg px-3 py-2 text-sm font-mono focus:ring-2 focus:ring-brand-300 focus:border-brand-500 outline-none"
+                          placeholder='[{"title_de":"Parteien","title_en":"Parties","content_de":"...","content_en":"...","fields":[...]}]'></textarea>
+                <p class="text-xs text-gray-400 mt-1">Optional: JSON array of section objects.</p>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">File (DOCX/PDF)</label>
+                <input type="file" name="file" accept=".docx,.doc,.pdf,.json"
+                       class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-brand-50 file:text-brand-700 hover:file:bg-brand-100">
+            </div>
+            <div class="flex gap-3 justify-end pt-2">
+                <button type="button" onclick="document.getElementById('upload-modal').classList.add('hidden')"
+                        class="px-4 py-2 border rounded-lg text-sm text-gray-600 hover:bg-gray-50">{{ t('btn_back') }}</button>
+                <button type="submit"
+                        class="px-4 py-2 bg-brand-500 text-white rounded-lg text-sm font-medium hover:bg-brand-700">{{ t('btn_upload') }}</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
