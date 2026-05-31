@@ -29,7 +29,6 @@ load_seed_templates(app)
 
 # ── i18n helpers ──
 def t(key):
-    """Return translation for `key` in the current session language."""
     lang = session.get('lang', 'de')
     if lang not in TRANSLATIONS:
         lang = 'de'
@@ -40,7 +39,6 @@ def current_lang():
     return session.get('lang', 'de')
 
 
-# Make `t` and `current_lang` available in all Jinja2 templates
 @app.context_processor
 def inject_translations():
     return dict(t=t, current_lang=current_lang)
@@ -120,6 +118,11 @@ def download_template(id):
 
 @app.route('/templates/<int:id>/delete', methods=['POST'])
 def delete_template(id):
+    password = request.form.get('password', '')
+    if password != '1111':
+        flash(t('wrong_password'))
+        return redirect(url_for('manage_templates'))
+
     template = Template.query.get_or_404(id)
     if template.file_path:
         file_path = os.path.join(app.config['UPLOAD_FOLDER'], template.file_path)
@@ -127,6 +130,7 @@ def delete_template(id):
             os.remove(file_path)
     db.session.delete(template)
     db.session.commit()
+    flash(t('delete_success'))
     return redirect(url_for('manage_templates'))
 
 
@@ -137,25 +141,26 @@ def fill_contract(id):
     template = Template.query.get_or_404(id)
 
     if request.method == 'POST':
-        mode = request.form.get('mode', 'fill')
         filled_data = {
-            'mode': mode,
             'sections': [],
         }
         section_count = len(template.sections)
         for i in range(section_count):
+            is_modified = request.form.get(f'modified_{i}') == '1'
             section_entry = {
                 'index': i,
-                'modified': request.form.get(f'modified_{i}') == '1',
+                'modified': is_modified,
             }
-            if mode == 'fill':
+            if is_modified:
+                # Free-edit mode: store the full section text
+                section_entry['content'] = request.form.get(f'section_content_{i}', '')
+            else:
+                # Fill mode: store individual field values
                 section_entry['fields'] = {}
                 section = template.sections[i]
                 for field in section.get('fields', []):
                     key = field['key']
                     section_entry['fields'][key] = request.form.get(f'field_{i}_{key}', '')
-            else:
-                section_entry['content'] = request.form.get(f'section_content_{i}', '')
             filled_data['sections'].append(section_entry)
 
         submission = Submission(

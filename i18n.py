@@ -45,6 +45,11 @@ TRANSLATIONS = {
         'submit_success': 'Vertrag erfolgreich eingereicht.',
         'review_success': 'Prüfung abgeschlossen.',
         'modified_warning': '⚠ Vom Benutzer geändert',
+        'wrong_password': 'Falsches Passwort! Vorlage wurde nicht gelöscht.',
+        'delete_success': 'Vorlage erfolgreich gelöscht.',
+        'password_prompt': 'Passwort zum Löschen eingeben:',
+        'toggle_free_edit': 'Freitext bearbeiten',
+        'toggle_fill_mode': 'Zurück zum Formular',
     },
     'en': {
         'app_name': 'Contract Manager',
@@ -91,5 +96,10 @@ TRANSLATIONS = {
         'submit_success': 'Contract submitted successfully.',
         'review_success': 'Review completed.',
         'modified_warning': '⚠ User-modified',
+        'wrong_password': 'Wrong password! Template was not deleted.',
+        'delete_success': 'Template deleted successfully.',
+        'password_prompt': 'Enter password to delete:',
+        'toggle_free_edit': 'Free Edit',
+        'toggle_fill_mode': 'Back to Form',
     }
 }
