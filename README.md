@@ -50,6 +50,8 @@ Das **Vertragsmanagementsystem** ist eine vollständige Webanwendung für die Ve
 
 ## 📸 Screenshots
 
+> Alle Screenshots zeigen die **Static-Version** (`index.html`) — läuft komplett im Browser, kein Server nötig.
+
 ### 🏠 Startseite · Home
 
 <div align="center">
@@ -64,7 +66,7 @@ Das **Vertragsmanagementsystem** ist eine vollständige Webanwendung für die Ve
 
 <div align="center">
   <img src="docs/screenshots/03-template-management.png" alt="Vorlagenverwaltung" width="90%">
-  <p><em>Übersicht aller Vertragsvorlagen mit Kategorie-Filter, Upload & Download</em></p>
+  <p><em>Übersicht aller Vertragsvorlagen mit Kategorie-Filter — Daten persistent in localStorage</em></p>
 </div>
 
 ---
@@ -78,36 +80,44 @@ Das **Vertragsmanagementsystem** ist eine vollständige Webanwendung für die Ve
 
 ---
 
-### ✍️ Vertriebsportal · Sales Portal
+### ✍️ Vertrag ausfüllen · Fill Contract
 
 <div align="center">
-  <img src="docs/screenshots/05-sales-home.png" alt="Vertriebsportal" width="90%">
+  <img src="docs/screenshots/05-fill-contract.png" alt="Vertrag ausfüllen" width="90%">
+  <p><em>Direktes Ausfüllen eines Vertrags: strukturiertes Formular mit Feldern aus der Vorlage</em></p>
+</div>
+
+---
+
+### 🛒 Vertriebsportal · Sales Portal
+
+<div align="center">
+  <img src="docs/screenshots/06-sales-home.png" alt="Vertriebsportal Dashboard" width="90%">
   <p><em>Personalisiertes Dashboard mit eigenen eingereichten Verträgen und ausfüllbaren Vorlagen</em></p>
 </div>
 
 <table>
 <tr>
-<td width="50%"><img src="docs/screenshots/06-sales-fill.png" alt="Vertrag ausfüllen"><br><em>Zweistufiger Ausfüllprozess: strukturiertes Formular + Live-Vorschau</em></td>
-<td width="50%"><img src="docs/screenshots/07-sales-preview.png" alt="Vorschau vor Einreichung"><br><em>Vorschauseite mit farblich hervorgehobenen Platzhaltern vor der Einreichung</em></td>
-</tr>
-<tr>
-<td width="50%" colspan="2"><img src="docs/screenshots/08-sales-submissions.png" alt="Eingereichte Verträge"><br><em>Status-Übersicht aller eingereichten Verträge (ausstehend / genehmigt / abgelehnt)</em></td>
+<td width="50%"><img src="docs/screenshots/07-sales-fill.png" alt="Vertrag ausfüllen (Vertrieb)"><br><em>Ausfüllprozess mit Formular- und Freitextmodus</em></td>
+<td width="50%"><img src="docs/screenshots/08-sales-preview.png" alt="Vorschau vor Einreichung"><br><em>Vorschauseite mit farblich hervorgehobenen Platzhaltern vor der Einreichung</em></td>
 </tr>
 </table>
+
+<div align="center">
+  <img src="docs/screenshots/09-sales-submissions.png" alt="Eingereichte Verträge" width="90%">
+  <p><em>Status-Übersicht aller eingereichten Verträge (ausstehend / genehmigt / abgelehnt)</em></p>
+</div>
 
 ---
 
 ### 🔍 Prüfungs-Workflow · Review Workflow
 
-<div align="center">
-  <img src="docs/screenshots/09-review-dashboard.png" alt="Prüfungs-Dashboard" width="90%">
-  <p><em>Übersicht aller eingereichten Verträge mit Status-Filter für die rechtliche Prüfung</em></p>
-</div>
-
-<div align="center">
-  <img src="docs/screenshots/10-review-detail.png" alt="Prüfungs-Detailansicht" width="90%">
-  <p><em>Detailprüfung mit additiven Notizen, Verlaufshistorie und Genehmigung/Ablehnung — modifizierte Abschnitte werden rot markiert</em></p>
-</div>
+<table>
+<tr>
+<td width="50%"><img src="docs/screenshots/10-review-dashboard.png" alt="Prüfungs-Dashboard"><br><em>Übersicht aller eingereichten Verträge mit Status-Filter</em></td>
+<td width="50%"><img src="docs/screenshots/11-review-detail.png" alt="Prüfungs-Detailansicht"><br><em>Detailprüfung mit additiven Notizen, Historie und Genehmigung/Ablehnung</em></td>
+</tr>
+</table>
 
 ---
 
