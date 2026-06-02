@@ -197,9 +197,8 @@ Jede Vorlage kann über den **Template-Editor** angepasst oder durch eigene erse
 flowchart LR
     A["🗂 Vorlagenverwaltung\n(Admin / Staff)"] --> B["✏️ Ausfüllen & Einreichen\n(Vertriebsportal)"]
     B --> C["⚖️ Rechtliche Prüfung\n(Compliance-Team)"]
-    B --> D["❌ Ablehnung\nmit Kommentar → Überarb."]
+    C --> D["❌ Ablehnung\nmit Kommentar → Überarb."]
     C --> E["✅ Genehmigt\nProzess abgeschlossen"]
-    C --> D
     D --> B
 ```
 
