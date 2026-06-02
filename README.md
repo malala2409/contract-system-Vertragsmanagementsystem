@@ -193,19 +193,14 @@ Jede Vorlage kann über den **Template-Editor** angepasst oder durch eigene erse
 
 ## 🔄 Workflow
 
-```
-┌─────────────┐      ┌─────────────────┐      ┌──────────────────┐
-│  Vorlagen    │      │  Vertrieb        │      │  Rechtliche       │
-│  Verwaltung  │ ───▶ │  Ausfüllen +     │ ───▶ │  Prüfung           │
-│  (Admin/     │      │  Einreichen      │      │  (Review)          │
-│   Staff)     │      │  (Sales Portal)  │      │                    │
-└─────────────┘      └─────────────────┘      └──────────────────┘
-                            │                         │
-                            │    ┌─────────────┐      │
-                            └───▶│  Ablehnung  │◀─────┘
-                                 │  mit Kommentar│
-                                 │  → Überarb.  │
-                                 └─────────────┘
+```mermaid
+flowchart LR
+    A["🗂 Vorlagenverwaltung\n(Admin / Staff)"] --> B["✏️ Ausfüllen & Einreichen\n(Vertriebsportal)"]
+    B --> C["⚖️ Rechtliche Prüfung\n(Compliance-Team)"]
+    B --> D["❌ Ablehnung\nmit Kommentar → Überarb."]
+    C --> D
+    C --> E["✅ Genehmigt\nProzess abgeschlossen"]
+    D --> B
 ```
 
 1. **Vorlagen anlegen** — Admin/Staff erstellt und pflegt Vertragsvorlagen (Template-Editor)
