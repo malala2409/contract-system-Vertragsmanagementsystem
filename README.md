@@ -198,8 +198,8 @@ flowchart LR
     A["🗂 Vorlagenverwaltung\n(Admin / Staff)"] --> B["✏️ Ausfüllen & Einreichen\n(Vertriebsportal)"]
     B --> C["⚖️ Rechtliche Prüfung\n(Compliance-Team)"]
     B --> D["❌ Ablehnung\nmit Kommentar → Überarb."]
-    C --> D
     C --> E["✅ Genehmigt\nProzess abgeschlossen"]
+    C --> D
     D --> B
 ```
 
