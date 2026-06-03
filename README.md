@@ -1,4 +1,4 @@
-# 📋 Vertragsmanagementsystem · Contract Management System
+# Vertragsmanagementsystem · Contract Management System
 
 <div align="center">
 
@@ -15,31 +15,31 @@
 
 ---
 
-## 📖 Inhaltsverzeichnis · Table of Contents
+## Inhaltsverzeichnis · Table of Contents
 
-- [👥 Drei Portale · Three Portals](#-drei-portale--three-portals)
-- [📸 Screenshots](#-screenshots)
-- [🚀 Quick Start](#-quick-start)
-- [⚡ Zwei Versionen · Two Versions](#-zwei-versionen--two-versions)
-- [📁 Vertragstypen · Contract Types](#-vertragstypen--contract-types)
-- [🔄 Workflow](#-workflow)
-- [🌐 Internationalisierung · Internationalization](#-internationalisierung--internationalization)
-- [🛠 Tech Stack](#-tech-stack)
-- [📂 Projektstruktur · Project Structure](#-projektstruktur--project-structure)
-- [🔀 Routen · Routes](#-routen--routes)
-- [📄 Lizenz · License](#-lizenz--license)
+- [Drei Portale · Three Portals](#drei-portale--three-portals)
+- [Screenshots](#screenshots)
+- [Quick Start](#quick-start)
+- [Zwei Versionen · Two Versions](#zwei-versionen--two-versions)
+- [Vertragstypen · Contract Types](#vertragstypen--contract-types)
+- [Workflow](#workflow)
+- [Internationalisierung · Internationalization](#internationalisierung--internationalization)
+- [Tech Stack](#tech-stack)
+- [Projektstruktur · Project Structure](#projektstruktur--project-structure)
+- [Routen · Routes](#routen--routes)
+- [Lizenz · License](#lizenz--license)
 
 ---
 
-## 👥 Drei Portale · Three Portals
+## Drei Portale · Three Portals
 
 Das System ist funktional in **drei Benutzerrollen** gegliedert:
 
-*The system is functionally divided into **three user roles**:*
+*The system is organized into **three user roles**:*
 
 ---
 
-### 🛒 1. Vertriebsportal · Sales Portal
+### 1. Vertriebsportal · Sales Portal
 
 > **Zielgruppe:** Vertriebsmitarbeiter, die Verträge ausfüllen und einreichen.
 > *Target audience: Salespeople who fill out and submit contracts.*
@@ -48,15 +48,15 @@ Das System ist funktional in **drei Benutzerrollen** gegliedert:
 
 | Feature | Beschreibung · Description |
 |---------|---------------------------|
-| 📝 **Strukturiertes Ausfüllen** | Felder werden aus der Vorlage extrahiert und als Formular dargestellt — einfach ausfüllen, keine juristischen Kenntnisse nötig · *Fields extracted from template, presented as a form — no legal knowledge required* |
-| ✏️ **Freitext-Modus** | Jeder Abschnitt kann bei Bedarf frei bearbeitet werden („Abschnitt bearbeiten"-Button), um individuelle Formulierungen einzufügen · *Any section can be freely edited via "Edit section" for custom wording* |
-| 👁️ **Vorschau vor Einreichung** | Vor dem Absenden wird der komplette Vertrag mit farblich markierten Platzhaltern angezeigt · *Full preview with highlighted placeholders before submission* |
-| 📊 **Status-Tracking** | Eigene Einreichungen im Dashboard verfolgen: ⏳ Ausstehend · ✅ Genehmigt · ❌ Abgelehnt · *Track own submissions: pending / approved / rejected* |
-| 🔄 **Überarbeitung nach Ablehnung** | Abgelehnte Verträge können mit den Prüferkommentaren erneut bearbeitet und wieder eingereicht werden · *Rejected contracts can be edited with reviewer feedback and resubmitted* |
+| **Strukturiertes Ausfüllen** | Felder werden aus der Vorlage extrahiert und als Formular dargestellt — einfach ausfüllen, keine juristischen Kenntnisse nötig · *Fields extracted from template, presented as a form — no legal knowledge required* |
+| **Freitext-Modus** | Jeder Abschnitt kann bei Bedarf frei bearbeitet werden („Abschnitt bearbeiten"-Button), um individuelle Formulierungen einzufügen · *Any section can be freely edited via "Edit section" for custom wording* |
+| **Vorschau vor Einreichung** | Vor dem Absenden wird der komplette Vertrag mit farblich markierten Platzhaltern angezeigt · *Full preview with highlighted placeholders before submission* |
+| **Status-Tracking** | Eigene Einreichungen im Dashboard verfolgen: Ausstehend / Genehmigt / Abgelehnt · *Track own submissions: pending / approved / rejected* |
+| **Überarbeitung nach Ablehnung** | Abgelehnte Verträge können mit den Prüferkommentaren erneut bearbeitet und wieder eingereicht werden · *Rejected contracts can be edited with reviewer feedback and resubmitted* |
 
 ---
 
-### 🛠 2. Vorlagenverwaltung · Template Management
+### 2. Vorlagenverwaltung · Template Management
 
 > **Zielgruppe:** Administratoren & juristische Mitarbeiter, die Vertragsvorlagen erstellen und pflegen.
 > *Target audience: Admins & legal staff who create and maintain contract templates.*
@@ -65,14 +65,14 @@ Das System ist funktional in **drei Benutzerrollen** gegliedert:
 
 | Feature | Beschreibung · Description |
 |---------|---------------------------|
-| 🧩 **Drag-and-Drop-Assistent** | Neue Vorlagen per Drag-and-Drop aus vordefinierten Bausteinen zusammenstellen — visuell und intuitiv · *Build new templates by dragging and dropping predefined building blocks — visual and intuitive* |
-| 📂 **Kategorie-Filter** | Vorlagen sind 7 BGB-Vertragstypen zugeordnet und danach filterbar · *Templates organized into 7 BGB contract types with filter* |
-| 📎 **Dokumenten-Upload** | Word (.docx) oder PDF als Vorlage hochladen und mit Metadaten versehen · *Upload Word or PDF files as templates with metadata* |
-| 🔒 **Passwortgeschütztes Löschen** | Löschen erfordert eine Passworteingabe (Standard: `1111`) — Schutz vor unbeabsichtigtem Löschen · *Deletion requires password confirmation — prevents accidental deletion* |
+| **Drag-and-Drop-Assistent** | Neue Vorlagen per Drag-and-Drop aus vordefinierten Bausteinen zusammenstellen — visuell und intuitiv · *Build new templates by dragging and dropping predefined building blocks — visual and intuitive* |
+| **Kategorie-Filter** | Vorlagen sind 7 BGB-Vertragstypen zugeordnet und danach filterbar · *Templates organized into 7 BGB contract types with filter* |
+| **Dokumenten-Upload** | Word (.docx) oder PDF als Vorlage hochladen und mit Metadaten versehen · *Upload Word or PDF files as templates with metadata* |
+| **Passwortgeschütztes Löschen** | Löschen erfordert eine Passworteingabe (Standard: `1111`) — Schutz vor unbeabsichtigtem Löschen · *Deletion requires password confirmation — prevents accidental deletion* |
 
 ---
 
-### ⚖️ 3. Prüfungsportal · Review Portal
+### 3. Prüfungsportal · Review Portal
 
 > **Zielgruppe:** Rechtsabteilung / Compliance-Team, das eingereichte Verträge prüft.
 > *Target audience: Legal / compliance team reviewing submitted contracts.*
@@ -81,18 +81,18 @@ Das System ist funktional in **drei Benutzerrollen** gegliedert:
 
 | Feature | Beschreibung · Description |
 |---------|---------------------------|
-| ✅❌ **Genehmigen / Ablehnen** | Eingereichte Verträge mit einem Klick genehmigen oder ablehnen — Status wird sofort aktualisiert · *Approve or reject submissions with one click — status updates instantly* |
-| 💬 **Prüfnotizen mit Verlauf** | Kommentare hinzufügen, ohne vorherige zu überschreiben — alle Notizen bleiben mit Zeitstempel erhalten (additive Historie) · *Add comments without overwriting previous ones — all notes preserved with timestamps (additive history)* |
-| 🔴 **Freitext-Änderungen hervorheben** | Abschnitte, die vom Vertrieb außerhalb der Vorlage bearbeitet wurden, werden **rot markiert** und mit dem Originaltext verglichen — warnt den Prüfer vor genauer Kontrolle · *Sections modified outside the template are **highlighted in red** and compared with the original — alerts reviewer to scrutinize carefully* |
-| 🔍 **Status-Filter** | Dashboard filterbar nach Status (ausstehend / genehmigt / abgelehnt) · *Dashboard filterable by status* |
+| **Genehmigen / Ablehnen** | Eingereichte Verträge mit einem Klick genehmigen oder ablehnen — Status wird sofort aktualisiert · *Approve or reject submissions with one click — status updates instantly* |
+| **Prüfnotizen mit Verlauf** | Kommentare hinzufügen, ohne vorherige zu überschreiben — alle Notizen bleiben mit Zeitstempel erhalten (additive Historie) · *Add comments without overwriting previous ones — all notes preserved with timestamps (additive history)* |
+| **Freitext-Änderungen hervorheben** | Abschnitte, die vom Vertrieb außerhalb der Vorlage bearbeitet wurden, werden rot markiert und mit dem Originaltext verglichen — warnt den Prüfer vor genauer Kontrolle · *Sections modified outside the template are highlighted in red and compared with the original — alerts reviewer to scrutinize carefully* |
+| **Status-Filter** | Dashboard filterbar nach Status (ausstehend / genehmigt / abgelehnt) · *Dashboard filterable by status* |
 
 ---
 
-## 📸 Screenshots
+## Screenshots
 
 > Alle Screenshots zeigen die **Static-Version** (`index.html`) — läuft komplett im Browser, kein Server nötig.
 
-### 🏠 Startseite · Home
+### Startseite · Home
 
 <div align="center">
   <img src="docs/screenshots/01-home-de.png" alt="Startseite Deutsch" width="48%">
@@ -102,7 +102,7 @@ Das System ist funktional in **drei Benutzerrollen** gegliedert:
 
 ---
 
-### 📁 Vorlagenverwaltung · Template Management
+### Vorlagenverwaltung · Template Management
 
 <div align="center">
   <img src="docs/screenshots/03-template-management.png" alt="Vorlagenverwaltung" width="90%">
@@ -111,7 +111,7 @@ Das System ist funktional in **drei Benutzerrollen** gegliedert:
 
 ---
 
-### 🛠 Template-Editor · Template Editor
+### Template-Editor · Template Editor
 
 <div align="center">
   <img src="docs/screenshots/04-template-editor.png" alt="Template Editor" width="90%">
@@ -120,7 +120,7 @@ Das System ist funktional in **drei Benutzerrollen** gegliedert:
 
 ---
 
-### ✍️ Vertrag ausfüllen · Fill Contract
+### Vertrag ausfüllen · Fill Contract
 
 <div align="center">
   <img src="docs/screenshots/05-fill-contract.png" alt="Vertrag ausfüllen" width="90%">
@@ -129,7 +129,7 @@ Das System ist funktional in **drei Benutzerrollen** gegliedert:
 
 ---
 
-### 🛒 Vertriebsportal · Sales Portal
+### Vertriebsportal · Sales Portal
 
 <div align="center">
   <img src="docs/screenshots/06-sales-home.png" alt="Vertriebsportal Dashboard" width="90%">
@@ -150,7 +150,7 @@ Das System ist funktional in **drei Benutzerrollen** gegliedert:
 
 ---
 
-### 🔍 Prüfungs-Workflow · Review Workflow
+### Prüfungs-Workflow · Review Workflow
 
 <table>
 <tr>
@@ -161,9 +161,9 @@ Das System ist funktional in **drei Benutzerrollen** gegliedert:
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
-### ⚡ Static-Version (keine Installation)
+### Static-Version (keine Installation)
 
 Die Static-Version läuft vollständig im Browser mit localStorage — kein Server nötig.
 
@@ -176,11 +176,11 @@ python3 -m http.server 8080
 # → http://localhost:8080
 ```
 
-🌍 **Live-Demo:** [malala2409.github.io/contract-system](https://malala2409.github.io/contract-system/)
+**Live-Demo:** [malala2409.github.io/contract-system](https://malala2409.github.io/contract-system/)
 
 ---
 
-### 🐍 Flask-Version (mit Backend)
+### Flask-Version (mit Backend)
 
 ```bash
 # 1. Abhängigkeiten installieren
@@ -195,12 +195,12 @@ open http://localhost:5000
 
 Die Datenbank wird beim ersten Start automatisch mit 7 BGB-Vertragsvorlagen befüllt.
 
-> 💡 **Datenbank-Konfiguration:** Standardmäßig wird SQLite verwendet (zero-config). Für MySQL/PostgreSQL die Umgebungsvariable `DATABASE_URL` setzen oder eine `.env`-Datei anlegen (siehe `.env.example`).
+> **Datenbank-Konfiguration:** Standardmäßig wird SQLite verwendet (zero-config). Für MySQL/PostgreSQL die Umgebungsvariable `DATABASE_URL` setzen oder eine `.env`-Datei anlegen (siehe `.env.example`).
 > *Database: SQLite by default. Set `DATABASE_URL` or create a `.env` file for MySQL/PostgreSQL (see `.env.example`).*
 
 ---
 
-## ⚡ Zwei Versionen · Two Versions
+## Zwei Versionen · Two Versions
 
 | Eigenschaft | Static | Flask |
 |------------|--------|-------|
@@ -216,7 +216,7 @@ Beide Versionen teilen sich dieselbe Codebasis für Templates, Logik und Interna
 
 ---
 
-## 📁 Vertragstypen · Contract Types
+## Vertragstypen · Contract Types
 
 Das System enthält **7 BGB-Vertragsvorlagen** — jede mit detaillierten, zweisprachigen Abschnitten und ausfüllbaren Feldern:
 
@@ -234,14 +234,14 @@ Jede Vorlage kann über den **Template-Editor** angepasst oder durch eigene erse
 
 ---
 
-## 🔄 Workflow
+## Workflow
 
 ```mermaid
 flowchart LR
-    A["🗂 Vorlagenverwaltung\nVorlagen erstellen & verwalten\nTemplate Management"] --> B["🛒 Vertriebsportal\nAusfüllen & Einreichen\nSalesperson fills & submits"]
-    B --> C["⚖️ Prüfungsportal\nRechtliche Prüfung\nReviewer checks"]
-    C --> D["❌ Ablehnung\nmit Kommentar → Überarb.\nRejected → Revise"]
-    C --> E["✅ Genehmigt\nProzess abgeschlossen\nApproved"]
+    A["Vorlagenverwaltung\nVorlagen erstellen & verwalten\nTemplate Management"] --> B["Vertriebsportal\nAusfüllen & Einreichen\nSalesperson fills & submits"]
+    B --> C["Prüfungsportal\nRechtliche Prüfung\nReviewer checks"]
+    C --> D["Ablehnung\nmit Kommentar zur Überarbeitung\nRejected, revise"]
+    C --> E["Genehmigt\nProzess abgeschlossen\nApproved"]
     D --> B
 ```
 
@@ -252,7 +252,7 @@ flowchart LR
 
 ---
 
-## 🌐 Internationalisierung · Internationalization
+## Internationalisierung · Internationalization
 
 - **164+ Übersetzungsschlüssel** in DE und EN
 - Session-basierte Sprachumschaltung (`/lang/de` ↔ `/lang/en`)
@@ -262,7 +262,7 @@ flowchart LR
 
 ---
 
-## 🛠 Tech Stack
+## Tech Stack
 
 | Ebene | Technologie |
 |-------|------------|
@@ -276,7 +276,7 @@ flowchart LR
 
 ---
 
-## 📂 Projektstruktur · Project Structure
+## Projektstruktur · Project Structure
 
 ```
 Vertragsmanagementsystem/
@@ -337,7 +337,7 @@ Vertragsmanagementsystem/
 
 ---
 
-## 🔀 Routen · Routes
+## Routen · Routes
 
 ### Startseite
 
@@ -355,7 +355,7 @@ Vertragsmanagementsystem/
 | `/templates/create` | `GET/POST` | Drag-and-Drop-Assistent für neue Vorlagen |
 | `/templates/<id>/update` | `POST` | Vorlage bearbeiten (Metadaten, Abschnitte) |
 | `/templates/<id>/download` | `GET` | Angehängte Datei herunterladen |
-| `/templates/<id>/delete` | `POST` | Vorlage löschen (**Passwort erforderlich**, Standard: `1111`) |
+| `/templates/<id>/delete` | `POST` | Vorlage löschen (Passwort erforderlich, Standard: `1111`) |
 
 ### Vertriebsportal · Sales Portal
 
@@ -365,14 +365,14 @@ Vertragsmanagementsystem/
 | `/sales/fill/<id>` | `GET/POST` | Vertrag ausfüllen (Formular- + Freitextmodus) |
 | `/sales/preview/<id>` | `GET/POST` | Vorschau vor Einreichung → Einreichen |
 | `/sales/view/<sub_id>` | `GET` | Eingereichten Vertrag einsehen (read-only) |
-| `/sales/edit/<sub_id>` | `GET/POST` | Abgelehnten Vertrag **mit Prüferkommentaren überarbeiten** & neu einreichen |
+| `/sales/edit/<sub_id>` | `GET/POST` | Abgelehnten Vertrag mit Prüferkommentaren überarbeiten & neu einreichen |
 
 ### Prüfungsportal · Review Portal
 
 | Route | Methode | Beschreibung |
 |-------|---------|-------------|
 | `/review` | `GET` | Prüfungs-Dashboard mit Status-Filter |
-| `/review/<id>` | `GET/POST` | Detailprüfung: **Genehmigen / Ablehnen**, **additive Notizen**, 🔴 freie Änderungen rot markiert |
+| `/review/<id>` | `GET/POST` | Detailprüfung: Genehmigen / Ablehnen, additive Notizen, freie Änderungen rot markiert |
 
 ### Staff (direkt)
 
@@ -382,16 +382,16 @@ Vertragsmanagementsystem/
 
 ---
 
-## 🔑 Standard-Passwort · Default Password
+## Standard-Passwort · Default Password
 
 Das Löschen von Vorlagen erfordert ein Passwort. Standard: **`1111`**
 
-> ⚠️ Das Passwort sollte in einer Produktivumgebung über die App-Konfiguration geändert werden.
+> Das Passwort sollte in einer Produktivumgebung über die App-Konfiguration geändert werden.
 > *Change the password in production via app configuration.*
 
 ---
 
-## 📄 Lizenz · License
+## Lizenz · License
 
 MIT License — siehe [LICENSE](LICENSE)
 
