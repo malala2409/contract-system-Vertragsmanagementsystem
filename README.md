@@ -39,15 +39,15 @@ Das System ist funktional in **drei Benutzerrollen** gegliedert:
 
 ---
 
-### 🛒 1. Vertriebsportal · Sales Portal （业务员）
+### 🛒 1. Vertriebsportal · Sales Portal
 
 > **Zielgruppe:** Vertriebsmitarbeiter, die Verträge ausfüllen und einreichen.
 > *Target audience: Salespeople who fill out and submit contracts.*
 
 **Funktionen · Features:**
 
-| 功能 | Beschreibung · Description |
-|------|---------------------------|
+| Feature | Beschreibung · Description |
+|---------|---------------------------|
 | 📝 **Strukturiertes Ausfüllen** | Felder werden aus der Vorlage extrahiert und als Formular dargestellt — einfach ausfüllen, keine juristischen Kenntnisse nötig · *Fields extracted from template, presented as a form — no legal knowledge required* |
 | ✏️ **Freitext-Modus** | Jeder Abschnitt kann bei Bedarf frei bearbeitet werden („Abschnitt bearbeiten"-Button), um individuelle Formulierungen einzufügen · *Any section can be freely edited via "Edit section" for custom wording* |
 | 👁️ **Vorschau vor Einreichung** | Vor dem Absenden wird der komplette Vertrag mit farblich markierten Platzhaltern angezeigt · *Full preview with highlighted placeholders before submission* |
@@ -56,15 +56,15 @@ Das System ist funktional in **drei Benutzerrollen** gegliedert:
 
 ---
 
-### 🛠 2. Vorlagenverwaltung · Template Management （模版制定人员）
+### 🛠 2. Vorlagenverwaltung · Template Management
 
 > **Zielgruppe:** Administratoren & juristische Mitarbeiter, die Vertragsvorlagen erstellen und pflegen.
 > *Target audience: Admins & legal staff who create and maintain contract templates.*
 
 **Funktionen · Features:**
 
-| 功能 | Beschreibung · Description |
-|------|---------------------------|
+| Feature | Beschreibung · Description |
+|---------|---------------------------|
 | 🧩 **Drag-and-Drop-Assistent** | Neue Vorlagen per Drag-and-Drop aus vordefinierten Bausteinen zusammenstellen — visuell und intuitiv · *Build new templates by dragging and dropping predefined building blocks — visual and intuitive* |
 | 📂 **Kategorie-Filter** | Vorlagen sind 7 BGB-Vertragstypen zugeordnet und danach filterbar · *Templates organized into 7 BGB contract types with filter* |
 | 📎 **Dokumenten-Upload** | Word (.docx) oder PDF als Vorlage hochladen und mit Metadaten versehen · *Upload Word or PDF files as templates with metadata* |
@@ -72,15 +72,15 @@ Das System ist funktional in **drei Benutzerrollen** gegliedert:
 
 ---
 
-### ⚖️ 3. Prüfungsportal · Review Portal （审核员）
+### ⚖️ 3. Prüfungsportal · Review Portal
 
 > **Zielgruppe:** Rechtsabteilung / Compliance-Team, das eingereichte Verträge prüft.
 > *Target audience: Legal / compliance team reviewing submitted contracts.*
 
 **Funktionen · Features:**
 
-| 功能 | Beschreibung · Description |
-|------|---------------------------|
+| Feature | Beschreibung · Description |
+|---------|---------------------------|
 | ✅❌ **Genehmigen / Ablehnen** | Eingereichte Verträge mit einem Klick genehmigen oder ablehnen — Status wird sofort aktualisiert · *Approve or reject submissions with one click — status updates instantly* |
 | 💬 **Prüfnotizen mit Verlauf** | Kommentare hinzufügen, ohne vorherige zu überschreiben — alle Notizen bleiben mit Zeitstempel erhalten (additive Historie) · *Add comments without overwriting previous ones — all notes preserved with timestamps (additive history)* |
 | 🔴 **Freitext-Änderungen hervorheben** | Abschnitte, die vom Vertrieb außerhalb der Vorlage bearbeitet wurden, werden **rot markiert** und mit dem Originaltext verglichen — warnt den Prüfer vor genauer Kontrolle · *Sections modified outside the template are **highlighted in red** and compared with the original — alerts reviewer to scrutinize carefully* |
@@ -238,17 +238,17 @@ Jede Vorlage kann über den **Template-Editor** angepasst oder durch eigene erse
 
 ```mermaid
 flowchart LR
-    A["🗂 模版制定人员\nVorlagen erstellen & verwalten\nTemplate Management"] --> B["🛒 业务员\nAusfüllen & Einreichen\nSalesperson fills & submits"]
-    B --> C["⚖️ 审核员\nRechtliche Prüfung\nReviewer checks"]
+    A["🗂 Vorlagenverwaltung\nVorlagen erstellen & verwalten\nTemplate Management"] --> B["🛒 Vertriebsportal\nAusfüllen & Einreichen\nSalesperson fills & submits"]
+    B --> C["⚖️ Prüfungsportal\nRechtliche Prüfung\nReviewer checks"]
     C --> D["❌ Ablehnung\nmit Kommentar → Überarb.\nRejected → Revise"]
     C --> E["✅ Genehmigt\nProzess abgeschlossen\nApproved"]
     D --> B
 ```
 
-1. **模版制定人员 · Template Manager** — Erstellt und pflegt Vertragsvorlagen per Drag-and-Drop oder Datei-Upload. Löschen mit Passwortschutz.
-2. **业务员 · Salesperson** — Wählt Vorlage, füllt Felder aus (strukturiert oder Freitext), sieht Vorschau und reicht ein. Verfolgt Status der eigenen Einreichungen. Bearbeitet abgelehnte Verträge anhand der Prüferkommentare.
-3. **审核员 · Reviewer** — Prüft eingereichte Verträge: genehmigen oder ablehnen, fügt additive Kommentare hinzu. Vom Vertrieb frei bearbeitete Abschnitte werden rot markiert.
-4. **Prüfhistorie** — Jeder Schritt wird mit Zeitstempel dokumentiert; Notizen bleiben vollständig erhalten.
+1. **Vorlagenverwaltung · Template Manager** — Erstellt und pflegt Vertragsvorlagen per Drag-and-Drop oder Datei-Upload. Löschen mit Passwortschutz. · *Creates and maintains contract templates via drag-and-drop or file upload. Password-protected deletion.*
+2. **Vertriebsportal · Salesperson** — Wählt Vorlage, füllt Felder aus (strukturiert oder Freitext), sieht Vorschau und reicht ein. Verfolgt Status der eigenen Einreichungen. Bearbeitet abgelehnte Verträge anhand der Prüferkommentare. · *Selects template, fills in fields (structured or free text), previews and submits. Tracks own submission status. Edits rejected contracts using reviewer feedback.*
+3. **Prüfungsportal · Reviewer** — Prüft eingereichte Verträge: genehmigen oder ablehnen, fügt additive Kommentare hinzu. Vom Vertrieb frei bearbeitete Abschnitte werden rot markiert. · *Reviews submitted contracts: approves or rejects, adds additive comments. Free-text edits by sales are highlighted in red.*
+4. **Prüfhistorie · Audit Trail** — Jeder Schritt wird mit Zeitstempel dokumentiert; Notizen bleiben vollständig erhalten. · *Every step is timestamped; all notes are preserved in full history.*
 
 ---
 
@@ -346,7 +346,7 @@ Vertragsmanagementsystem/
 | `/` | Startseite mit Drei-Portal-Navigation (Vorlagen · Vertrieb · Prüfung) |
 | `/lang/<de\|en>` | Sprache wechseln |
 
-### Vorlagenverwaltung（模版制定人员 · Template Manager）
+### Vorlagenverwaltung · Template Management
 
 | Route | Methode | Beschreibung |
 |-------|---------|-------------|
@@ -357,7 +357,7 @@ Vertragsmanagementsystem/
 | `/templates/<id>/download` | `GET` | Angehängte Datei herunterladen |
 | `/templates/<id>/delete` | `POST` | Vorlage löschen (**Passwort erforderlich**, Standard: `1111`) |
 
-### Vertriebsportal（业务员 · Salesperson）
+### Vertriebsportal · Sales Portal
 
 | Route | Methode | Beschreibung |
 |-------|---------|-------------|
@@ -367,7 +367,7 @@ Vertragsmanagementsystem/
 | `/sales/view/<sub_id>` | `GET` | Eingereichten Vertrag einsehen (read-only) |
 | `/sales/edit/<sub_id>` | `GET/POST` | Abgelehnten Vertrag **mit Prüferkommentaren überarbeiten** & neu einreichen |
 
-### Prüfungsportal（审核员 · Reviewer）
+### Prüfungsportal · Review Portal
 
 | Route | Methode | Beschreibung |
 |-------|---------|-------------|
