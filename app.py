@@ -14,8 +14,13 @@ from i18n import TRANSLATIONS
 
 app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY', 'dev-secret-key-change-in-production')
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(
-    os.path.dirname(os.path.abspath(__file__)), 'contract.db')
+
+# Database: SQLite by default, or use DATABASE_URL env var for MySQL/PostgreSQL
+# Example: DATABASE_URL=mysql+pymysql://root:root@127.0.0.1:3306/contract_system
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
+    'DATABASE_URL',
+    'sqlite:///' + os.path.join(os.path.dirname(os.path.abspath(__file__)), 'contract.db')
+)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 UPLOAD_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'uploads')
